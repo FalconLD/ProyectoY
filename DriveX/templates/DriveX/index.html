@@ -1,0 +1,47 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DriveX - Concesionaria</title>
+    <link rel="stylesheet" href="{% static 'DriveX/css/style.css' %}">
+</head>
+<body>
+    <header>
+        <h1>Bienvenido a DriveX</h1>
+        <nav>
+            <a href="#">Inicio</a>
+            <a href="#">Autos</a>
+            <a href="#">Login</a>
+        </nav>
+    </header>
+
+    <main>
+        <h2>Autos Disponibles</h2>
+        <section class="autos-container">
+            {% for auto in autos %}
+            <div class="auto-card">
+                <h3>{{ auto.marca }} {{ auto.modelo }}</h3>
+                <p>Año: {{ auto.anio }}</p>
+                <p>Precio: ${{ auto.precio }}</p>
+                <p>
+                    {% if auto.disponible %}
+                        ✅ Disponible
+                    {% else %}
+                        ❌ Vendido
+                    {% endif %}
+                </p>
+            </div>
+            {% empty %}
+            <p>No hay autos registrados aún</p>
+            {% endfor %}
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 DriveX</p>
+    </footer>
+</body>
+</html>
