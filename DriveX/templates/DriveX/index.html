@@ -1,47 +1,146 @@
 {% load static %}
-
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DriveX - Concesionaria</title>
-    <link rel="stylesheet" href="{% static 'DriveX/css/style.css' %}">
+    <title>Rental Car DriveX - Transporte Premium</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Corinthia:wght@400;700&family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="{% static 'DriveX/css/styles.css' %}">
 </head>
+
 <body>
     <header>
-        <h1>Bienvenido a DriveX</h1>
         <nav>
-            <a href="#">Inicio</a>
-            <a href="#">Autos</a>
-            <a href="#">Login</a>
+            <div class="logo">Rental Car DriveX</div>
+            <ul class="nav-links">
+                <li><a href="{% url 'index' %}">Inicio</a></li>
+                <li><a href="{% url 'vehiculos' %}">Vehículos</a></li>
+                <li><a href="{% url 'reserva' %}">Reservar</a></li>
+                <li><a href="#contact">Contacto</a></li>
+            </ul>
+            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
         </nav>
     </header>
 
     <main>
-        <h2>Autos Disponibles</h2>
-        <section class="autos-container">
-            {% for auto in autos %}
-            <div class="auto-card">
-                <h3>{{ auto.marca }} {{ auto.modelo }}</h3>
-                <p>Año: {{ auto.anio }}</p>
-                <p>Precio: ${{ auto.precio }}</p>
-                <p>
-                    {% if auto.disponible %}
-                        ✅ Disponible
-                    {% else %}
-                        ❌ Vendido
-                    {% endif %}
-                </p>
+        <section class="hero">
+            <div class="hero-content">
+                <br>
+                <br>
+                <h1>Conduce la excelencia. Vive la experiencia DriveX</h1>
+                <p>Transporte premium de primera categoría con vehículos de lujo, chofer profesional y seguro integral
+                    incluido.</p>
+                <a href="{% url 'reserva' %}" class="cta-button">Reservar Ahora</a>
             </div>
-            {% empty %}
-            <p>No hay autos registrados aún</p>
-            {% endfor %}
+        </section>
+
+        <section class="services">
+            <div class="container">
+                <div class="section-title fade-in">
+                    <h2>Servicios Premium</h2>
+                    <p>Experiencia de transporte personalizada para clientes exigentes</p>
+                </div>
+                <div class="services-grid">
+                    <div class="service-card fade-in">
+                        <div class="service-icon">🚗</div>
+                        <h3>Vehículos de Lujo</h3>
+                        <p>Flota premium con los modelos más exclusivos y elegantes del mercado, mantenidos en perfectas
+                            condiciones.</p>
+                    </div>
+                    <div class="service-card fade-in">
+                        <div class="service-icon">👨‍💼</div>
+                        <h3>Chofer Profesional</h3>
+                        <p>Conductores certificados y experimentados que garantizan un viaje seguro y confortable.</p>
+                    </div>
+                    <div class="service-card fade-in">
+                        <div class="service-icon">🛡️</div>
+                        <h3>Seguro Integral</h3>
+                        <p>Cobertura completa para el usuario y el vehículo, brindando total tranquilidad durante su
+                            experiencia.</p>
+                    </div>
+                    <div class="service-card fade-in">
+                        <div class="service-icon">📍</div>
+                        <h3>Servicio Puerta a Puerta</h3>
+                        <p>Recogida y entrega en el lugar que prefieras, o visita nuestras elegantes instalaciones.</p>
+                    </div>
+                    <div class="service-card fade-in">
+                        <div class="service-icon">⏰</div>
+                        <h3>Disponibilidad 24/7</h3>
+                        <p>Reserva en tiempo real con disponibilidad inmediata para cuando lo necesites.</p>
+                    </div>
+                    <div class="service-card fade-in">
+                        <div class="service-icon">⭐</div>
+                        <h3>Experiencia Personalizada</h3>
+                        <p>Servicio adaptado a tus necesidades específicas con atención al detalle excepcional.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="featured-vehicles">
+            <div class="container">
+                <div class="section-title fade-in">
+                    <h2>Vehículos Destacados</h2>
+                    <p>Descubre nuestra selección premium de vehículos de lujo</p>
+                </div>
+                <div class="vehicles-grid">
+                    <div class="vehicle-card fade-in">
+                        <div class="vehicle-image">
+                            <img src="{% static 'DriveX/images/Clase-S-Mercedes-Benz.jpg' %}"
+                                alt="Clase S Mercedes Benz">
+                        </div>
+                        <div class="vehicle-content">
+                            <h3>Mercedes-Benz Clase S</h3>
+                            <p>Elegancia y confort supremo con tecnología de vanguardia para ejecutivos exigentes.</p>
+                            <a href="{% url 'reserva' %}" class="vehicle-button">Reservar</a>
+                        </div>
+                    </div>
+                    <div class="vehicle-card fade-in">
+                        <div class="vehicle-image">🚙</div>
+                        <div class="vehicle-content">
+                            <h3>BMW X7 xDrive</h3>
+                            <p>SUV premium espacioso y potente, perfecto para viajes familiares de lujo.</p>
+                            <a href="{% url 'reserva' %}" class="vehicle-button">Reservar</a>
+                        </div>
+                    </div>
+                    <div class="vehicle-card fade-in">
+                        <div class="vehicle-image">🏁</div>
+                        <div class="vehicle-content">
+                            <h3>Audi A8 Quattro</h3>
+                            <p>Innovación alemana y diseño sofisticado para una experiencia de conducción inigualable.
+                            </p>
+                            <a href="{% url 'reserva' %}" class="vehicle-button">Reservar</a>
+                        </div>
+                    </div>
+                </div>
+                <div style="text-align: center; margin-top: 3rem;">
+                    <a href="{% url 'vehiculos' %}" class="cta-button">Ver Todos los Vehículos</a>
+                </div>
+            </div>
         </section>
     </main>
 
-    <footer>
-        <p>&copy; 2025 DriveX</p>
+    <footer id="contact">
+        <div class="footer-content">
+            <p>Rental Car DriveX - Transporte Premium de Primera Categoría</p>
+            <div class="social-links">
+                <a href="#">📧</a>
+                <a href="#">📱</a>
+                <a href="#">🌐</a>
+            </div>
+            <p>&copy; 2025 Rental Car DriveX. Todos los derechos reservados.</p>
+        </div>
     </footer>
+
+    <script src="{% static 'DriveX/js/script.js' %}"></script>
+
 </body>
+
 </html>

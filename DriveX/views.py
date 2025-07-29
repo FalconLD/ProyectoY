@@ -1,6 +1,10 @@
 from django.shortcuts import render
-from .models import Auto
 
 def index(request):
-    autos = Auto.objects.all()
-    return render(request, 'DriveX/index.html', {'autos': autos})
+    return render(request, 'DriveX/index.html')
+
+def vehiculos(request):
+    return render(request, 'DriveX/vehiculos.html')
+
+def reserva(request):
+    return render(request, 'DriveX/reserva.html')
