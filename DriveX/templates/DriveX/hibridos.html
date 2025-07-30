@@ -1,0 +1,67 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vehículos Híbridos - Rental Car DriveX</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">Rental Car DriveX</div>
+            <ul class="nav-links">
+                <li><a href="/">Inicio</a></li>
+                <li><a href="/vehiculos/">Vehículos</a></li>
+                <li><a href="/reservar/">Reservar</a></li>
+                <li><a href="/contacto/">Contacto</a></li>
+            </ul>
+            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
+        </nav>
+    </header>
+
+    <main>
+        <section class="vehicles-section">
+            <div class="container">
+                <h2 class="section-title">Nuestra Flota de Vehículos Híbridos</h2>
+                <p class="section-subtitle">Combina eficiencia y potencia con nuestra selección de vehículos híbridos premium.</p>
+                <div class="vehicles-grid">
+                    {% for vehiculo in vehiculos %}
+                        {% if vehiculo.categoria == 'Híbridos' %}
+                        <div class="vehicle-card fade-in">
+                            <div class="vehicle-image">{{ vehiculo.icon }}</div>
+                            <div class="vehicle-content">
+                                <h3>{{ vehiculo.nombre }}</h3>
+                                <p>{{ vehiculo.descripcion }}</p>
+                                <p style="font-size: 0.8rem; color: var(--primary-gold); margin-bottom: 1rem;">
+                                    {{ vehiculo.caracteristicas }}
+                                </p>
+                                <a href="/reserva/?vehicle={{ vehiculo.value }}" class="vehicle-button">Reservar</a>
+                            </div>
+                        </div>
+                        {% endif %}
+                    {% empty %}
+                        <p>No hay vehículos híbridos disponibles en este momento.</p>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p>Rental Car DriveX - Transporte Premium de Primera Categoría</p>
+            <div class="social-links">
+                <a href="#">📧</a>
+                <a href="#">📱</a>
+                <a href="#">🌐</a>
+            </div>
+            <p>© 2025 Rental Car DriveX. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="{% static 'script.js' %}"></script>
+</body>
+</html>

@@ -18,7 +18,7 @@
 <body>
     <header>
         <nav>
-            <div class="logo">Rental Car DriveX</div>
+            <a href="{% url 'index' %}" class="logo">Rental Car DriveX</a>
             <ul class="nav-links">
                 <li><a href="{% url 'index' %}">Inicio</a></li>
                 <li><a href="{% url 'vehiculos' %}">Vehículos</a></li>
@@ -82,8 +82,7 @@
                     </div>
                 </div>
             </div>
-        </section>
-
+        <!-- REEMPLAZA ESTA SECCIÓN EN index.html -->
         <section class="featured-vehicles">
             <div class="container">
                 <div class="section-title fade-in">
@@ -91,40 +90,31 @@
                     <p>Descubre nuestra selección premium de vehículos de lujo</p>
                 </div>
                 <div class="vehicles-grid">
+                    
+                    <!-- Bucle dinámico -->
+                    {% for vehiculo in vehiculos_destacados %}
                     <div class="vehicle-card fade-in">
                         <div class="vehicle-image">
-                            <img src="{% static 'DriveX/images/Clase-S-Mercedes-Benz.jpg' %}"
-                                alt="Clase S Mercedes Benz">
+                            <!-- Usamos la URL de la imagen subida -->
+                            <img src="{{ vehiculo.imagen.url }}" alt="{{ vehiculo.nombre }}">
                         </div>
                         <div class="vehicle-content">
-                            <h3>Mercedes-Benz Clase S</h3>
-                            <p>Elegancia y confort supremo con tecnología de vanguardia para ejecutivos exigentes.</p>
-                            <a href="{% url 'reserva' %}" class="vehicle-button">Reservar</a>
+                            <h3>{{ vehiculo.nombre }}</h3>
+                            <p>{{ vehiculo.descripcion }}</p>
+                            <!-- El enlace ahora usa el valor_slug del vehículo -->
+                            <a href="{% url 'reserva' %}?vehicle={{ vehiculo.valor_slug }}" class="vehicle-button">Reservar</a>
                         </div>
                     </div>
-                    <div class="vehicle-card fade-in">
-                        <div class="vehicle-image">🚙</div>
-                        <div class="vehicle-content">
-                            <h3>BMW X7 xDrive</h3>
-                            <p>SUV premium espacioso y potente, perfecto para viajes familiares de lujo.</p>
-                            <a href="{% url 'reserva' %}" class="vehicle-button">Reservar</a>
-                        </div>
-                    </div>
-                    <div class="vehicle-card fade-in">
-                        <div class="vehicle-image">🏁</div>
-                        <div class="vehicle-content">
-                            <h3>Audi A8 Quattro</h3>
-                            <p>Innovación alemana y diseño sofisticado para una experiencia de conducción inigualable.
-                            </p>
-                            <a href="{% url 'reserva' %}" class="vehicle-button">Reservar</a>
-                        </div>
-                    </div>
+                    {% endfor %}
+                    
                 </div>
                 <div style="text-align: center; margin-top: 3rem;">
                     <a href="{% url 'vehiculos' %}" class="cta-button">Ver Todos los Vehículos</a>
                 </div>
             </div>
         </section>
+
+
     </main>
 
     <footer id="contact">

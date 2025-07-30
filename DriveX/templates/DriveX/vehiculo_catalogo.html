@@ -1,0 +1,52 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <!-- ... tu head ... -->
+    <title>Flota {{ categoria.nombre }} - Rental Car DriveX</title>
+    <link rel="stylesheet" href="{% static 'DriveX/css/styles.css' %}">
+</head>
+<body>
+    <header>
+        <!-- ... tu nav ... -->
+    </header>
+
+    <main style="padding-top: 100px;">
+        <section class="featured-vehicles" style="padding-top: 2rem;">
+            <div class="container">
+                <div class="section-title fade-in">
+                    <!-- Título dinámico con el nombre de la categoría -->
+                    <h2>Nuestra Flota {{ categoria.nombre }}</h2>
+                    <p>{{ categoria.descripcion }}</p>
+                </div>
+                <div class="vehicles-grid" id="all-vehicles-grid">
+                    
+                    <!-- Bucle para mostrar los vehículos de la categoría -->
+                    {% for vehiculo in vehiculos %}
+                    <div class="vehicle-card fade-in">
+                        <div class="vehicle-image">
+                             <img src="{{ vehiculo.imagen.url }}" alt="{{ vehiculo.nombre }}" style="width: 100%; height: auto; border-radius: 8px;">
+                        </div>
+                        <div class="vehicle-content">
+                            <h3>{{ vehiculo.nombre }}</h3>
+                            <p>{{ vehiculo.descripcion }}</p>
+                            <p style="font-size: 0.8rem; color: var(--primary-gold); margin-bottom: 1rem;">
+                                {{ vehiculo.caracteristicas }}
+                            </p>
+                            <a href="{% url 'reserva' %}?vehicle={{ vehiculo.valor_slug }}" class="vehicle-button">Reservar</a>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <p>No hay vehículos disponibles en esta categoría por el momento.</p>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer id="contact">
+        <!-- ... tu footer ... -->
+    </footer>
+    <script src="{% static 'DriveX/js/script.js' %}"></script>
+</body>
+</html>

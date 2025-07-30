@@ -1,150 +1,42 @@
+<!-- CONTENIDO COMPLETO PARA vehiculos.html -->
 {% load static %}
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vehículos - Rental Car DriveX</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Corinthia:wght@400;700&family=Poppins:wght@300;400;500;600;700&display=swap"
-        rel="stylesheet">
+    <!-- ... tu head ... -->
+    <title>Tipos de Vehículo - Rental Car DriveX</title>
     <link rel="stylesheet" href="{% static 'DriveX/css/styles.css' %}">
 </head>
-
 <body>
     <header>
-        <nav>
-            <div class="logo">Rental Car DriveX</div>
-            <ul class="nav-links">
-                <li><a href="{% url 'index' %}">Inicio</a></li>
-                <li><a href="{% url 'vehiculos' %}">Vehículos</a></li>
-                <li><a href="{% url 'reserva' %}">Reservar</a></li>
-                <li><a href="#contact">Contacto</a></li>
-            </ul>
-            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
-        </nav>
+        <!-- ... tu nav ... -->
     </header>
 
     <main style="padding-top: 100px;">
         <section class="featured-vehicles" style="padding-top: 2rem;">
             <div class="container">
                 <div class="section-title fade-in">
-                    <h2>Nuestra Flota Premium</h2>
-                    <p>Vehículos de lujo cuidadosamente seleccionados para su comodidad</p>
+                    <h2>Nuestros Tipos de Vehículo</h2>
+                    <p>Explora nuestras categorías de vehículos de lujo</p>
                 </div>
-                <div class="vehicles-grid" id="all-vehicles-grid">
-                    <!-- Vehicles will be loaded dynamically by JavaScript -->
-                    <div class="vehicle-card fade-in">
-                        <div class="vehicle-image">🏎️</div>
-                        <div class="vehicle-content">
-                            <h3>Mercedes-Benz Clase S</h3>
-                            <p>Elegancia y confort supremo con tecnología de vanguardia para ejecutivos exigentes.</p>
-                            <p style="font-size: 0.8rem; color: var(--primary-gold); margin-bottom: 1rem;">
-                                Asientos de cuero, climatización automática, sistema de sonido premium
-                            </p>
-                            <a href="{% url 'reserva' %}?vehicle=mercedes-s" class="vehicle-button">Reservar</a>
-                        </div>
-                    </div>
-                    <div class="vehicle-card fade-in">
-                        <div class="vehicle-image">🚙</div>
-                        <div class="vehicle-content">
-                            <h3>BMW X7 xDrive</h3>
-                            <p>SUV premium espacioso y potente, perfecto para viajes familiares de lujo.</p>
-                            <p style="font-size: 0.8rem; color: var(--primary-gold); margin-bottom: 1rem;">
-                                Tracción integral, 7 asientos, techo panorámico, asistente de conducción
-                            </p>
-                            <a href="{% url 'reserva' %}?vehicle=bmw-x7" class="vehicle-button">Reservar</a>
-                        </div>
-                    </div>
-                    <div class="vehicle-card fade-in">
-                        <div class="vehicle-image">🏁</div>
-                        <div class="vehicle-content">
-                            <h3>Audi A8 Quattro</h3>
-                            <p>Innovación alemana y diseño sofisticado para una experiencia de conducción inigualable.
-                            </p>
-                            <p style="font-size: 0.8rem; color: var(--primary-gold); margin-bottom: 1rem;">
-                                Matrix LED, suspensión neumática, cockpit virtual, masaje en asientos
-                            </p>
-                            <a href="{% url 'reserva' %}?vehicle=audi-a8" class="vehicle-button">Reservar</a>
-                        </div>
-                    </div>
-                    <div class="vehicle-card fade-in">
-                        <div class="vehicle-image">⚡</div>
-                        <div class="vehicle-content">
-                            <h3>Tesla Model S</h3>
-                            <p>Vehículo eléctrico de lujo con tecnología autopilot y rendimiento excepcional.</p>
-                            <p style="font-size: 0.8rem; color: var(--primary-gold); margin-bottom: 1rem;">
-                                Autopilot, pantalla táctil 17", carga rápida, 0-100 km/h en 3.2s
-                            </p>
-                            <a href="{% url 'reserva' %}?vehicle=tesla-s" class="vehicle-button">Reservar</a>
-                        </div>
-                    </div>
-                    <div class="vehicle-card fade-in">
-                        <div class="vehicle-image">🏃‍♂️</div>
-                        <div class="vehicle-content">
-                            <h3>Porsche Panamera</h3>
-                            <p>Deportivo de lujo de 4 puertas que combina performance y elegancia.</p>
-                            <p style="font-size: 0.8rem; color: var(--primary-gold); margin-bottom: 1rem;">
-                                Motor V8 biturbo, chasis deportivo, frenos cerámicos, interior deportivo
-                            </p>
-                            <a href="{% url 'reserva' %}?vehicle=porsche-panamera" class="vehicle-button">Reservar</a>
-                        </div>
-                    </div>
-                    <div class="vehicle-card fade-in">
-                        <div class="vehicle-image">🏔️</div>
-                        <div class="vehicle-content">
-                            <h3>Range Rover Vogue</h3>
-                            <p>SUV de lujo británico con capacidades todo terreno y máximo confort.</p>
-                            <p style="font-size: 0.8rem; color: var(--primary-gold); margin-bottom: 1rem;">
-                                Control de terreno, suspensión neumática, interior en cuero Windsor
-                            </p>
-                            <a href="{% url 'reserva' %}?vehicle=range-rover" class="vehicle-button">Reservar</a>
-                        </div>
-                    </div>
-                    <div class="vehicle-card fade-in">
-                        <div class="vehicle-image">👑</div>
-                        <div class="vehicle-content">
-                            <h3>Bentley Continental GT</h3>
-                            <p>Gran turismo británico que representa la máxima expresión del lujo automotriz.</p>
-                            <p style="font-size: 0.8rem; color: var(--primary-gold); margin-bottom: 1rem;">
-                                Motor W12, interior artesanal, sistema de sonido Naim, acabados en madera
-                            </p>
-                            <a href="{% url 'reserva' %}?vehicle=bentley-gt" class="vehicle-button">Reservar</a>
-                        </div>
-                    </div>
-                    <div class="vehicle-card fade-in">
-                        <div class="vehicle-image">🇮🇹</div>
-                        <div class="vehicle-content">
-                            <h3>Maserati Quattroporte</h3>
-                            <p>Sedán deportivo italiano que combina elegancia, performance y exclusividad.</p>
-                            <p style="font-size: 0.8rem; color: var(--primary-gold); margin-bottom: 1rem;">
-                                Motor Ferrari V6, escape deportivo, interior italiano, suspensión Skyhook
-                            </p>
-                            <a href="{% url 'reserva' %}?vehicle=maserati-quattroporte"
-                                class="vehicle-button">Reservar</a>
-                        </div>
-                    </div>
+                
+                <!-- Bucle para mostrar cada categoría -->
+                {% for categoria in categorias %}
+                <div class="category-card fade-in" style="background: #222; padding: 2rem; margin-bottom: 2rem; border-radius: 8px; border-left: 5px solid var(--primary-gold);">
+                    <h3 style="font-size: 2rem; color: var(--primary-gold); margin-bottom: 1rem;">{{ categoria.nombre }}</h3>
+                    <p style="margin-bottom: 1.5rem;">{{ categoria.descripcion }}</p>
+                    <!-- Este botón lleva al catálogo de esa categoría -->
+                    <a href="{% url 'vehiculos_por_categoria' categoria.slug %}" class="cta-button">Mostrar Catálogo</a>
                 </div>
+                {% endfor %}
+
             </div>
         </section>
     </main>
 
     <footer id="contact">
-        <div class="footer-content">
-            <p>Rental Car DriveX - Transporte Premium de Primera Categoría</p>
-            <div class="social-links">
-                <a href="#">📧</a>
-                <a href="#">📱</a>
-                <a href="#">🌐</a>
-            </div>
-            <p>&copy; 2025 Rental Car DriveX. Todos los derechos reservados.</p>
-        </div>
+        <!-- ... tu footer ... -->
     </footer>
-
     <script src="{% static 'DriveX/js/script.js' %}"></script>
 </body>
-
 </html>
