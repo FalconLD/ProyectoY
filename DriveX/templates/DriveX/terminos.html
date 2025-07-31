@@ -1,66 +1,40 @@
+{% extends 'DriveX/base.html' %}
 {% load static %}
 
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Términos y Condiciones - Rental Car DriveX</title>
-    <link rel="stylesheet" href="{% static 'styles.css' %}">
-</head>
-<body>
-    <header>
-        <nav>
-            <div class="logo">Rental Car DriveX</div>
-            <ul class="nav-links">
-                <li><a href="/">Inicio</a></li>
-                <li><a href="/vehiculos/">Vehículos</a></li>
-                <li><a href="/reservar/">Reservar</a></li>
-                <li><a href="/contacto/">Contacto</a></li>
-            </ul>
-            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
-        </nav>
-    </header>
+{% block title %}Términos y Condiciones - Rental Car DriveX{% endblock %}
 
-    <main>
-        <section class="terms-section">
-            <div class="container">
-                <h2 class="section-title">Términos y Condiciones</h2>
-                <div class="terms-content">
-                    <h3>1. Uso del Servicio</h3>
-                    <p>Al utilizar nuestros servicios, aceptas cumplir con todas las leyes y regulaciones aplicables. Eres responsable de mantener la confidencialidad de tu cuenta y contraseña.</p>
-                    
-                    <h3>2. Responsabilidad del Usuario</h3>
-                    <p>El usuario es responsable de cualquier daño causado al vehículo durante el período de alquiler. Se requiere un depósito de seguridad que será reembolsado al final del servicio, sujeto a la inspección del vehículo.</p>
-                    
-                    <h3>3. Cancelaciones y Reservas</h3>
-                    <p>Las reservas pueden cancelarse hasta 24 horas antes del inicio del servicio sin costo adicional. Las cancelaciones dentro de las 24 horas previas pueden estar sujetas a cargos.</p>
-                    
-                    <h3>4. Seguros</h3>
-                    <p>Todos los vehículos están asegurados con cobertura integral. Sin embargo, el usuario es responsable de cualquier deducible en caso de accidente o daño.</p>
-                    
-                    <h3>5. Métodos de Pago</h3>
-                    <p>Aceptamos tarjetas de crédito, transferencias bancarias y pagos en efectivo en nuestras oficinas. El pago total debe realizarse al momento de la reserva.</p>
-                    
-                    <h3>6. Modificaciones a los Términos</h3>
-                    <p>Nos reservamos el derecho de modificar estos términos en cualquier momento. Las modificaciones serán efectivas inmediatamente después de su publicación en nuestro sitio web.</p>
-                </div>
-            </div>
-        </section>
-    </main>
+{% block content %}
+<main>
+    <section class="terms-section">
+        <div class="container">
+            <h2 class="section-title">Términos y Condiciones</h2>
+            <div class="terms-content">
+                <h3>1. Uso del Servicio</h3>
+                <p>Al utilizar nuestros servicios, aceptas cumplir con todas las leyes y regulaciones aplicables. Eres
+                    responsable de mantener la confidencialidad de tu cuenta y contraseña.</p>
 
-    <footer>
-        <div class="footer-content">
-            <p>Rental Car DriveX - Transporte Premium de Primera Categoría</p>
-            <div class="social-links">
-                <a href="#">📧</a>
-                <a href="#">📱</a>
-                <a href="#">🌐</a>
+                <h3>2. Responsabilidad del Usuario</h3>
+                <p>El usuario es responsable de cualquier daño causado al vehículo durante el período de alquiler. Se
+                    requiere un depósito de seguridad que será reembolsado al final del servicio, sujeto a la inspección
+                    del vehículo.</p>
+
+                <h3>3. Cancelaciones y Reservas</h3>
+                <p>Las reservas pueden cancelarse hasta 24 horas antes del inicio del servicio sin costo adicional. Las
+                    cancelaciones dentro de las 24 horas previas pueden estar sujetas a cargos.</p>
+
+                <h3>4. Seguros</h3>
+                <p>Todos los vehículos están asegurados con cobertura integral. Sin embargo, el usuario es responsable
+                    de cualquier deducible en caso de accidente o daño.</p>
+
+                <h3>5. Métodos de Pago</h3>
+                <p>Aceptamos tarjetas de crédito, transferencias bancarias y pagos en efectivo en nuestras oficinas. El
+                    pago total debe realizarse al momento de la reserva.</p>
+
+                <h3>6. Modificaciones a los Términos</h3>
+                <p>Nos reservamos el derecho de modificar estos términos en cualquier momento. Las modificaciones serán
+                    efectivas inmediatamente después de su publicación en nuestro sitio web.</p>
             </div>
-            <p>© 2025 Rental Car DriveX. Todos los derechos reservados.</p>
         </div>
-    </footer>
-
-    <script src="{% static 'script.js' %}"></script>
-</body>
-</html>
+    </section>
+</main>
+{% endblock %}

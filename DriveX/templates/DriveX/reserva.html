@@ -1,182 +1,143 @@
+{% extends 'DriveX/base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="es">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reservar - Rental Car DriveX</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Corinthia:wght@400;700&family=Poppins:wght@300;400;500;600;700&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'DriveX/css/styles.css' %}">
-</head>
+{% block title %}Reservar - Rental Car DriveX{% endblock %}
 
-<body>
-    <header>
-        <nav>
-            <div class="logo">Rental Car DriveX</div>
-            <ul class="nav-links">
-                <li><a href="{% url 'index' %}">Inicio</a></li>
-                <li><a href="{% url 'vehiculos' %}">Vehículos</a></li>
-                <li><a href="{% url 'reserva' %}">Reservar</a></li>
-                <li><a href="#contact">Contacto</a></li>
-            </ul>
-            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
-        </nav>
-    </header>
+{% block content %}
+<main style="padding-top: 120px; padding-bottom: 3rem;">
+    <section class="services">
+        <div class="container">
+            <div class="section-title fade-in">
+                <h2>Reserva tu Experiencia Premium</h2>
+                <p>Completa los detalles para personalizar tu servicio de transporte de lujo</p>
+            </div>
 
-    <main style="padding-top: 120px; padding-bottom: 3rem;">
-        <section class="services">
-            <div class="container">
-                <div class="section-title fade-in">
-                    <h2>Reserva tu Experiencia Premium</h2>
-                    <p>Completa los detalles para personalizar tu servicio de transporte de lujo</p>
+            <div class="form-container fade-in">
+                <div class="success-message" id="success-message">
+                    ¡Reserva realizada con éxito! Nos contactaremos contigo pronto.
                 </div>
 
-                <div class="form-container fade-in">
-                    <div class="success-message" id="success-message">
-                        ¡Reserva realizada con éxito! Nos contactaremos contigo pronto.
+                <form id="reservation-form" method="post" action="{% url 'reserva' %}">
+                    {% csrf_token %}
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="name">Nombre Completo *</label>
+                            <input type="text" id="name" name="name" required>
+                            <div class="error-message" id="name-error">Por favor ingresa tu nombre completo</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Correo Electrónico *</label>
+                            <input type="email" id="email" name="email" required>
+                            <div class="error-message" id="email-error">Por favor ingresa un correo válido</div>
+                        </div>
                     </div>
 
-                    <form id="reservation-form" method="post" action="{% url 'reserva' %}">
-                        {% csrf_token %}
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="name">Nombre Completo *</label>
-                                <input type="text" id="name" name="name" required>
-                                <div class="error-message" id="name-error">Por favor ingresa tu nombre completo</div>
-                            </div>
-                            <div class="form-group">
-                                <label for="email">Correo Electrónico *</label>
-                                <input type="email" id="email" name="email" required>
-                                <div class="error-message" id="email-error">Por favor ingresa un correo válido</div>
-                            </div>
-                        </div>
-
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="phone">Teléfono *</label>
-                                <input type="tel" id="phone" name="phone" required>
-                                <div class="error-message" id="phone-error">Por favor ingresa tu número de teléfono
-                                </div>
-                            </div>
-                        </div>
-                        <!-- EN reserva.html, REEMPLAZA EL CAMPO <select> DE VEHÍCULOS -->
+                    <div class="form-row">
                         <div class="form-group">
-                            <label for="vehicle">Tipo de Vehículo *</label>
-                            <select id="vehicle" name="vehicle" required>
-                                <option value="">Selecciona un vehículo</option>
+                            <label for="phone">Teléfono *</label>
+                            <input type="tel" id="phone" name="phone" required>
+                            <div class="error-message" id="phone-error">Por favor ingresa tu número de teléfono
+                            </div>
+                        </div>
+                    </div>
+                    <!-- EN reserva.html, REEMPLAZA EL CAMPO <select> DE VEHÍCULOS -->
+                    <div class="form-group">
+                        <label for="vehicle">Tipo de Vehículo *</label>
+                        <select id="vehicle" name="vehicle" required>
+                            <option value="">Selecciona un vehículo</option>
 
-                                <!-- Bucle dinámico -->
-                                {% for vehiculo in vehiculos %}
-                                <option value="{{ vehiculo.valor_slug }}">{{ vehiculo.nombre }}</option>
-                                {% endfor %}
+                            <!-- Bucle dinámico -->
+                            {% for vehiculo in vehiculos %}
+                            <option value="{{ vehiculo.valor_slug }}">{{ vehiculo.nombre }}</option>
+                            {% endfor %}
 
+                        </select>
+                        <div class="error-message" id="vehicle-error">Por favor selecciona un vehículo</div>
+                    </div>
+
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="date">Fecha de Servicio *</label>
+                            <input type="date" id="date" name="date" required>
+                            <div class="error-message" id="date-error">Por favor selecciona una fecha</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="time">Hora *</label>
+                            <input type="time" id="time" name="time" required>
+                            <div class="error-message" id="time-error">Por favor selecciona una hora</div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="duration">Duración del Servicio *</label>
+                            <select id="duration" name="duration" required>
+                                <option value="">Selecciona duración</option>
+                                <option value="2h">2 horas</option>
+                                <option value="4h">4 horas</option>
+                                <option value="8h">8 horas</option>
+                                <option value="12h">12 horas</option>
+                                <option value="24h">24 horas</option>
+                                <option value="custom">Personalizado</option>
                             </select>
-                            <div class="error-message" id="vehicle-error">Por favor selecciona un vehículo</div>
+                            <div class="error-message" id="duration-error">Por favor selecciona la duración</div>
                         </div>
-
-
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="date">Fecha de Servicio *</label>
-                                <input type="date" id="date" name="date" required>
-                                <div class="error-message" id="date-error">Por favor selecciona una fecha</div>
-                            </div>
-                            <div class="form-group">
-                                <label for="time">Hora *</label>
-                                <input type="time" id="time" name="time" required>
-                                <div class="error-message" id="time-error">Por favor selecciona una hora</div>
-                            </div>
-                        </div>
-
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="duration">Duración del Servicio *</label>
-                                <select id="duration" name="duration" required>
-                                    <option value="">Selecciona duración</option>
-                                    <option value="2h">2 horas</option>
-                                    <option value="4h">4 horas</option>
-                                    <option value="8h">8 horas</option>
-                                    <option value="12h">12 horas</option>
-                                    <option value="24h">24 horas</option>
-                                    <option value="custom">Personalizado</option>
-                                </select>
-                                <div class="error-message" id="duration-error">Por favor selecciona la duración</div>
-                            </div>
-                            <div class="form-group">
-                                <label for="pickup">Tipo de Servicio *</label>
-                                <select id="pickup" name="pickup" required>
-                                    <option value="">Selecciona el servicio</option>
-                                    <option value="door-to-door">Puerta a puerta</option>
-                                    <option value="office-pickup">Recogida en oficina</option>
-                                </select>
-                                <div class="error-message" id="pickup-error">Por favor selecciona el tipo de servicio
-                                </div>
-                            </div>
-                        </div>
-
                         <div class="form-group">
-                            <label for="pickup-address">Dirección de Recogida *</label>
-                            <input type="text" id="pickup-address" name="pickup_address"
-                                placeholder="Ingresa la dirección de recogida" required>
-                            <div class="error-message" id="pickup-address-error">Por favor ingresa la dirección de
-                                recogida</div>
+                            <label for="pickup">Tipo de Servicio *</label>
+                            <select id="pickup" name="pickup" required>
+                                <option value="">Selecciona el servicio</option>
+                                <option value="door-to-door">Puerta a puerta</option>
+                                <option value="office-pickup">Recogida en oficina</option>
+                            </select>
+                            <div class="error-message" id="pickup-error">Por favor selecciona el tipo de servicio
+                            </div>
                         </div>
+                    </div>
 
-                        <div class="form-group">
-                            <label for="destination">Destino (Opcional)</label>
-                            <input type="text" id="destination" name="destination"
-                                placeholder="Ingresa el destino si es conocido">
-                        </div>
+                    <div class="form-group">
+                        <label for="pickup-address">Dirección de Recogida *</label>
+                        <input type="text" id="pickup-address" name="pickup_address"
+                            placeholder="Ingresa la dirección de recogida" required>
+                        <div class="error-message" id="pickup-address-error">Por favor ingresa la dirección de
+                            recogida</div>
+                    </div>
 
-                        <div class="checkbox-group">
-                            <input type="checkbox" id="chauffeur" name="chauffeur">
-                            <label for="chauffeur">Solicitar chofer profesional (+$50/hora)</label>
-                        </div>
+                    <div class="form-group">
+                        <label for="destination">Destino (Opcional)</label>
+                        <input type="text" id="destination" name="destination"
+                            placeholder="Ingresa el destino si es conocido">
+                    </div>
 
-                        <div class="form-group">
-                            <label for="special-requests">Solicitudes Especiales</label>
-                            <textarea id="special-requests" name="special_requests" rows="4"
-                                placeholder="Compártenos cualquier preferencia o requerimiento especial..."></textarea>
-                        </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="chauffeur" name="chauffeur">
+                        <label for="chauffeur">Solicitar chofer profesional (+$35/día)</label>
+                    </div>
 
-                        <div style="text-align: center; margin-top: 2rem;">
-                            <button type="submit" class="cta-button">Confirmar Reserva</button>
-                        </div>
-                    </form>
-                </div>
+                    <div class="form-group">
+                        <label for="special-requests">Solicitudes Especiales</label>
+                        <textarea id="special-requests" name="special_requests" rows="4"
+                            placeholder="Compártenos cualquier preferencia o requerimiento especial..."></textarea>
+                    </div>
+
+                    <div style="text-align: center; margin-top: 2rem;">
+                        <button type="submit" class="cta-button">Confirmar Reserva</button>
+                    </div>
+                </form>
             </div>
-        </section>
-    </main>
-
-    <footer id="contact">
-        <div class="footer-content">
-            <p>Rental Car DriveX - Transporte Premium de Primera Categoría</p>
-            <div class="social-links">
-                <a href="#">📧</a>
-                <a href="#">📱</a>
-                <a href="#">🌐</a>
-            </div>
-            <p>&copy; 2025 Rental Car DriveX. Todos los derechos reservados.</p>
         </div>
-    </footer>
+    </section>
+</main>
 
-    <script src="{% static 'DriveX/js/script.js' %}"></script>
-    <script>
-        // Pre-select vehicle if coming from URL parameter
-        document.addEventListener('DOMContentLoaded', function () {
-            const urlParams = new URLSearchParams(window.location.search);
-            const vehicleParam = urlParams.get('vehicle');
-            if (vehicleParam) {
-                const vehicleSelect = document.getElementById('vehicle');
-                vehicleSelect.value = vehicleParam;
-            }
-        });
-    </script>
-</body>
-
-</html>
+<script>
+    // Pre-select vehicle if coming from URL parameter
+    document.addEventListener('DOMContentLoaded', function () {
+        const urlParams = new URLSearchParams(window.location.search);
+        const vehicleParam = urlParams.get('vehicle');
+        if (vehicleParam) {
+            const vehicleSelect = document.getElementById('vehicle');
+            vehicleSelect.value = vehicleParam;
+        }
+    });
+</script>
+{% endblock %}

@@ -483,3 +483,31 @@ footer {
         grid-template-columns: 1fr;
     }
 }
+
+.auth-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+.auth-button {
+    padding: 0.9rem 2rem;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 50px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border: 2px solid var(--primary-gold);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: transparent;
+    color: var(--primary-gold);
+    text-decoration: none;
+}
+
+.auth-button:hover {
+    background: var(--primary-gold);
+    color: var(--dark-bg);
+    box-shadow: 0 10px 30px var(--shadow-gold);
+}

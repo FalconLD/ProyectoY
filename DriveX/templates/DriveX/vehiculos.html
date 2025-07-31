@@ -1,42 +1,31 @@
-<!-- CONTENIDO COMPLETO PARA vehiculos.html -->
+{% extends 'DriveX/base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <!-- ... tu head ... -->
-    <title>Tipos de Vehículo - Rental Car DriveX</title>
-    <link rel="stylesheet" href="{% static 'DriveX/css/styles.css' %}">
-</head>
-<body>
-    <header>
-        <!-- ... tu nav ... -->
-    </header>
 
-    <main style="padding-top: 100px;">
-        <section class="featured-vehicles" style="padding-top: 2rem;">
-            <div class="container">
-                <div class="section-title fade-in">
-                    <h2>Nuestros Tipos de Vehículo</h2>
-                    <p>Explora nuestras categorías de vehículos de lujo</p>
-                </div>
-                
-                <!-- Bucle para mostrar cada categoría -->
-                {% for categoria in categorias %}
-                <div class="category-card fade-in" style="background: #222; padding: 2rem; margin-bottom: 2rem; border-radius: 8px; border-left: 5px solid var(--primary-gold);">
-                    <h3 style="font-size: 2rem; color: var(--primary-gold); margin-bottom: 1rem;">{{ categoria.nombre }}</h3>
-                    <p style="margin-bottom: 1.5rem;">{{ categoria.descripcion }}</p>
-                    <!-- Este botón lleva al catálogo de esa categoría -->
-                    <a href="{% url 'vehiculos_por_categoria' categoria.slug %}" class="cta-button">Mostrar Catálogo</a>
-                </div>
-                {% endfor %}
+{% block title %}Tipos de Vehículo - Rental Car DriveX{% endblock %}
 
+{% block content %}
+<main style="padding-top: 100px;">
+    <section class="featured-vehicles" style="padding-top: 2rem;">
+        <div class="container">
+            <div class="section-title fade-in">
+                <h2>Nuestros Tipos de Vehículo</h2>
+                <p>Explora nuestras categorías de vehículos de lujo</p>
             </div>
-        </section>
-    </main>
 
-    <footer id="contact">
-        <!-- ... tu footer ... -->
-    </footer>
-    <script src="{% static 'DriveX/js/script.js' %}"></script>
-</body>
-</html>
+            <!-- Bucle para mostrar cada categoría -->
+            {% for categoria in categorias %}
+            <div class="category-card fade-in"
+                style="background: #222; padding: 2rem; margin-bottom: 2rem; border-radius: 8px; border-left: 5px solid var(--primary-gold);">
+                <h3 style="font-size: 2rem; color: var(--primary-gold); margin-bottom: 1rem;">{{ categoria.nombre }}
+                </h3>
+                <p style="margin-bottom: 1.5rem;">{{ categoria.descripcion }}</p>
+                <!-- Este botón lleva al catálogo de esa categoría -->
+                <a href="{% url 'vehiculos_por_categoria' categoria.slug %}" class="cta-button">Mostrar Catálogo</a>
+            </div>
+            {% endfor %}
+
+        </div>
+    </section>
+</main>
+
+{% endblock %}

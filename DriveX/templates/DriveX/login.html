@@ -1,62 +1,30 @@
+{% extends 'DriveX/base.html' %}
 {% load static %}
 
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inicio de Sesión - Rental Car DriveX</title>
-    <link rel="stylesheet" href="{% static 'styles.css' %}">
-</head>
-<body>
-    <header>
-        <nav>
-            <div class="logo">Rental Car DriveX</div>
-            <ul class="nav-links">
-                <li><a href="/">Inicio</a></li>
-                <li><a href="/vehiculos/">Vehículos</a></li>
-                <li><a href="/reservar/">Reservar</a></li>
-                <li><a href="/contacto/">Contacto</a></li>
-            </ul>
-            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
-        </nav>
-    </header>
+{% block title %}Inicio de Sesión - Rental Car DriveX{% endblock %}
 
-    <main>
-        <section class="form-section">
-            <div class="container">
-                <h2 class="section-title">Iniciar Sesión</h2>
-                <form id="login-form" class="form-container">
-                    {% csrf_token %}
-                    <div class="form-group">
-                        <label for="username">Nombre de Usuario *</label>
-                        <input type="text" id="username" name="username" required>
-                        <div id="username-error" class="error-message">Por favor ingresa tu nombre de usuario</div>
-                    </div>
-                    <div class="form-group">
-                        <label for="password">Contraseña *</label>
-                        <input type="password" id="password" name="password" required>
-                        <div id="password-error" class="error-message">Por favor ingresa tu contraseña</div>
-                    </div>
-                    <button type="submit" class="cta-button">Iniciar Sesión</button>
-                    <p>¿No tienes una cuenta? <a href="/registro/">Regístrate aquí</a></p>
-                </form>
-            </div>
-        </section>
-    </main>
-
-    <footer>
-        <div class="footer-content">
-            <p>Rental Car DriveX - Transporte Premium de Primera Categoría</p>
-            <div class="social-links">
-                <a href="#">📧</a>
-                <a href="#">📱</a>
-                <a href="#">🌐</a>
-            </div>
-            <p>© 2025 Rental Car DriveX. Todos los derechos reservados.</p>
+{% block content %}
+<main>
+    <section class="form-section">
+        <div class="container">
+            <h2 class="section-title">Iniciar Sesión</h2>
+            <form id="login-form" class="form-container">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="username">Nombre de Usuario *</label>
+                    <input type="text" id="username" name="username" required>
+                    <div id="username-error" class="error-message">Por favor ingresa tu nombre de usuario</div>
+                </div>
+                <div class="form-group">
+                    <label for="password">Contraseña *</label>
+                    <input type="password" id="password" name="password" required>
+                    <div id="password-error" class="error-message">Por favor ingresa tu contraseña</div>
+                </div>
+                <button type="submit" class="cta-button">Iniciar Sesión</button>
+                <p>¿No tienes una cuenta? <a href="/registro/">Regístrate aquí</a></p>
+            </form>
         </div>
-    </footer>
+    </section>
+</main>
 
-    <script src="{% static 'script.js' %}"></script>
-</body>
-</html>
+{% endblock %}

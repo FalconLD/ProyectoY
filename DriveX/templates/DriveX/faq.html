@@ -1,69 +1,41 @@
+{% extends 'DriveX/base.html' %}
 {% load static %}
 
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Preguntas Frecuentes - Rental Car DriveX</title>
-    <link rel="stylesheet" href="{% static 'styles.css' %}">
-</head>
-<body>
-    <header>
-        <nav>
-            <div class="logo">Rental Car DriveX</div>
-            <ul class="nav-links">
-                <li><a href="/">Inicio</a></li>
-                <li><a href="/vehiculos/">Vehículos</a></li>
-                <li><a href="/reservar/">Reservar</a></li>
-                <li><a href="/contacto/">Contacto</a></li>
-            </ul>
-            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
-        </nav>
-    </header>
+{% block title %}Preguntas Frecuentes - Rental Car DriveX{% endblock %}
 
-    <main>
-        <section class="faq-section">
-            <div class="container">
-                <h2 class="section-title">Preguntas Frecuentes</h2>
-                <div class="faq-list">
-                    <div class="faq-item">
-                        <h3>¿Qué seguros están incluidos?</h3>
-                        <p>Todos nuestros vehículos cuentan con seguro integral que cubre daños, robo y responsabilidad civil. Además, ofrecemos opciones de seguro adicional para mayor tranquilidad.</p>
-                    </div>
-                    <div class="faq-item">
-                        <h3>¿Cuáles son los requisitos para reservar?</h3>
-                        <p>Debes tener al menos 25 años, poseer una licencia de conducir válida y una tarjeta de crédito para el depósito de seguridad.</p>
-                    </div>
-                    <div class="faq-item">
-                        <h3>¿Qué métodos de pago aceptan?</h3>
-                        <p>Aceptamos todas las principales tarjetas de crédito, transferencias bancarias y pagos en efectivo en nuestras oficinas.</p>
-                    </div>
-                    <div class="faq-item">
-                        <h3>¿Puedo cancelar mi reserva?</h3>
-                        <p>Sí, puedes cancelar tu reserva hasta 24 horas antes del inicio del servicio sin costo adicional. Las cancelaciones dentro de las 24 horas previas pueden estar sujetas a cargos.</p>
-                    </div>
-                    <div class="faq-item">
-                        <h3>¿Ofrecen servicio de chofer?</h3>
-                        <p>Sí, puedes solicitar un chofer profesional al momento de hacer tu reserva. Este servicio tiene un costo adicional de $50 por hora.</p>
-                    </div>
+{% block content %}
+<main>
+    <section class="faq-section">
+        <div class="container">
+            <h2 class="section-title">Preguntas Frecuentes</h2>
+            <div class="faq-list">
+                <div class="faq-item">
+                    <h3>¿Qué seguros están incluidos?</h3>
+                    <p>Todos nuestros vehículos cuentan con seguro integral que cubre daños, robo y responsabilidad
+                        civil. Además, ofrecemos opciones de seguro adicional para mayor tranquilidad.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>¿Cuáles son los requisitos para reservar?</h3>
+                    <p>Debes tener al menos 25 años, poseer una licencia de conducir válida y una tarjeta de crédito
+                        para el depósito de seguridad.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>¿Qué métodos de pago aceptan?</h3>
+                    <p>Aceptamos todas las principales tarjetas de crédito, transferencias bancarias y pagos en efectivo
+                        en nuestras oficinas.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>¿Puedo cancelar mi reserva?</h3>
+                    <p>Sí, puedes cancelar tu reserva hasta 24 horas antes del inicio del servicio sin costo adicional.
+                        Las cancelaciones dentro de las 24 horas previas pueden estar sujetas a cargos.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>¿Ofrecen servicio de chofer?</h3>
+                    <p>Sí, puedes solicitar un chofer profesional al momento de hacer tu reserva. Este servicio tiene un
+                        costo adicional de $35 por día.</p>
                 </div>
             </div>
-        </section>
-    </main>
-
-    <footer>
-        <div class="footer-content">
-            <p>Rental Car DriveX - Transporte Premium de Primera Categoría</p>
-            <div class="social-links">
-                <a href="#">📧</a>
-                <a href="#">📱</a>
-                <a href="#">🌐</a>
-            </div>
-            <p>© 2025 Rental Car DriveX. Todos los derechos reservados.</p>
         </div>
-    </footer>
-
-    <script src="{% static 'script.js' %}"></script>
-</body>
-</html>
+    </section>
+</main>
+{% endblock %}

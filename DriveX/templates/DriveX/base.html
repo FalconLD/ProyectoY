@@ -1,0 +1,102 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- El título será dinámico. Cada página definirá el suyo. -->
+    <title>{% block title %}Rental Car DriveX{% endblock %}</title>
+
+    <!-- Enlaces a CSS y fuentes -->
+    <link rel="stylesheet" href="{% static 'DriveX/css/styles.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Corinthia:wght@400;700&family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Aquí puedes añadir más enlaces CSS o meta tags que sean comunes a todo el sitio -->
+</head>
+
+<body>
+
+    <!-- ======================= HEADER ======================= -->
+    <!-- Este header aparecerá en TODAS las páginas que hereden de esta base -->
+    <header>
+        <nav>
+            <a href="{% url 'index' %}" class="logo">Rental Car DriveX</a>
+            <ul class="nav-links">
+                <li><a href="{% url 'index' %}">Inicio</a></li>
+                <li><a href="{% url 'vehiculos' %}">Vehículos</a></li>
+                <li><a href="{% url 'reserva' %}">Reserva</a></li>
+                <li><a href="{% url 'contacto' %}">Contacto</a></li>
+                <li><a href="{% url 'faq' %}">FAQ</a></li>
+            </ul>
+
+            <button class="mobile-menu-btn">☰</button>
+        </nav>
+
+        <div class="auth-buttons">
+            <a href="{% url 'login' %}" class="auth-button">Iniciar Sesión</a>
+            <a href="{% url 'registro' %}" class="auth-button">Registrarse</a>
+        </div>
+    </header>
+
+    <!-- ======================= CONTENIDO PRINCIPAL ======================= -->
+    <!-- Esta es la sección mágica. El contenido de cada página individual irá aquí. -->
+    <main>
+        {% block content %}
+        <!-- El contenido específico de cada página se insertará aquí. -->
+        {% endblock %}
+    </main>
+
+    <!-- ======================= FOOTER ======================= -->
+    <!-- Este footer aparecerá en TODAS las páginas que hereden de esta base -->
+
+
+
+    <footer id="contact">
+        <div class="footer-content">
+            <p>Rental Car DriveX - Transporte Premium de Primera Categoría</p>
+            <div class="social-links">
+                <a href="#">📧</a>
+                <a href="#">📱</a>
+                <a href="#">🌐</a>
+            </div>
+            <p>&copy; 2025 Rental Car DriveX. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <footer id="contact">
+        <div class="footer-container">
+            <div class="footer-about">
+                <h4>Rental Car DriveX</h4>
+                <p>Ofrecemos una experiencia de transporte de lujo inigualable, con una flota de vehículos premium y un
+                    servicio impecable.</p>
+            </div>
+            <div class="footer-links">
+                <h4>Navegación</h4>
+                <ul>
+                    <li><a href="{% url 'terminos' %}">Términos y Condiciones</a></li>
+                    <li><a href="{% url 'faq' %}">Preguntas Frecuentes</a></li>
+                </ul>
+            </div>
+            <div class="footer-contact">
+                <h4>Contacto</h4>
+                <p>Email: info@drivex.com</p>
+                <p>Teléfono: +123 456 7890</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© {% now "Y" %} Rental Car DriveX. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts JS comunes a todo el sitio -->
+    <script src="{% static 'DriveX/js/script.js' %}"></script>
+
+</body>
+
+</html>
