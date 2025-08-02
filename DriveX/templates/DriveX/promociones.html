@@ -1,0 +1,41 @@
+{% extends 'DriveX/base.html' %}
+{% load static %}
+
+{% block title %}Promociones - Rental Car DriveX{% endblock %}
+
+{% block content %}
+
+<main>
+    <section class="promotions-section">
+        <div class="container">
+            <h2 class="section-title">Ofertas y Promociones</h2>
+            <p class="section-subtitle">Aprovecha nuestras ofertas exclusivas para una experiencia de lujo a precios
+                inigualables.</p>
+            <div class="promotions-list">
+                <div class="promotion-item">
+                    <h3>Descuento por Reserva Anticipada</h3>
+                    <p>Reserva con 30 días de antelación y obtén un 15% de descuento en cualquier vehículo de nuestra
+                        flota.</p>
+                    <p class="validity">Válido hasta el 31 de diciembre de 2025</p>
+                    <a href="/reserva/" class="cta-button">Reservar Ahora</a>
+                </div>
+                <div class="promotion-item">
+                    <h3>Paquete con Chofer Incluido</h3>
+                    <p>Reserva un vehículo de la categoría "Eléctricos" por 24 horas y obtén un chofer profesional
+                        gratis.</p>
+                    <p class="validity">Válido para reservas realizadas en octubre de 2025</p>
+                    <a href="/reserva/" class="cta-button">Reservar Ahora</a>
+                </div>
+                <div class="promotion-item">
+                    <h3>Fin de Semana de Lujo</h3>
+                    <p>Alquila cualquier vehículo de viernes a domingo y obtén un 20% de descuento en la tarifa total.
+                    </p>
+                    <p class="validity">Válido todos los fines de semana hasta el 31 de julio de 2025</p>
+                    <a href="/reserva/" class="cta-button">Reservar Ahora</a>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+{% endblock %}

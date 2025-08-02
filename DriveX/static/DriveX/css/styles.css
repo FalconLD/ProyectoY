@@ -1,6 +1,4 @@
-/* styles.css */
-
-/* === Global Styles === */
+/* --- ESTILOS ORIGINALES (RESTAURADOS) --- */
 :root {
     --primary-gold: #C9A74D;
     --dark-bg: #0A0A0A;
@@ -25,7 +23,7 @@ body {
     overflow-x: hidden;
 }
 
-/* === Header and Navigation === */
+/* Header */
 header {
     position: fixed;
     top: 0;
@@ -51,8 +49,8 @@ nav {
     font-weight: 700;
     background: linear-gradient(135deg, var(--primary-gold), #E6D08A);
     -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
     background-clip: text;
-    color: transparent;
     font-family: 'Corinthia', cursive;
 }
 
@@ -89,54 +87,7 @@ nav {
     width: 100%;
 }
 
-.nav-auth {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-}
-
-.auth-button {
-    padding: 0.6rem 1.2rem;
-    font-size: 0.9rem;
-    font-weight: 500;
-    border-radius: 50px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    border: 2px solid var(--primary-gold);
-    background: transparent;
-    color: var(--primary-gold);
-    text-decoration: none;
-    text-align: center;
-    transition: all 0.3s ease;
-    cursor: pointer;
-}
-
-.auth-button:hover {
-    background: var(--primary-gold);
-    color: var(--dark-bg);
-    box-shadow: 0 5px 15px var(--shadow-gold);
-}
-
-.auth-button.primary {
-    background: var(--primary-gold);
-    color: var(--dark-bg);
-}
-
-.auth-button.primary:hover {
-    background: transparent;
-    color: var(--primary-gold);
-}
-
-.mobile-menu-btn {
-    display: none;
-    background: none;
-    border: none;
-    color: var(--text-white);
-    font-size: 1.5rem;
-    cursor: pointer;
-}
-
-/* === Hero Section === */
+/* Hero Section */
 .hero {
     height: 100vh;
     background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.7)),
@@ -147,6 +98,7 @@ nav {
     align-items: center;
     justify-content: center;
     text-align: center;
+    position: relative;
 }
 
 .hero-content {
@@ -161,8 +113,8 @@ nav {
     margin-bottom: 1.5rem;
     background: linear-gradient(135deg, var(--text-white), var(--primary-gold));
     -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
     background-clip: text;
-    color: transparent;
 }
 
 .hero p {
@@ -193,7 +145,7 @@ nav {
     box-shadow: 0 15px 40px var(--shadow-gold);
 }
 
-/* === Services Section === */
+/* Services Section */
 .services {
     padding: 5rem 0;
     background: var(--secondary-dark);
@@ -268,7 +220,7 @@ nav {
     line-height: 1.8;
 }
 
-/* === Vehicles Section === */
+/* Featured Vehicles */
 .featured-vehicles {
     padding: 5rem 0;
     background: var(--dark-bg);
@@ -344,18 +296,18 @@ nav {
     color: var(--dark-bg);
 }
 
-/* === Form Styles === */
+/* Form Styles */
 .form-container {
-    max-width: 500px; /* Reduced from 800px to center and avoid stretching */
-    margin: 5rem auto 2rem; /* Increased top margin to push down from header, bottom margin for footer */
-    padding: 3rem; /* Increased padding for more breathing room */
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
     background: var(--secondary-dark);
     border-radius: 15px;
     border: 1px solid rgba(201, 167, 77, 0.1);
 }
 
 .form-group {
-    margin-bottom: 2.5rem; /* Increased from 1.5rem for better spacing */
+    margin-bottom: 1.5rem;
 }
 
 .form-group label {
@@ -402,26 +354,84 @@ nav {
     width: auto;
 }
 
-.error-message {
-    color: #ff6b6b;
+/* Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.6s ease;
+}
+
+.fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Mobile Menu */
+.mobile-menu-btn {
+    display: none;
+    background: none;
+    border: none;
+    color: var(--text-white);
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+/* --- NUEVOS ESTILOS PARA HEADER Y FOOTER (AÑADIDOS) --- */
+
+/* Ajustes del Header y Botones de Autenticación */
+.nav-auth {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.auth-button {
+    padding: 0.6rem 1.2rem;
     font-size: 0.9rem;
-    margin-top: 0.5rem;
-    display: none;
+    font-weight: 500;
+    border-radius: 50px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border: 2px solid var(--primary-gold);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: transparent;
+    color: var(--primary-gold);
+    text-decoration: none;
+    text-align: center;
 }
 
-.success-message {
-    background: rgba(40, 167, 69, 0.1);
-    color: #28a745;
-    padding: 1rem;
-    border-radius: 8px;
-    margin-bottom: 1rem;
-    display: none;
+.auth-button:hover {
+    background: var(--primary-gold);
+    color: var(--dark-bg);
+    box-shadow: 0 5px 15px var(--shadow-gold);
 }
 
-/* === Footer === */
+.auth-button.primary {
+    background: var(--primary-gold);
+    color: var(--dark-bg);
+}
+
+.auth-button.primary:hover {
+    background: transparent;
+    color: var(--primary-gold);
+}
+
+/* Footer Mejorado */
 footer {
-    padding: 4rem 0 2rem;
     background: var(--secondary-dark);
+    padding: 4rem 0 2rem;
     border-top: 1px solid rgba(201, 167, 77, 0.1);
 }
 
@@ -432,6 +442,7 @@ footer {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 2rem;
+    text-align: left; /* Alineación a la izquierda para las columnas */
 }
 
 .footer-about h4,
@@ -496,19 +507,7 @@ footer {
     font-size: 0.9rem;
 }
 
-/* === Animations === */
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(50px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* === Responsive Design === */
+/* --- RESPONSIVE DESIGN --- */
 @media (max-width: 768px) {
     .mobile-menu-btn {
         display: block;
@@ -525,11 +524,11 @@ footer {
         padding: 1rem;
         gap: 1rem;
     }
-
+    
     .nav-links.active {
         display: flex;
     }
-
+    
     .nav-auth {
         display: none;
     }
@@ -551,12 +550,43 @@ footer {
         padding: 0 1rem;
     }
 
-    .form-container {
-        margin: 2rem auto; /* Adjusted for smaller screens */
-        padding: 2rem;
-    }
-
     .form-row {
         grid-template-columns: 1fr;
     }
+}
+
+/* --- ESTILOS PARA VALIDACIÓN DE FORMULARIOS --- */
+
+/* Oculta los mensajes de error por defecto */
+.error-message {
+    display: none;
+    color: #ff6b6b; /* Un color rojo para errores */
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+}
+
+/* Estilo para los campos de entrada que son inválidos */
+.form-group input.is-invalid,
+.form-group textarea.is-invalid {
+    border-color: #ff6b6b !important; /* Rojo para indicar error */
+}
+
+/* Estilos para los mensajes de Django (opcional pero recomendado) */
+.alert {
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.alert-success {
+    background-color: rgba(40, 167, 69, 0.2);
+    color: #52c76e;
+    border: 1px solid rgba(40, 167, 69, 0.4);
+}
+
+.alert-error {
+    background-color: rgba(255, 107, 107, 0.2);
+    color: #ff8a8a;
+    border: 1px solid rgba(255, 107, 107, 0.4);
 }

@@ -17,8 +17,6 @@
 </head>
 
 <body>
-
-    <!-- ======================= HEADER CORREGIDO ======================= -->
     <header>
         <nav>
             <a href="{% url 'index' %}" class="logo">Rental Car DriveX</a>
@@ -27,10 +25,8 @@
                 <li><a href="{% url 'vehiculos' %}">Vehículos</a></li>
                 <li><a href="{% url 'reserva' %}">Reserva</a></li>
                 <li><a href="{% url 'contacto' %}">Contacto</a></li>
-                <li><a href="{% url 'faq' %}">FAQ</a></li>
             </ul>
             
-            <!-- BOTONES MOVIDOS DENTRO DE <nav> PARA ALINEACIÓN CORRECTA -->
             <div class="nav-auth">
                 <a href="{% url 'login' %}" class="auth-button">Iniciar Sesión</a>
                 <a href="{% url 'registro' %}" class="auth-button primary">Registrarse</a>
@@ -47,9 +43,8 @@
         {% endblock %}
     </main>
 
-    <!-- ======================= FOOTER CORREGIDO Y ÚNICO ======================= -->
     <footer id="contact">
-        <div class="footer-container">
+        <div class="footer-container fade-in">
             <div class="footer-about">
                 <h4>Rental Car DriveX</h4>
                 <p>Ofrecemos una experiencia de transporte de lujo inigualable, con una flota de vehículos premium y un
