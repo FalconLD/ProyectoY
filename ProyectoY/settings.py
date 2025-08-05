@@ -129,3 +129,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Al final de settings.py
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'index' # Después del login, si no hay 'next', redirige a la página de inicio
+LOGOUT_REDIRECT_URL = 'index' # Después de cerrar sesión, redirige a la página de inicio

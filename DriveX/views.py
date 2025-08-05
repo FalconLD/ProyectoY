@@ -1,6 +1,12 @@
+# Archivo: DriveX/views.py (Versión Limpia y Final)
+
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from .models import Vehiculo, Categoria
+from .models import Vehiculo, Categoria, Reserva # Añade Reserva
+from .forms import ReservaForm # Importa el formulario desde forms.py
+from django.contrib.auth import login as auth_login, authenticate, logout as auth_logout
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth.decorators import login_required # Importa el decorador
 
 def index(request):
     # Obtenemos solo los vehículos marcados como 'destacados'
@@ -29,28 +35,24 @@ def vehiculos_por_categoria(request, categoria_slug):
     }
     return render(request, 'DriveX/vehiculo_catalogo.html', context)
 
+# VISTA DE RESERVA REAL Y EN SU LUGAR CORRECTO
+@login_required # Solo usuarios logueados pueden reservar
 def reserva(request):
-    todos_los_vehiculos = Vehiculo.objects.all()
     if request.method == 'POST':
-        # Lógica básica para manejar el formulario (puedes expandirla)
-        nombre = request.POST.get('name')
-        email = request.POST.get('email')
-        telefono = request.POST.get('phone')
-        vehiculo_id = request.POST.get('vehicle')
-        fecha = request.POST.get('date')
-        hora = request.POST.get('time')
-        duracion = request.POST.get('duration')
-        tipo_servicio = request.POST.get('tipo_servicio')
-        direccion_recogida = request.POST.get('pickup-address')
-        
-        if all([nombre, email, telefono, vehiculo_id, fecha, hora, duracion, tipo_servicio, direccion_recogida]):
+        form = ReservaForm(request.POST)
+        if form.is_valid():
+            reserva = form.save(commit=False)
+            reserva.usuario = request.user # Asigna el usuario actual
+            reserva.save()
             messages.success(request, '¡Reserva realizada con éxito! Nos contactaremos contigo pronto.')
-            return redirect('reserva')
+            return redirect('index')
         else:
-            messages.error(request, 'Por favor, completa todos los campos obligatorios.')
+             messages.error(request, 'Por favor, corrige los errores en el formulario.')
+    else:
+        form = ReservaForm()
     
     context = {
-        'vehiculos': todos_los_vehiculos
+        'form': form
     }
     return render(request, 'DriveX/reserva.html', context)
 
@@ -77,58 +79,43 @@ def terminos(request):
     # No requiere lógica dinámica por ahora, solo muestra la plantilla
     return render(request, 'DriveX/terminos.html')
 
-def login(request):
-    if request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        # Aquí deberías agregar autenticación (por ejemplo, con Django auth)
-        if username and password:  # Simulación básica
-            messages.success(request, 'Inicio de sesión exitoso.')
-            return redirect('index')
-        else:
-            messages.error(request, 'Credenciales incorrectas o campos vacíos.')
-    
-    return render(request, 'DriveX/login.html')
-
+# VISTA DE REGISTRO REAL
 def registro(request):
     if request.method == 'POST':
-        nombre = request.POST.get('nombre')
-        email = request.POST.get('email')
-        password = request.POST.get('password')
-        licencia = request.POST.get('licencia')
-        
-        if all([nombre, email, password, licencia]):
-            # Aquí deberías guardar el usuario en la base de datos (usar Django auth)
-            messages.success(request, 'Registro exitoso. Por favor, inicia sesión.')
-            return redirect('login')
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            auth_login(request, user) # Inicia sesión automáticamente tras el registro
+            messages.success(request, '¡Registro exitoso! Has iniciado sesión.')
+            return redirect('index')
         else:
-            messages.error(request, 'Por favor, completa todos los campos obligatorios.')
-    
-    return render(request, 'DriveX/registro.html')
+            messages.error(request, 'Hubo un error en el registro. Por favor, revisa los datos.')
+    else:
+        form = UserCreationForm()
+    return render(request, 'DriveX/registro.html', {'form': form})
 
-def electricos(request):
-    categoria = Categoria.objects.get(slug='electricos')
-    vehiculos = Vehiculo.objects.filter(categoria=categoria)
-    context = {
-        'categoria': categoria,
-        'vehiculos': vehiculos
-    }
-    return render(request, 'DriveX/electricos.html', context)
+# VISTA DE LOGIN REAL
+def login_view(request):
+    if request.method == 'POST':
+        form = AuthenticationForm(request, data=request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                auth_login(request, user)
+                messages.info(request, f"Has iniciado sesión como {username}.")
+                return redirect('index')
+            else:
+                messages.error(request, "Nombre de usuario o contraseña incorrectos.")
+        else:
+            messages.error(request, "Nombre de usuario o contraseña incorrectos.")
+    form = AuthenticationForm()
+    return render(request, 'DriveX/login.html', {'form': form})
 
-def hibridos(request):
-    categoria = Categoria.objects.get(slug='hibridos')
-    vehiculos = Vehiculo.objects.filter(categoria=categoria)
-    context = {
-        'categoria': categoria,
-        'vehiculos': vehiculos
-    }
-    return render(request, 'DriveX/hibridos.html', context)
 
-def gasolina(request):
-    categoria = Categoria.objects.get(slug='gasolina')
-    vehiculos = Vehiculo.objects.filter(categoria=categoria)
-    context = {
-        'categoria': categoria,
-        'vehiculos': vehiculos
-    }
-    return render(request, 'DriveX/gasolina.html', context)
+# VISTA DE LOGOUT
+def logout_view(request):
+    auth_logout(request)
+    messages.info(request, "Has cerrado sesión exitosamente.")
+    return redirect('index')

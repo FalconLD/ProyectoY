@@ -8,24 +8,55 @@
     <section class="form-section">
         <div class="container">
             <h2 class="section-title">Iniciar Sesión</h2>
-            <form id="login-form" class="form-container">
+
+            <!-- Mostramos mensajes de Django, como "Has cerrado sesión" -->
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+            
+            <form method="post" class="form-container">
                 {% csrf_token %}
-                <div class="form-group">
-                    <label for="username">Nombre de Usuario *</label>
-                    <input type="text" id="username" name="username" required>
-                    <div id="username-error" class="error-message">Por favor ingresa tu nombre de usuario</div>
-                </div>
-                <div class="form-group">
-                    <label for="password">Contraseña *</label>
-                    <input type="password" id="password" name="password" required>
-                    <div id="password-error" class="error-message">Por favor ingresa tu contraseña</div>
-                </div>
+
+                <!-- 
+                    Aquí mostramos los errores que no son específicos de un campo,
+                    como "Por favor, introduzca un nombre de usuario y una contraseña correctos".
+                -->
+                {% if form.non_field_errors %}
+                    <div class="form-group" style="color: #ff6b6b; text-align: center;">
+                        {% for error in form.non_field_errors %}
+                            <p>{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+                <!-- 
+                    Iteramos sobre los campos del formulario (Username y Password)
+                    y los envolvemos en la estructura HTML que tu CSS espera.
+                -->
+                {% for field in form %}
+                    <div class="form-group">
+                        {{ field.label_tag }} <!-- Renderiza <label for="id_username">...</label> -->
+                        {{ field }}         <!-- Renderiza <input type="text" name="username" ...> -->
+                        
+                        <!-- Muestra errores si un campo específico está mal (aunque es raro en login) -->
+                        {% if field.errors %}
+                            <div class="error-message" style="display: block; color: #ff6b6b;">
+                                {% for error in field.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+                
                 <button type="submit" class="cta-button">Iniciar Sesión</button>
                 <br><br>
-                <p>¿No tienes una cuenta? <a href="/registro/">Regístrate aquí</a></p>
+                <p>¿No tienes una cuenta? <a href="{% url 'registro' %}">Regístrate aquí</a></p>
+                <p><a href="{% url 'password_reset' %}">¿Olvidaste tu contraseña?</a></p>
             </form>
         </div>
     </section>
 </main>
-
 {% endblock %}

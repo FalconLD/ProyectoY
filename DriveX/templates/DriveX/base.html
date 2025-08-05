@@ -26,12 +26,18 @@
                 <li><a href="{% url 'reserva' %}">Reserva</a></li>
                 <li><a href="{% url 'contacto' %}">Contacto</a></li>
             </ul>
-            
+
+            <!-- En base.html, reemplaza la sección nav-auth -->
             <div class="nav-auth">
+                {% if user.is_authenticated %}
+                <span>Bienvenido, {{ user.username }}</span>
+                <a href="{% url 'logout' %}" class="auth-button">Cerrar Sesión</a>
+                {% else %}
                 <a href="{% url 'login' %}" class="auth-button">Iniciar Sesión</a>
                 <a href="{% url 'registro' %}" class="auth-button primary">Registrarse</a>
+                {% endif %}
             </div>
-
+            
             <button class="mobile-menu-btn">☰</button>
         </nav>
     </header>

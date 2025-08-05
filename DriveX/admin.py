@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Categoria, Vehiculo
+from .models import Categoria, Vehiculo, Reserva
 
 @admin.register(Categoria)
 class CategoriaAdmin(admin.ModelAdmin):
@@ -12,3 +12,9 @@ class VehiculoAdmin(admin.ModelAdmin):
     list_filter = ('categoria', 'es_destacado')
     search_fields = ('nombre', 'descripcion')
     list_editable = ('es_destacado',)
+
+@admin.register(Reserva)
+class ReservaAdmin(admin.ModelAdmin):
+    list_display = ('vehiculo', 'usuario', 'fecha_servicio', 'fecha_creacion')
+    list_filter = ('fecha_servicio', 'vehiculo')
+    
