@@ -1,0 +1,19 @@
+# Created by venv; see https://docs.python.org/3/library/venv.html
+# Entorno Virtual
+.venv/
+venv/
+env/
+
+# Base de datos
+db.sqlite3
+*.sqlite3
+
+# Archivos multimedia subidos por usuarios
+media/
+
+# Archivos de Python
+__pycache__/
+*.pyc
+
+# Archivos de configuración con secretos (buena práctica para el futuro)
+.env
