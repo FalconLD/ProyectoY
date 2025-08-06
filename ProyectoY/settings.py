@@ -19,10 +19,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
+# SECURITY WARNING: La SECRET_KEY no debe estar hardcodeada en producción.
+# Considera usar variables de entorno para cargarla de forma segura.
 SECRET_KEY = 'django-insecure-&k@*1qy!f9a@04z3h)s)4iv9xt(b5b%e_e#xbl6ps7wz-alpwf'
 
-# SECURITY WARNING: don't run with debug turned on in production!
+# SECURITY WARNING: No ejecutes la aplicación con DEBUG=True en producción.
 DEBUG = True
 
 ALLOWED_HOSTS = []
@@ -37,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # Tu app
     'DriveX',
 ]
 
@@ -62,6 +64,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'DriveX.context_processors.admin_group_processor', 
             ],
         },
     },
@@ -73,7 +76,8 @@ WSGI_APPLICATION = 'ProyectoY.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-
+# SECURITY WARNING: Las credenciales de la base de datos no deben estar hardcodeadas.
+# Utiliza variables de entorno para proteger esta información.
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -84,6 +88,7 @@ DATABASES = {
         'PORT': '5432',
     }
 }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
@@ -107,7 +112,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'es-es' # Cambiado a español
 
 TIME_ZONE = 'UTC'
 
@@ -121,14 +126,17 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# Al final de settings.py
+# --- Configuraciones de Media (archivos subidos por el usuario) ---
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+# --- Configuraciones de Autenticación ---
 LOGIN_URL = 'login'
-LOGIN_REDIRECT_URL = 'index' # Después del login, si no hay 'next', redirige a la página de inicio
-LOGOUT_REDIRECT_URL = 'index' # Después de cerrar sesión, redirige a la página de inicio
+LOGIN_REDIRECT_URL = 'index'
+LOGOUT_REDIRECT_URL = 'index'

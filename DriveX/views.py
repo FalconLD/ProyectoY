@@ -1,134 +1,168 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth import login as auth_login, authenticate, logout as auth_logout
-from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
-from django.contrib.auth.decorators import login_required # Importa el decorador
-from .models import Vehiculo, Categoria, Reserva # Añade Reserva
-from .forms import ReservaForm # Importa el formulario desde forms.py
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.decorators import login_required, user_passes_test
+from .models import Vehiculo, Categoria, Reserva
+from .forms import ReservaForm, ContactoForm, VehiculoForm, CustomUserCreationForm
+
+# ========= Vistas Principales =========
 
 def index(request):
-    # Obtenemos solo los vehículos marcados como 'destacados'
     vehiculos_destacados = Vehiculo.objects.filter(es_destacado=True)
-    context = {
-        'vehiculos_destacados': vehiculos_destacados
-    }
+    context = {'vehiculos_destacados': vehiculos_destacados}
     return render(request, 'DriveX/index.html', context)
 
 def lista_categorias(request):
-    # Obtenemos todas las categorías para listarlas
     categorias = Categoria.objects.all()
-    context = {
-        'categorias': categorias
-    }
+    context = {'categorias': categorias}
     return render(request, 'DriveX/vehiculos.html', context)
 
 def vehiculos_por_categoria(request, categoria_slug):
-    # Obtenemos la categoría específica por su slug
-    categoria = Categoria.objects.get(slug=categoria_slug)
-    # Obtenemos todos los vehículos que pertenecen a esa categoría
+    categoria = get_object_or_404(Categoria, slug=categoria_slug)
     vehiculos = Vehiculo.objects.filter(categoria=categoria)
-    context = {
-        'categoria': categoria,
-        'vehiculos': vehiculos
-    }
+    context = {'categoria': categoria, 'vehiculos': vehiculos}
     return render(request, 'DriveX/vehiculo_catalogo.html', context)
 
-# VISTA DE RESERVA REAL Y EN SU LUGAR CORRECTO
-@login_required # Solo usuarios logueados pueden reservar
+@login_required
 def reserva(request):
+    initial_data = {}
+    # Revisa si se pasó un slug de vehículo en la URL para pre-seleccionarlo
+    vehiculo_slug = request.GET.get('vehicle')
+    if vehiculo_slug:
+        vehiculo = get_object_or_404(Vehiculo, valor_slug=vehiculo_slug)
+        initial_data['vehiculo'] = vehiculo
+
     if request.method == 'POST':
         form = ReservaForm(request.POST)
         if form.is_valid():
             reserva = form.save(commit=False)
-            reserva.usuario = request.user # Asigna el usuario actual
+            reserva.usuario = request.user
             reserva.save()
             messages.success(request, '¡Reserva realizada con éxito! Nos contactaremos contigo pronto.')
             return redirect('index')
         else:
-             messages.error(request, 'Por favor, corrige los errores en el formulario.')
+            messages.error(request, 'Por favor, corrige los errores en el formulario.')
     else:
-        form = ReservaForm()
-    
-    context = {
-        'form': form
-    }
+        # Pasa los datos iniciales al formulario en la petición GET
+        form = ReservaForm(initial=initial_data)
+
+    context = {'form': form}
     return render(request, 'DriveX/reserva.html', context)
 
 def contacto(request):
     if request.method == 'POST':
-        nombre = request.POST.get('nombre')
-        email = request.POST.get('email')
-        asunto = request.POST.get('asunto')
-        mensaje = request.POST.get('mensaje')
-        
-        if all([nombre, email, asunto, mensaje]):
+        form = ContactoForm(request.POST)
+        if form.is_valid():
+            # Aquí iría la lógica para enviar el email (no implementada)
+            # send_mail(...)
             messages.success(request, '¡Mensaje enviado con éxito! Te responderemos pronto.')
             return redirect('contacto')
         else:
-            messages.error(request, 'Por favor, completa todos los campos obligatorios.')
+            messages.error(request, 'Por favor, completa todos los campos obligatorios correctamente.')
+    else:
+        form = ContactoForm()
     
-    return render(request, 'DriveX/contacto.html')
+    return render(request, 'DriveX/contacto.html', {'form': form})
+
+# ========= Vistas de Contenido Estático =========
 
 def faq(request):
-    # No requiere lógica dinámica por ahora, solo muestra la plantilla
     return render(request, 'DriveX/faq.html')
 
 def terminos(request):
-    # No requiere lógica dinámica por ahora, solo muestra la plantilla
     return render(request, 'DriveX/terminos.html')
 
-# VISTA DE REGISTRO REAL
+def sobre_nosotros(request):
+    return render(request, 'DriveX/sobre_nosotros.html')
+
+def promociones(request):
+    return render(request, 'DriveX/promociones.html')
+
+# ========= Vistas de Autenticación =========
+
 def registro(request):
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
-            auth_login(request, user) # Inicia sesión automáticamente tras el registro
+            auth_login(request, user)
             messages.success(request, '¡Registro exitoso! Has iniciado sesión.')
             return redirect('index')
         else:
             messages.error(request, 'Hubo un error en el registro. Por favor, revisa los datos.')
     else:
-        form = UserCreationForm()
+        form = CustomUserCreationForm()
     return render(request, 'DriveX/registro.html', {'form': form})
 
-# VISTA DE LOGIN REAL
 def login_view(request):
     if request.method == 'POST':
         form = AuthenticationForm(request, data=request.POST)
         if form.is_valid():
-            username = form.cleaned_data.get('username')
-            password = form.cleaned_data.get('password')
-            user = authenticate(username=username, password=password)
-            if user is not None:
-                auth_login(request, user)
-                messages.info(request, f"Has iniciado sesión como {username}.")
-                return redirect('index')
-            else:
-                messages.error(request, "Nombre de usuario o contraseña incorrectos.")
+            user = form.get_user()
+            auth_login(request, user)
+            messages.info(request, f"Has iniciado sesión como {user.username}.")
+            # Redirigir a la página previa o al index
+            next_url = request.GET.get('next', 'index')
+            return redirect(next_url)
         else:
             messages.error(request, "Nombre de usuario o contraseña incorrectos.")
-    form = AuthenticationForm()
+    else:
+        form = AuthenticationForm()
     return render(request, 'DriveX/login.html', {'form': form})
 
-# VISTA DE LOGOUT
 def logout_view(request):
     auth_logout(request)
     messages.info(request, "Has cerrado sesión exitosamente.")
     return redirect('index')
 
-@login_required
-def panel_administracion(request):
-    # PRIMER FILTRO: ¿Ha iniciado sesión el usuario?
-    # SEGUNDO FILTRO: ¿Pertenece al grupo 'Administradores'?
-    if not request.user.groups.filter(name='Administradores').exists():
-        messages.error(request, "No tienes permiso para acceder a esta página.")
-        return redirect('index')
+# ========= Vistas del Panel de Administración =========
 
-    # Si pasa los filtros, le mostramos la página del panel.
-    # Por ahora, solo le pasamos una lista de todos los vehículos para que los vea.
-    vehiculos = Vehiculo.objects.all()
-    context = {
-        'vehiculos': vehiculos
-    }
+def es_administrador(user):
+    """Función helper para comprobar si un usuario pertenece al grupo 'Administradores'."""
+    return user.is_authenticated and user.groups.filter(name='Administradores').exists()
+
+@user_passes_test(es_administrador, login_url='login')
+def panel_administracion(request):
+    vehiculos = Vehiculo.objects.all().order_by('categoria', 'nombre')
+    context = {'vehiculos': vehiculos}
     return render(request, 'DriveX/panel_administracion.html', context)
+
+@user_passes_test(es_administrador, login_url='login')
+def vehiculo_add(request):
+    if request.method == 'POST':
+        form = VehiculoForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Vehículo añadido con éxito.')
+            return redirect('panel_administracion')
+    else:
+        form = VehiculoForm()
+    
+    context = {'form': form, 'form_title': 'Añadir Nuevo Vehículo'}
+    return render(request, 'DriveX/vehiculo_form.html', context)
+
+@user_passes_test(es_administrador, login_url='login')
+def vehiculo_edit(request, pk):
+    vehiculo = get_object_or_404(Vehiculo, pk=pk)
+    if request.method == 'POST':
+        form = VehiculoForm(request.POST, request.FILES, instance=vehiculo)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Vehículo actualizado con éxito.')
+            return redirect('panel_administracion')
+    else:
+        form = VehiculoForm(instance=vehiculo)
+
+    context = {'form': form, 'form_title': f'Editar {vehiculo.nombre}'}
+    return render(request, 'DriveX/vehiculo_form.html', context)
+
+@user_passes_test(es_administrador, login_url='login')
+def vehiculo_delete(request, pk):
+    vehiculo = get_object_or_404(Vehiculo, pk=pk)
+    if request.method == 'POST':
+        vehiculo.delete()
+        messages.success(request, 'Vehículo eliminado con éxito.')
+        return redirect('panel_administracion')
+
+    return render(request, 'DriveX/vehiculo_confirm_delete.html', {'vehiculo': vehiculo})

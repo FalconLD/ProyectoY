@@ -7,13 +7,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Rental Car DriveX{% endblock %}</title>
 
-    <!-- Enlaces a CSS y fuentes -->
-    <link rel="stylesheet" href="{% static 'DriveX/css/styles.css' %}">
+    <!-- Enlaces a Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Corinthia:wght@400;700&family=Poppins:wght@300;400;500;600;700&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Corinthia:wght@400;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Enlace a tu hoja de estilos local. La línea {% load static %} de arriba es VITAL para que esto funcione. -->
+    <link rel="stylesheet" href="{% static 'DriveX/css/styles.css' %}">
 </head>
 
 <body>
@@ -25,12 +25,12 @@
                 <li><a href="{% url 'vehiculos' %}">Vehículos</a></li>
                 <li><a href="{% url 'reserva' %}">Reserva</a></li>
                 <li><a href="{% url 'contacto' %}">Contacto</a></li>
-                {% if user.is_authenticated and user.groups.all.0.name == 'Administradores' %}
+                
+                {% if is_in_admin_group %}
                 <li><a href="{% url 'panel_administracion' %}" style="color: var(--primary-gold);">Panel Admin</a></li>
                 {% endif %}
             </ul>
 
-            <!-- En base.html, reemplaza la sección nav-auth -->
             <div class="nav-auth">
                 {% if user.is_authenticated %}
                 <span>Bienvenido, {{ user.username }}</span>
@@ -45,7 +45,6 @@
         </nav>
     </header>
 
-    <!-- ======================= CONTENIDO PRINCIPAL ======================= -->
     <main>
         {% block content %}
         <!-- El contenido específico de cada página se insertará aquí. -->
@@ -56,21 +55,22 @@
         <div class="footer-container fade-in">
             <div class="footer-about">
                 <h4>Rental Car DriveX</h4>
-                <p>Ofrecemos una experiencia de transporte de lujo inigualable, con una flota de vehículos premium y un
-                    servicio impecable.</p>
+                <p>Ofrecemos una experiencia de transporte de lujo inigualable, con una flota de vehículos premium y un servicio impecable.</p>
             </div>
             <div class="footer-links">
                 <h4>Navegación</h4>
                 <ul>
+                    <li><a href="{% url 'sobre_nosotros' %}">Sobre Nosotros</a></li>
+                    <li><a href="{% url 'promociones' %}">Promociones</a></li>
                     <li><a href="{% url 'terminos' %}">Términos y Condiciones</a></li>
                     <li><a href="{% url 'faq' %}">Preguntas Frecuentes</a></li>
-                    <li><a href="{% url 'contacto' %}">Contacto</a></li>
                 </ul>
             </div>
             <div class="footer-contact">
                 <h4>Contacto</h4>
                 <p><span>Email:</span> info@drivex.com</p>
                 <p><span>Teléfono:</span> +123 456 7890</p>
+                <p><a href="{% url 'contacto' %}" style="color: var(--primary-gold);">Formulario de Contacto</a></p>
             </div>
         </div>
         <div class="footer-bottom">
@@ -78,9 +78,9 @@
         </div>
     </footer>
 
-    <!-- Scripts JS comunes a todo el sitio -->
+    <!-- Enlace a tu archivo JavaScript -->
     <script src="{% static 'DriveX/js/script.js' %}"></script>
-
+    {% block extra_js %}{% endblock %}
 </body>
 
 </html>

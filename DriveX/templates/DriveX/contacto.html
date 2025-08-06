@@ -4,8 +4,7 @@
 {% block title %}Contacto - Rental Car DriveX{% endblock %}
 
 {% block content %}
-
-<main style="padding-top: 150px;">
+<main style="padding-top: 150px; padding-bottom: 3rem;">
     <section class="contact-section">
         <div class="container">
             <div class="section-title fade-in">
@@ -13,42 +12,29 @@
                 <p>¿Tienes alguna pregunta? Rellena el formulario y te responderemos lo antes posible.</p>
             </div>
 
-            <!-- Mensajes de Django -->
             {% if messages %}
-            {% for message in messages %}
-            <div class="alert alert-{{ message.tags }}">{{ message }}</div>
-            {% endfor %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+                {% endfor %}
             {% endif %}
 
-            <!-- AÑADE la clase 'requires-validation' al formulario -->
-            <form action="{% url 'contacto' %}" method="post" class="form-container requires-validation fade-in" novalidate>
+            <!-- CORREGIDO: El formulario ahora renderiza el ContactoForm de Django -->
+            <form action="{% url 'contacto' %}" method="post" class="form-container fade-in">
                 {% csrf_token %}
 
-                <!-- Estructura de un campo del formulario -->
-                <div class="form-group">
-                    <label for="nombre">Nombre Completo</label>
-                    <input type="text" id="nombre" name="nombre" required>
-                    <!-- Mensaje de error oculto por defecto -->
-                    <div class="error-message"></div>
-                </div>
+                {% if form.non_field_errors %}
+                    <div class="alert alert-danger">{{ form.non_field_errors }}</div>
+                {% endif %}
 
+                {% for field in form %}
                 <div class="form-group">
-                    <label for="email">Correo Electrónico</label>
-                    <input type="email" id="email" name="email" required>
-                    <div class="error-message"></div>
+                    {{ field.label_tag }}
+                    {{ field }}
+                    {% if field.errors %}
+                    <div class="error-message">{{ field.errors|first }}</div>
+                    {% endif %}
                 </div>
-
-                <div class="form-group">
-                    <label for="asunto">Asunto</label>
-                    <input type="text" id="asunto" name="asunto" required>
-                    <div class="error-message"></div>
-                </div>
-
-                <div class="form-group">
-                    <label for="mensaje">Mensaje</label>
-                    <textarea id="mensaje" name="mensaje" rows="6" required></textarea>
-                    <div class="error-message"></div>
-                </div>
+                {% endfor %}
 
                 <button type="submit" class="cta-button">Enviar Mensaje</button>
             </form>

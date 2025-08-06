@@ -1,0 +1,56 @@
+{% extends 'DriveX/base.html' %}
+
+{% block title %}{{ form_title }} - Panel de Administración{% endblock %}
+
+{% block content %}
+<main style="padding-top: 120px; padding-bottom: 3rem;">
+    <section class="form-section">
+        <div class="container">
+            <h2 class="section-title">{{ form_title }}</h2>
+
+            <!-- El atributo enctype es crucial para la subida de archivos -->
+            <form method="post" enctype="multipart/form-data" class="form-container">
+                {% csrf_token %}
+
+                <!-- Errores generales del formulario -->
+                {% if form.non_field_errors %}
+                    <div class="alert alert-danger">
+                        {% for error in form.non_field_errors %}{{ error }}{% endfor %}
+                    </div>
+                {% endif %}
+
+                <!-- Renderizado de cada campo del formulario -->
+                {% for field in form %}
+                    <div class="form-group">
+                        {{ field.label_tag }}
+                        
+                        <!-- Si el campo es para subir una imagen, mostramos la actual si existe -->
+                        {% if field.name == 'imagen' and form.instance.pk and form.instance.imagen %}
+                            <div style="margin-bottom: 10px;">
+                                <small>Imagen actual: <a href="{{ form.instance.imagen.url }}" target="_blank">{{ form.instance.imagen.url }}</a></small>
+                            </div>
+                        {% endif %}
+                        
+                        {{ field }}
+                        
+                        {% if field.help_text %}
+                            <small class="help-text">{{ field.help_text|safe }}</small>
+                        {% endif %}
+
+                        {% if field.errors %}
+                            <div class="error-message">
+                                {% for error in field.errors %}{{ error }}{% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+
+                <div class="form-actions" style="display: flex; justify-content: space-between; margin-top: 2rem;">
+                    <a href="{% url 'panel_administracion' %}" class="auth-button">Cancelar</a>
+                    <button type="submit" class="cta-button">Guardar Cambios</button>
+                </div>
+            </form>
+        </div>
+    </section>
+</main>
+{% endblock %}
