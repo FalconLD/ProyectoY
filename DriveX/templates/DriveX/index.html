@@ -5,9 +5,23 @@
 
 {% block content %}
 
+<!-- ======================= INICIO DE LA INTRO CON VIDEO ======================= -->
+<div id="intro-splash">
+    <video autoplay muted playsinline id="intro-video">
+        <source src="{% static 'DriveX/videos/Intro.mp4' %}" type="video/mp4">
+        Tu navegador no soporta el tag de video.
+    </video>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Corinthia:wght@400;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <h1 class="splash-title">DriveX</h1>
+</div>
+<!-- ======================= FIN DE LA INTRO CON VIDEO ======================= -->
+
 <main>
     <section class="hero">
         <div class="hero-content">
+            <br>
             <br>
             <br>
             <h1>Conduce la excelencia. Vive la experiencia DriveX</h1>
@@ -57,6 +71,7 @@
                     <p>Servicio adaptado a tus necesidades específicas con atención al detalle excepcional.</p>
                 </div>
             </div>
+            <br>
         </div>
         <section class="featured-vehicles">
             <div class="container">
@@ -92,4 +107,26 @@
 
 
 </main>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Obtenemos los elementos que necesitamos
+        const splash = document.getElementById('intro-splash');
+        const video = document.getElementById('intro-video');
+
+        // Añadimos un "oyente" que se activa cuando el video termina
+        video.addEventListener('ended', () => {
+            // Cuando el video termina, añadimos la clase 'hidden' al contenedor
+            splash.classList.add('hidden');
+
+            // Para un mejor rendimiento, después de que la transición de opacidad termine,
+            // ocultamos completamente el splash para que no interfiera.
+            splash.addEventListener('transitionend', () => {
+                splash.style.display = 'none';
+            }, { once: true }); // {once: true} asegura que este oyente se ejecute una sola vez
+        });
+    });
+</script>
 {% endblock %}

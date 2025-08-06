@@ -64,6 +64,68 @@ body {
     font-size: 1.1rem;
 }
 
+/* ======================= INTRO SPLASH SCREEN ======================= */
+
+#intro-splash {
+    position: fixed; /* Lo fija sobre toda la página */
+    top: 0;
+    left: 0;
+    width: 100vw; /* 100% del ancho de la ventana */
+    height: 100vh; /* 100% del alto de la ventana */
+    z-index: 9999; /* Se asegura de que esté por encima de todo */
+    background-color: #000; /* Fondo negro por si el video tarda en cargar */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 1s ease-out; /* Para una desaparición suave */
+}
+
+#intro-splash.hidden {
+    opacity: 0; /* Lo hacemos transparente para que desaparezca */
+}
+
+#intro-splash video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Hace que el video cubra todo el espacio sin deformarse */
+}
+
+.splash-title {
+    position: relative; /* Lo ponemos relativo para que el z-index funcione */
+    z-index: 10; /* Se asegura de que el título esté por encima del video */
+    font-size: 6rem; /* Tamaño grande y llamativo */
+    color: var(--primary-gold); /* Usamos tu variable de color dorado */
+    font-family: 'Corinthia', cursive;
+    font-weight: 600;
+    text-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+
+    /* ¡La animación elegante! */
+    animation: fadeInOut 5s ease-in-out forwards; /* Ajusta la duración (5s) a tus necesidades */
+}
+
+/* Keyframes para la animación del título */
+@keyframes fadeInOut {
+    0% {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    20% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    80% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+}
+
 
 /* ======================= 1. HEADER Y NAVEGACIÓN ======================= */
 
@@ -95,7 +157,7 @@ nav {
     -webkit-text-fill-color: transparent;
     background-clip: text;
     font-family: 'Corinthia', cursive;
-} /* <--- ¡LA LLAVE QUE FALTABA HA SIDO AÑADIDA AQUÍ! */
+}
 
 .nav-links {
     display: flex;
@@ -183,15 +245,19 @@ nav {
 .hero {
     height: 100vh;
     background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.7)),
-                url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800"><rect fill="%23111" width="1200" height="800"/><polygon fill="%23222" points="0,800 400,600 800,700 1200,500 1200,800"/></svg>');
-    background-size: cover;
-    background-position: center;
+                url('../images/fondo.png');
+    background-size: cover; /* Hace que la imagen cubra toda la sección sin deformarse */
+    background-position: center; /* Centra la imagen */
+    background-repeat: no-repeat; /* Evita que la imagen se repita si es pequeña */
+    background-attachment: fixed; /* Crea un elegante efecto de parallax al hacer scroll */
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
     position: relative;
 }
+
+
 
 .hero-content {
     max-width: 800px;
@@ -295,8 +361,14 @@ nav {
 /* ======================= 4. SECCIÓN DE VEHÍCULOS DESTACADOS ======================= */
 
 .featured-vehicles {
+    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.7)),
+                url('../images/fondo.png');
+    background-size: cover; /* Hace que la imagen cubra toda la sección sin deformarse */
+    background-position: center; /* Centra la imagen */
+    background-repeat: no-repeat; /* Evita que la imagen se repita si es pequeña */
+    background-attachment: fixed; /* Crea un elegante efecto de parallax al hacer scroll */
     padding: 5rem 0;
-    background: var(--dark-bg);
+   
 }
 
 .vehicles-grid {

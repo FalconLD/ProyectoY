@@ -166,3 +166,17 @@ def vehiculo_delete(request, pk):
         return redirect('panel_administracion')
 
     return render(request, 'DriveX/vehiculo_confirm_delete.html', {'vehiculo': vehiculo})
+
+@user_passes_test(es_administrador, login_url='login')
+def vehiculo_delete(request, pk):
+    vehiculo = get_object_or_404(Vehiculo, pk=pk)
+    
+    if request.method == 'POST':
+        # Si el método es POST, significa que se confirmó la eliminación.
+        vehiculo_nombre = vehiculo.nombre # Guardamos el nombre para el mensaje
+        vehiculo.delete()
+        messages.success(request, f'El vehículo "{vehiculo_nombre}" ha sido eliminado con éxito.')
+        return redirect('panel_administracion')
+
+    # Si el método es GET, mostramos la página de confirmación.
+    return render(request, 'DriveX/vehiculo_confirm_delete.html', {'vehiculo': vehiculo})
