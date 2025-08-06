@@ -25,6 +25,9 @@
                 <li><a href="{% url 'vehiculos' %}">Vehículos</a></li>
                 <li><a href="{% url 'reserva' %}">Reserva</a></li>
                 <li><a href="{% url 'contacto' %}">Contacto</a></li>
+                {% if user.is_authenticated and user.groups.all.0.name == 'Administradores' %}
+                <li><a href="{% url 'panel_administracion' %}" style="color: var(--primary-gold);">Panel Admin</a></li>
+                {% endif %}
             </ul>
 
             <!-- En base.html, reemplaza la sección nav-auth -->
@@ -37,7 +40,7 @@
                 <a href="{% url 'registro' %}" class="auth-button primary">Registrarse</a>
                 {% endif %}
             </div>
-            
+
             <button class="mobile-menu-btn">☰</button>
         </nav>
     </header>

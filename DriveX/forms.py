@@ -42,3 +42,20 @@ class ReservaForm(forms.ModelForm):
         # Opcional: Añadir una clase común a todos los campos para estilos
         for field in self.fields:
             self.fields[field].widget.attrs['class'] = 'form-input'
+
+# En DriveX/forms.py
+
+
+# ... (tu ReservaForm se queda como está) ...
+
+class VehiculoForm(forms.ModelForm):
+    class Meta:
+        model = Vehiculo
+        # Lista de los campos del modelo que quieres que aparezcan en el formulario
+        fields = ['nombre', 'categoria', 'descripcion', 'caracteristicas', 'valor_slug', 'imagen', 'es_destacado']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Opcional: añade clases de CSS a los campos para que se vean bien
+        for field_name, field in self.fields.items():
+            field.widget.attrs['class'] = 'form-input'

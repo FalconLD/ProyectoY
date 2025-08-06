@@ -1,12 +1,10 @@
-# Archivo: DriveX/views.py (Versión Limpia y Final)
-
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from .models import Vehiculo, Categoria, Reserva # Añade Reserva
-from .forms import ReservaForm # Importa el formulario desde forms.py
 from django.contrib.auth import login as auth_login, authenticate, logout as auth_logout
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth.decorators import login_required # Importa el decorador
+from .models import Vehiculo, Categoria, Reserva # Añade Reserva
+from .forms import ReservaForm # Importa el formulario desde forms.py
 
 def index(request):
     # Obtenemos solo los vehículos marcados como 'destacados'
@@ -113,9 +111,24 @@ def login_view(request):
     form = AuthenticationForm()
     return render(request, 'DriveX/login.html', {'form': form})
 
-
 # VISTA DE LOGOUT
 def logout_view(request):
     auth_logout(request)
     messages.info(request, "Has cerrado sesión exitosamente.")
     return redirect('index')
+
+@login_required
+def panel_administracion(request):
+    # PRIMER FILTRO: ¿Ha iniciado sesión el usuario?
+    # SEGUNDO FILTRO: ¿Pertenece al grupo 'Administradores'?
+    if not request.user.groups.filter(name='Administradores').exists():
+        messages.error(request, "No tienes permiso para acceder a esta página.")
+        return redirect('index')
+
+    # Si pasa los filtros, le mostramos la página del panel.
+    # Por ahora, solo le pasamos una lista de todos los vehículos para que los vea.
+    vehiculos = Vehiculo.objects.all()
+    context = {
+        'vehiculos': vehiculos
+    }
+    return render(request, 'DriveX/panel_administracion.html', context)

@@ -1,0 +1,48 @@
+{% extends 'DriveX/base.html' %}
+
+{% block title %}Panel de Administración - DriveX{% endblock %}
+
+{% block content %}
+<main style="padding-top: 100px;">
+    <div class="container">
+        <h2 class="section-title">Panel de Administración</h2>
+        <p>Bienvenido, {{ user.username }}. Desde aquí puedes gestionar la flota de vehículos.</p>
+        
+        <!-- Botón para añadir nuevos vehículos -->
+        <div style="margin-bottom: 2rem; text-align: right;">
+            <a href="#" class="cta-button">Añadir Nuevo Vehículo</a>
+        </div>
+
+        <!-- Tabla para mostrar los vehículos existentes -->
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th>Imagen</th>
+                    <th>Nombre</th>
+                    <th>Categoría</th>
+                    <th>Destacado</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for vehiculo in vehiculos %}
+                <tr>
+                    <td><img src="{{ vehiculo.imagen.url }}" alt="{{ vehiculo.nombre }}" width="100"></td>
+                    <td>{{ vehiculo.nombre }}</td>
+                    <td>{{ vehiculo.categoria.nombre }}</td>
+                    <td>{% if vehiculo.es_destacado %}Sí{% else %}No{% endif %}</td>
+                    <td>
+                        <a href="#" class="action-link">Editar</a>
+                        <a href="#" class="action-link delete">Eliminar</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="5">No hay vehículos en la flota.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</main>
+{% endblock %}
