@@ -16,3 +16,6 @@ __pycache__/
 
 # Archivos de configuración con secretos (buena práctica para el futuro)
 .env
+
+# Backups de la base de datos
+data_backup.json

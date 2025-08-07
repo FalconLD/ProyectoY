@@ -81,9 +81,9 @@ WSGI_APPLICATION = 'ProyectoY.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'DriveX',
-        'USER': 'FalconLD',
-        'PASSWORD': '1234',
+        'NAME': 'drivex_db',         # <-- CAMBIAR AQUÍ
+        'USER': 'drivex_user',      # <-- CAMBIAR AQUÍ
+        'PASSWORD': 'password',     # <-- CAMBIAR AQUÍ
         'HOST': 'localhost',
         'PORT': '5432',
     }

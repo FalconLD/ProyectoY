@@ -12,10 +12,17 @@ Guía de instalación y comandos para el proyecto "Rental Car DriveX".
 ### Configuración de la Base de Datos
 Antes de instalar las dependencias, asegúrate de crear la base de datos en PostgreSQL.
 ~~~sql
--- Desde una terminal psql
+-- Desde una terminal psql Opción 1:
+CREATE USER drivex_user WITH PASSWORD 'password'
+CREATE DATABASE drivex_db OWNER drivex_user;
+~~~
+
+~~~sql 
+-- Desde una terminal psql Opción 2:
 CREATE DATABASE drivex_db;
 CREATE USER drivex_user WITH PASSWORD 'password';
 GRANT ALL PRIVILEGES ON DATABASE drivex_db TO drivex_user;
+GRANT USAGE, CREATE ON SCHEMA public TO drivex_user;
 ~~~
 > **Nota:** Recuerda actualizar las credenciales en el archivo `ProyectoY/settings.py` para que coincidan con las que creaste.
 
