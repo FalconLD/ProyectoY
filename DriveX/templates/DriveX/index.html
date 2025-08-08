@@ -13,7 +13,9 @@
     </video>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Corinthia:wght@400;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Corinthia:wght@400;700&family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
     <h1 class="splash-title">DriveX</h1>
 </div>
 <!-- ======================= FIN DE LA INTRO CON VIDEO ======================= -->
@@ -107,26 +109,48 @@
 
 
 </main>
-{% endblock %}
 
+<!-- ... (al final del archivo, antes de {% endblock %}) ... -->
 {% block extra_js %}
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Obtenemos los elementos que necesitamos
+    document.addEventListener('DOMContentLoaded', function () {
         const splash = document.getElementById('intro-splash');
         const video = document.getElementById('intro-video');
 
-        // Añadimos un "oyente" que se activa cuando el video termina
-        video.addEventListener('ended', () => {
-            // Cuando el video termina, añadimos la clase 'hidden' al contenedor
-            splash.classList.add('hidden');
+        // --- INICIO DE LA NUEVA LÓGICA ---
 
-            // Para un mejor rendimiento, después de que la transición de opacidad termine,
-            // ocultamos completamente el splash para que no interfiera.
-            splash.addEventListener('transitionend', () => {
+        // 1. Leemos los parámetros de la URL actual
+        const urlParams = new URLSearchParams(window.location.search);
+
+        // 2. Comprobamos si el parámetro 'intro' existe y es igual a 'true'
+        const shouldPlayIntro = urlParams.get('intro') === 'true';
+
+        if (shouldPlayIntro) {
+            // SI DEBEMOS MOSTRAR LA INTRO:
+            // Usamos la misma lógica de temporizador que ya tenías.
+            const introDuration = 5000; // 5 segundos
+
+            function hideSplash() {
+                if (splash) { // Comprobación de seguridad
+                    splash.classList.add('hidden');
+                    video.pause();
+                    splash.addEventListener('transitionend', () => {
+                        splash.style.display = 'none';
+                    }, { once: true });
+                }
+            }
+
+            setTimeout(hideSplash, introDuration);
+            if (video) video.addEventListener('ended', hideSplash);
+
+        } else {
+            // SI NO DEBEMOS MOSTRAR LA INTRO:
+            // Simplemente la ocultamos de inmediato.
+            if (splash) {
                 splash.style.display = 'none';
-            }, { once: true }); // {once: true} asegura que este oyente se ejecute una sola vez
-        });
+            }
+        }
+        // --- FIN DE LA NUEVA LÓGICA ---
     });
 </script>
 {% endblock %}
