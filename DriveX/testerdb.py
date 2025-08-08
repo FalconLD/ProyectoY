@@ -1,7 +1,7 @@
-import psycopg
-from psycopg import OperationalError
+import psycopg2
+from psycopg2 import OperationalError
 try:
-    conn = psycopg.connect(
+    conn = psycopg2.connect(
     dbname="DriveX",
     user="FalconLD",
     password="1234",

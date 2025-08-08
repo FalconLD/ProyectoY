@@ -1,0 +1,71 @@
+{% extends 'DriveX/base.html' %}
+
+{% block title %}Gestionar Reservas - Panel de Administración{% endblock %}
+
+{% block content %}
+<main style="padding-top: 100px; padding-bottom: 3rem;">
+    <div class="container">
+        <h2 class="section-title">Gestionar Reservas</h2>
+        <p>Aquí puedes ver y administrar todas las reservas de los clientes.</p>
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+        
+        <!-- Filtros y Acciones -->
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+            <div class="filters">
+                <span style="margin-right: 1rem;">Filtrar por estado:</span>
+                <a href="{% url 'panel_reservas' %}" class="auth-button {% if not active_filter %}primary{% endif %}">Todas</a>
+                {% for key, value in estados.items %}
+                    <a href="?estado={{ key }}" class="auth-button {% if active_filter == key %}primary{% endif %}">{{ value }}</a>
+                {% endfor %}
+            </div>
+            <a href="{% url 'exportar_reservas_csv' %}" class="cta-button">Exportar a CSV</a>
+        </div>
+
+        <div class="admin-table-container">
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>Cliente</th>
+                        <th>Vehículo</th>
+                        <th>Fecha de Servicio</th>
+                        <th>Estado Actual</th>
+                        <th>Cambiar Estado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for reserva in reservas %}
+                    <tr>
+                        <td>{{ reserva.usuario.username }}<br><small>{{ reserva.email }}</small></td>
+                        <td>{{ reserva.vehiculo.nombre }}</td>
+                        <td>{{ reserva.fecha_servicio }} a las {{ reserva.hora_servicio }}</td>
+                        <td>
+                            <span class="status-badge status-{{ reserva.estado|lower }}">{{ reserva.get_estado_display }}</span>
+                        </td>
+                        <td>
+                            <form method="POST" action="{% url 'update_reserva_status' reserva.pk %}" style="display: flex; gap: 0.5rem;">
+                                {% csrf_token %}
+                                <select name="estado" class="form-input" style="padding: 0.5rem;">
+                                    {% for key, value in reserva.ESTADO_CHOICES %}
+                                        <option value="{{ key }}" {% if key == reserva.estado %}disabled{% endif %}>{{ value }}</option>
+                                    {% endfor %}
+                                </select>
+                                <button type="submit" class="auth-button primary" style="padding: 0.5rem 1rem;">OK</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="5">No hay reservas que coincidan con el filtro seleccionado.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>
+{% endblock %}
