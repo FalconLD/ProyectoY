@@ -9,53 +9,65 @@
         <div class="container">
             <div class="section-title fade-in">
                 {% if search_query %}
-                    <h2>Resultados para "{{ search_query }}"</h2>
-                    <p><a href="{% url 'vehiculos' %}" style="color: var(--primary-gold);">Limpiar búsqueda y ver todas las categorías</a></p>
+                <h2>Resultados para "{{ search_query }}"</h2>
+                <p><a href="{% url 'vehiculos' %}" style="color: var(--primary-gold);">Limpiar búsqueda y ver todas las
+                        categorías</a></p>
                 {% else %}
-                    <h2>Nuestros Tipos de Vehículo</h2>
-                    <p>Explora nuestras categorías o busca un modelo específico</p>
+                <h2>Nuestros Tipos de Vehículo</h2>
+                <p>Explora nuestras categorías o busca un modelo específico</p>
                 {% endif %}
             </div>
 
             <div class="search-container" style="max-width: 800px; margin: 0 auto 3rem auto;">
-                <form method="GET" action="{% url 'vehiculos' %}" class="form-container" style="padding: 1rem; display: flex; gap: 1rem;">
-                    <input type="text" name="q" class="form-group" placeholder="Buscar por nombre (ej. Mercedes, Porsche...)" value="{{ search_query|default:'' }}" style="flex-grow: 1; margin-bottom: 0;">
+                <form method="GET" action="{% url 'vehiculos' %}" class="form-container"
+                    style="padding: 1rem; display: flex; gap: 1rem;">
+                    <input type="text" name="q" class="form-group"
+                        placeholder="Buscar por nombre (ej. Mercedes, Porsche...)" value="{{ search_query|default:'' }}"
+                        style="flex-grow: 1; margin-bottom: 0;">
                     <button type="submit" class="cta-button">Buscar</button>
                 </form>
             </div>
-            
+
             {% if search_query %}
-                <div class="vehicles-grid">
-                    {% for vehiculo in vehiculos %}
-                        <div class="vehicle-card fade-in">
-                            <div class="vehicle-image">
-                                <img src="{{ vehiculo.imagen.url }}" alt="{{ vehiculo.nombre }}">
-                            </div>
-                            <div class="vehicle-content">
-                                <h3>{{ vehiculo.nombre }}</h3>
-                                <p>{{ vehiculo.descripcion|truncatewords:20 }}</p>
-                                <p style="font-size: 0.8rem; color: var(--primary-gold); margin-bottom: 1rem;">
-                                    {{ vehiculo.caracteristicas }}
-                                </p>
-                                <a href="{% url 'reserva' %}?vehicle={{ vehiculo.valor_slug }}" class="vehicle-button">Reservar</a>
-                            </div>
-                        </div>
-                    {% empty %}
-                        <p style="text-align: center; grid-column: 1 / -1; font-size: 1.2rem;">
-                            No se encontraron vehículos que coincidan con tu búsqueda.
+            <div class="vehicles-grid">
+                {% for vehiculo in vehiculos %}
+                <div class="vehicle-card fade-in">
+                    <div class="vehicle-image">
+                        <img src="{{ vehiculo.imagen.url }}" alt="{{ vehiculo.nombre }}">
+                    </div>
+                    <div class="vehicle-content">
+                        <h3>{{ vehiculo.nombre }}</h3>
+                        <p>{{ vehiculo.descripcion|truncatewords:20 }}</p>
+                        <p style="font-size: 0.8rem; color: var(--primary-gold); margin-bottom: 1rem;">
+                            {{ vehiculo.caracteristicas }}
                         </p>
-                    {% endfor %}
+                        <a href="{% url 'reserva' %}?vehicle={{ vehiculo.valor_slug }}"
+                            class="vehicle-button">Reservar</a>
+                    </div>
                 </div>
+                {% empty %}
+                <p style="text-align: center; grid-column: 1 / -1; font-size: 1.2rem;">
+                    No se encontraron vehículos que coincidan con tu búsqueda.
+                </p>
+                {% endfor %}
+            </div>
             {% else %}
+
+            <div class="categories-gallery">
                 {% for categoria in categorias %}
-                <div class="category-card fade-in"
-                    style="background: #222; padding: 2rem; margin-bottom: 2rem; border-radius: 8px; border-left: 5px solid var(--primary-gold);">
-                    <h3 style="font-size: 2rem; color: var(--primary-gold); margin-bottom: 1rem;">{{ categoria.nombre }}</h3>
-                    <p style="margin-bottom: 1.5rem;">{{ categoria.descripcion }}</p>
-                    <a href="{% url 'vehiculos_por_categoria' categoria.slug %}" class="cta-button">Mostrar Catálogo</a>
+                <div class="category-item">
+                    <img src="{{ categoria.imagen.url }}" alt="{{ categoria.nombre }}">
+                    <div class="category-info">
+                        <h3>{{ categoria.nombre }}</h3>
+                        <p>{{ categoria.descripcion}}</p>
+                        <a href="{% url 'vehiculos_por_categoria' categoria.slug %}" class="cta-button">Mostrar
+                            Catálogo</a>
+                    </div>
                 </div>
                 {% endfor %}
+            </div>
             {% endif %}
+
 
         </div>
     </section>

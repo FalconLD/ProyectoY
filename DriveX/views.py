@@ -7,7 +7,7 @@ from django.contrib.auth import login as auth_login, authenticate, logout as aut
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.db.models import Count
-from .models import Vehiculo, Categoria, Reserva, Sucursal, Ruta
+from .models import Vehiculo, Categoria, Reserva, Sucursal, Ruta, Piloto
 from .forms import ReservaForm, ContactoForm, VehiculoForm, CustomUserCreationForm
 from .utils import dijkstra
 
@@ -268,26 +268,5 @@ def exportar_reservas_csv(request):
     return response
 
 def pilotos_view(request):
-    pilotos = [
-        {"nombre": "Michael Schumacher", "disciplina": "F1", "edad": 56, "altura_cm": 174, "experiencia_años": 30, "idiomas": "Alemán, Inglés", "calificacion": 5.0},
-        {"nombre": "Lewis Hamilton", "disciplina": "F1", "edad": 40, "altura_cm": 174, "experiencia_años": 20, "idiomas": "Inglés", "calificacion": 4.9},
-        {"nombre": "Juan Manuel Fangio", "disciplina": "F1", "edad": 84, "altura_cm": 175, "experiencia_años": 15, "idiomas": "Español, Italiano", "calificacion": 5.0},
-        {"nombre": "Ayrton Senna", "disciplina": "F1", "edad": 34, "altura_cm": 175, "experiencia_años": 10, "idiomas": "Portugués, Inglés", "calificacion": 5.0},
-        {"nombre": "Alain Prost", "disciplina": "F1", "edad": 68, "altura_cm": 170, "experiencia_años": 20, "idiomas": "Francés, Inglés", "calificacion": 4.8},
-        {"nombre": "Sébastien Loeb", "disciplina": "RALLY", "edad": 50, "altura_cm": 176, "experiencia_años": 25, "idiomas": "Francés, Inglés", "calificacion": 5.0},
-        {"nombre": "Sébastien Ogier", "disciplina": "RALLY", "edad": 38, "altura_cm": 175, "experiencia_años": 15, "idiomas": "Francés, Inglés", "calificacion": 4.9},
-        {"nombre": "Carlos Sainz", "disciplina": "RALLY", "edad": 58, "altura_cm": 175, "experiencia_años": 35, "idiomas": "Español, Inglés", "calificacion": 4.8},
-        {"nombre": "Tommi Mäkinen", "disciplina": "RALLY", "edad": 57, "altura_cm": 172, "experiencia_años": 20, "idiomas": "Finlandés, Inglés", "calificacion": 4.7},
-        {"nombre": "Juha Kankkunen", "disciplina": "RALLY", "edad": 65, "altura_cm": 178, "experiencia_años": 25, "idiomas": "Finlandés, Inglés", "calificacion": 4.8},
-        {"nombre": "Nelson Piquet", "disciplina": "F1", "edad": 69, "altura_cm": 177, "experiencia_años": 18, "idiomas": "Portugués, Inglés", "calificacion": 4.7},
-        {"nombre": "Niki Lauda", "disciplina": "F1", "edad": 70, "altura_cm": 170, "experiencia_años": 15, "idiomas": "Alemán, Inglés", "calificacion": 4.9},
-        {"nombre": "Marcus Grönholm", "disciplina": "RALLY", "edad": 57, "altura_cm": 182, "experiencia_años": 22, "idiomas": "Finlandés, Inglés", "calificacion": 4.8},
-        {"nombre": "Colin McRae", "disciplina": "RALLY", "edad": 37, "altura_cm": 178, "experiencia_años": 15, "idiomas": "Inglés", "calificacion": 4.9},
-        {"nombre": "Walter Röhrl", "disciplina": "RALLY", "edad": 75, "altura_cm": 175, "experiencia_años": 30, "idiomas": "Alemán, Inglés", "calificacion": 5.0},
-        {"nombre": "Fernando Alonso", "disciplina": "F1", "edad": 42, "altura_cm": 171, "experiencia_años": 20, "idiomas": "Español, Inglés", "calificacion": 4.8},
-        {"nombre": "Sebastian Vettel", "disciplina": "F1", "edad": 36, "altura_cm": 176, "experiencia_años": 15, "idiomas": "Alemán, Inglés", "calificacion": 4.7},
-        {"nombre": "Mika Häkkinen", "disciplina": "F1", "edad": 54, "altura_cm": 176, "experiencia_años": 12, "idiomas": "Finlandés, Inglés", "calificacion": 4.8},
-        {"nombre": "Didier Auriol", "disciplina": "RALLY", "edad": 64, "altura_cm": 174, "experiencia_años": 25, "idiomas": "Francés, Inglés", "calificacion": 4.7},
-        {"nombre": "Ari Vatanen", "disciplina": "RALLY", "edad": 70, "altura_cm": 177, "experiencia_años": 22, "idiomas": "Finlandés, Inglés", "calificacion": 4.8}
-    ]
+    pilotos = Piloto.objects.all()
     return render(request, 'DriveX/pilotos.html', {'pilotos': pilotos})

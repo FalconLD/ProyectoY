@@ -20,8 +20,9 @@
 
 <body>
     <header>
-        <nav>
-            <a href="{% url 'index' %}?intro=true" class="logo">Rental Car DriveX</a>
+        <nav class="navbar">
+            <a href="{% url 'index' %}?intro=true" class="logo">DriveX Rental Car</a>
+
             <ul class="nav-links">
                 <li><a href="{% url 'index' %}">Inicio</a></li>
                 <li><a href="{% url 'vehiculos' %}">Vehículos</a></li>
@@ -30,7 +31,7 @@
                 <li><a href="{% url 'contacto' %}">Contacto</a></li>
 
                 {% if is_in_admin_group %}
-                <li><a href="{% url 'panel_administracion' %}" style="color: var(--primary-gold);">Panel Admin</a></li>
+                <li><a href="{% url 'panel_administracion' %}" class="admin-link">Panel Admin</a></li>
                 {% endif %}
             </ul>
 
@@ -44,9 +45,15 @@
                 {% endif %}
             </div>
 
-            <button class="mobile-menu-btn">☰</button>
+            <button class="mobile-menu-btn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
         </nav>
     </header>
+
 
     <main>
         {% block content %}

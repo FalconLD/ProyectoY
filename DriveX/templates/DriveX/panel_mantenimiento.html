@@ -5,104 +5,250 @@
 {% block content %}
 <main style="padding-top: 100px; padding-bottom: 3rem;">
     <div class="container">
-        <a href="{% url 'panel_administracion' %}" style="color: var(--primary-gold); text-decoration: none; margin-bottom: 2rem; display: inline-block;">&larr; Volver al Panel Principal</a>
+        <a href="{% url 'panel_administracion' %}"
+            style="color: var(--primary-gold); text-decoration: none; margin-bottom: 2rem; display: inline-block;">
+            &larr; Volver al Panel Principal
+        </a>
 
+        <!-- Título -->
         <div class="section-title fade-in">
             <h2>Guía de Costos de Mantenimiento Preventivo</h2>
-            <p>Esta información es ideal para construir un Árbol Generador Mínimo (Prim o Kruskal), considerando los costos como pesos de las aristas.</p>
+            <p>
+                Información con productos reales de Ecuador, ideal para un Árbol Generador Mínimo (Prim o Kruskal).
+            </p>
         </div>
 
-        <h3 style="color: var(--primary-gold); margin-top: 3rem; margin-bottom: 1rem;">🛠️ Mantenimiento Preventivo por Tipo de Servicio</h3>
-        <div class="admin-table-container">
-            <table class="admin-table">
-                <thead>
-                    <tr>
-                        <th>Servicio</th>
-                        <th>Mercedes-Benz Clase S</th>
-                        <th>Bentley Continental GT Híbrido</th>
-                        <th>Audi RS e-tron GT Eléctrico</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Aceite de motor</td>
-                        <td>US$ 80–100</td>
-                        <td>US$ 80–100</td>
-                        <td>US$ 0 (sin aceite de motor)</td>
-                    </tr>
-                    <tr>
-                        <td>Filtros</td>
-                        <td>US$ 20–50 cada uno</td>
-                        <td>US$ 20–50 cada uno</td>
-                        <td>US$ 20–50 cada uno</td>
-                    </tr>
-                    <tr>
-                        <td>Bujías</td>
-                        <td>US$ 15–25 cada una</td>
-                        <td>US$ 15–25 cada una</td>
-                        <td>US$ 0 (sin bujías)</td>
-                    </tr>
-                    <tr>
-                        <td>Pastillas de freno</td>
-                        <td>US$ 100–150 por eje</td>
-                        <td>US$ 100–150 por eje</td>
-                        <td>US$ 100–150 por eje</td>
-                    </tr>
-                    <tr>
-                        <td>Líquido de frenos</td>
-                        <td>US$ 12–15 por litro</td>
-                        <td>US$ 12–15 por litro</td>
-                        <td>US$ 12–15 por litro</td>
-                    </tr>
-                    <tr>
-                        <td>Correa de distribución</td>
-                        <td>US$ 100–150</td>
-                        <td>US$ 100–150</td>
-                        <td>US$ 0 (sin correa de distribución)</td>
-                    </tr>
-                    <tr>
-                        <td>Neumáticos</td>
-                        <td>US$ 150–250 cada uno</td>
-                        <td>US$ 300–500 cada uno</td>
-                        <td>US$ 300–500 cada uno</td>
-                    </tr>
-                </tbody>
-            </table>
+        <!-- Tarjeta 1: Servicios -->
+        <div class="card"
+            style="background: var(--secondary-dark); padding: 2rem; border-radius: 12px; margin-top: 2rem; box-shadow: 0 4px 12px rgba(0,0,0,0.3);">
+            <h3 style="color: var(--primary-gold); margin-bottom: 1.5rem;">🛠️ Mantenimiento por Producto Real</h3>
+            <div class="admin-table-container">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Servicio</th>
+                            <th>Mercedes-Benz Clase S (Gasolina)</th>
+                            <th>Bentley Continental GT Hybrid</th>
+                            <th>Audi RS e-tron GT (Eléctrico)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Aceite de motor</td>
+                            <td>Castrol EDGE 5W-40 – US$ 95</td>
+                            <td>Mobil 1 Hybrid 0W-20 – US$ 100</td>
+                            <td>No aplica</td>
+                        </tr>
+                        <tr>
+                            <td>Filtros</td>
+                            <td>Mann-Filter – US$ 40 c/u</td>
+                            <td>Bosch Premium – US$ 45 c/u</td>
+                            <td>Sakura Filter – US$ 50 c/u</td>
+                        </tr>
+                        <tr>
+                            <td>Bujías</td>
+                            <td>NGK Iridium IX – US$ 25 c/u</td>
+                            <td>Denso Iridium Power – US$ 30 c/u</td>
+                            <td>No aplica</td>
+                        </tr>
+                        <tr>
+                            <td>Pastillas de freno</td>
+                            <td>Brembo Ceramic Pads – US$ 140 por eje</td>
+                            <td>Akebono Euro – US$ 150 por eje</td>
+                            <td>Bosch QuietCast – US$ 160 por eje</td>
+                        </tr>
+                        <tr>
+                            <td>Líquido de frenos</td>
+                            <td>Castrol React DOT 4 – US$ 15/L</td>
+                            <td>Castrol React DOT 4 – US$ 15/L</td>
+                            <td>Castrol React DOT 4 – US$ 15/L</td>
+                        </tr>
+                        <tr>
+                            <td>Correa de distribución</td>
+                            <td>Gates PowerGrip – US$ 120</td>
+                            <td>Dayco High Performance – US$ 130</td>
+                            <td>No aplica</td>
+                        </tr>
+                        <tr>
+                            <td>Neumáticos</td>
+                            <td>Michelin Pilot Sport 4 – US$ 220 c/u</td>
+                            <td>Pirelli P Zero Hybrid – US$ 400 c/u</td>
+                            <td>Toyo Proxes Sport EV – US$ 450 c/u</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
 
-        <h3 style="color: var(--primary-gold); margin-top: 3rem; margin-bottom: 1rem;">💰 Costos Anuales Estimados de Mantenimiento</h3>
-        <div class="admin-table-container">
+        <!-- Tarjeta 2: Costos anuales -->
+        <div class="card"
+            style="background: var(--secondary-dark); padding: 2rem; border-radius: 12px; margin-top: 2rem; box-shadow: 0 4px 12px rgba(0,0,0,0.3);">
+            <h3 style="color: var(--primary-gold); margin-bottom: 1.5rem;">💰 Costos Anuales Estimados</h3>
             <table class="admin-table">
                 <thead>
                     <tr>
                         <th>Vehículo</th>
-                        <th>Costo Anual Estimado</th>
+                        <th>Costo Anual Estimado (Ecuador)</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td>Mercedes-Benz Clase S</td>
-                        <td>US$ 1,500–2,000</td>
+                        <td>Mercedes-Benz Clase S (Gasolina)</td>
+                        <td>US$ 1,800</td>
                     </tr>
                     <tr>
-                        <td>Bentley Continental GT Híbrido</td>
-                        <td>US$ 2,000–2,500</td>
+                        <td>Bentley Continental GT Hybrid</td>
+                        <td>US$ 2,300</td>
                     </tr>
                     <tr>
-                        <td>Audi RS e-tron GT Eléctrico</td>
-                        <td>US$ 1,000–1,500</td>
+                        <td>Audi RS e-tron GT (Eléctrico)</td>
+                        <td>US$ 1,400</td>
                     </tr>
                 </tbody>
             </table>
         </div>
 
-        <div style="margin-top: 3rem; background: var(--secondary-dark); padding: 1.5rem; border-radius: 8px;">
-            <h3 style="color: var(--primary-gold); margin-bottom: 1rem;">📌 Notas Importantes</h3>
-            <p style="margin-bottom: 0.5rem;"><strong>Mercedes-Benz Clase S:</strong> El mantenimiento incluye cambios de aceite, reemplazo de filtros, bujías y pastillas de freno.</p>
-            <p style="margin-bottom: 0.5rem;"><strong>Bentley Continental GT Híbrido:</strong> Además de los servicios mencionados, se considera el mantenimiento del sistema híbrido, lo que puede aumentar los costos.</p>
-            <p><strong>Audi RS e-tron GT Eléctrico:</strong> Los vehículos eléctricos requieren menos mantenimiento en términos de motor, pero los costos de neumáticos y frenos pueden ser similares a los de los vehículos de combustión interna.</p>
+        <!-- Tarjeta 3: Conclusión -->
+        <div class="card"
+            style="background: var(--secondary-dark); padding: 2rem; border-radius: 12px; margin-top: 2rem; box-shadow: 0 4px 12px rgba(0,0,0,0.3);">
+            <h3 style="color: var(--primary-gold); margin-bottom: 1.5rem;">📊 Conclusión según Árbol Generador Mínimo
+            </h3>
+            <p>
+                Aplicando Prim/Kruskal con los costos como pesos:
+            </p>
+            <ul>
+                <li><strong>Audi RS e-tron GT</strong> es el más barato (US$ 1,400).</li>
+                <li><strong>Mercedes-Benz Clase S</strong> se conecta con US$ 1,800.</li>
+                <li><strong>Bentley Continental GT Hybrid</strong> es el más costoso (US$ 2,300).</li>
+            </ul>
+            <p style="margin-top: 1rem; font-weight: bold; color: var(--primary-gold);">
+                ✅ El Árbol Generador Mínimo indica que la mejor opción de mantenimiento en Ecuador es el <strong>Audi RS
+                    e-tron GT</strong>, seguido del Mercedes-Benz Clase S.
+            </p>
         </div>
-
     </div>
+
+    <!-- Diagrama MST (SVG) -->
+    <figure style="margin-top:2rem;">
+        <svg viewBox="0 0 900 520" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg" role="img"
+            aria-label="Árbol Generador Mínimo por costos anuales">
+            <!-- Definición de estilos -->
+            <defs>
+                <linearGradient id="gold" x1="0" x2="1">
+                    <stop offset="0%" stop-color="#E6C766" />
+                    <stop offset="100%" stop-color="#C9A43E" />
+                </linearGradient>
+                <filter id="softShadow" x="-40%" y="-40%" width="180%" height="180%">
+                    <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000" flood-opacity="0.45" />
+                </filter>
+            </defs>
+
+            <!-- Fondo de tarjeta -->
+            <rect x="20" y="20" width="860" height="480" rx="20" fill="#171717" filter="url(#softShadow)" />
+
+            <!-- Título -->
+            <text x="450" y="70" fill="url(#gold)" font-size="22" text-anchor="middle"
+                font-family="Inter, Poppins, system-ui" font-weight="600">
+                Árbol Generador Mínimo (Pesos = Costos Anuales en Ecuador)
+            </text>
+            <text x="450" y="98" fill="#bdbdbd" font-size="14" text-anchor="middle"
+                font-family="Inter, Poppins, system-ui">
+                Se resaltan las aristas de menor costo total (Prim/Kruskal)
+            </text>
+
+            <!-- Nodo central (referencia) -->
+            <g transform="translate(450,170)">
+                <rect x="-120" y="-30" width="240" height="60" rx="16" fill="#212121" stroke="url(#gold)"
+                    stroke-width="2" />
+                <text fill="#E6E6E6" font-size="10" text-anchor="middle" font-family="Inter, Poppins, system-ui" y="5">
+                    Referencia de Costos (nodo base)
+                </text>
+            </g>
+
+            <!-- Posiciones de nodos -->
+            <!-- Audi RS e-tron GT -->
+            <g id="nodo-audi" transform="translate(180,370)">
+                <rect x="-150" y="-42" width="300" height="84" rx="16" fill="#1E1E1E" stroke="url(#gold)"
+                    stroke-width="2" />
+                <text x="0" y="-6" fill="#EAEAEA" font-size="10" text-anchor="middle"
+                    font-family="Inter, Poppins, system-ui" font-weight="600">
+                    Audi RS e-tron GT (Eléctrico)
+                </text>
+                <text x="0" y="18" fill="#C7C7C7" font-size="8" text-anchor="middle"
+                    font-family="Inter, Poppins, system-ui">
+                    Costo anual: US$ 1,400
+                </text>
+            </g>
+
+            <!-- Mercedes-Benz Clase S -->
+            <g id="nodo-mercedes" transform="translate(450,370)">
+                <rect x="-170" y="-42" width="340" height="84" rx="16" fill="#1E1E1E" stroke="url(#gold)"
+                    stroke-width="2" />
+                <text x="0" y="-6" fill="#EAEAEA" font-size="10" text-anchor="middle"
+                    font-family="Inter, Poppins, system-ui" font-weight="600">
+                    Mercedes-Benz Clase S (Gasolina)
+                </text>
+                <text x="0" y="18" fill="#C7C7C7" font-size="8" text-anchor="middle"
+                    font-family="Inter, Poppins, system-ui">
+                    Costo anual: US$ 1,800
+                </text>
+            </g>
+
+            <!-- Bentley Continental GT Hybrid -->
+            <g id="nodo-bentley" transform="translate(740,370)">
+                <rect x="-185" y="-42" width="370" height="84" rx="16" fill="#1E1E1E" stroke="#3a3a3a"
+                    stroke-width="2" />
+                <text x="0" y="-6" fill="#EAEAEA" font-size="10" text-anchor="middle"
+                    font-family="Inter, Poppins, system-ui" font-weight="600">
+                    Bentley Continental GT Hybrid
+                </text>
+                <text x="0" y="18" fill="#C7C7C7" font-size="8" text-anchor="middle"
+                    font-family="Inter, Poppins, system-ui">
+                    Costo anual: US$ 2,300
+                </text>
+            </g>
+
+            <!-- Aristas desde el nodo base -->
+            <!-- Audi: seleccionada (más barata) -->
+            <line x1="450" y1="200" x2="180" y2="328" stroke="url(#gold)" stroke-width="3.5" />
+            <circle cx="315" cy="265" r="14" fill="#111" stroke="url(#gold)" stroke-width="2" />
+            <text x="315" y="269" fill="#F4E3A1" font-size="12" text-anchor="middle"
+                font-family="Inter, Poppins, system-ui">
+                1,400
+            </text>
+
+            <!-- Mercedes: seleccionada (segunda más barata) -->
+            <line x1="450" y1="200" x2="450" y2="328" stroke="url(#gold)" stroke-width="3.5" />
+            <circle cx="450" cy="264" r="14" fill="#111" stroke="url(#gold)" stroke-width="2" />
+            <text x="450" y="269" fill="#F4E3A1" font-size="12" text-anchor="middle"
+                font-family="Inter, Poppins, system-ui">
+                1,800
+            </text>
+
+            <!-- Bentley: no seleccionada -->
+            <line x1="450" y1="200" x2="740" y2="328" stroke="#3a3a3a" stroke-dasharray="6 6" stroke-width="3" />
+            <circle cx="610" cy="264" r="14" fill="#1a1a1a" stroke="#3a3a3a" stroke-width="2" />
+            <text x="610" y="269" fill="#9a9a9a" font-size="12" text-anchor="middle"
+                font-family="Inter, Poppins, system-ui">
+                2,300
+            </text>
+
+            <!-- Leyenda -->
+            <g transform="translate(170,455)">
+                <rect x="-150" y="-18" width="300" height="36" rx="10" fill="#202020" />
+                <circle cx="-120" cy="0" r="6" fill="url(#gold)" />
+                <text x="-100" y="4" fill="#E6E6E6" font-size="13" font-family="Inter, Poppins, system-ui">Arista
+                    seleccionada (MST)</text>
+                <rect x="40" y="-6" width="18" height="3.5" fill="#3a3a3a" />
+                <text x="66" y="4" fill="#BFBFBF" font-size="13" font-family="Inter, Poppins, system-ui">No
+                    seleccionada</text>
+            </g>
+        </svg>
+        <figcaption style="color:#bdbdbd; text-align:center; margin-top:.5rem;">
+            MST según costos anuales: se eligen Audi (US$ 1,400) y Mercedes (US$ 1,800).
+        </figcaption>
+    </figure>
+
+
 </main>
 {% endblock %}

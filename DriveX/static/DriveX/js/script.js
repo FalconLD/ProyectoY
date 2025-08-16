@@ -340,3 +340,12 @@ window.addEventListener('scroll', () => {
     // Optional: Re-observe elements on scroll for dynamic content
     // observeElements();
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+    const mobileBtn = document.querySelector('.mobile-menu-btn');
+    const navLinks = document.querySelector('.nav-links');
+
+    mobileBtn.addEventListener('click', () => {
+        navLinks.classList.toggle('show');
+    });
+});

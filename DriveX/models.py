@@ -6,7 +6,8 @@ class Categoria(models.Model):
     nombre = models.CharField(max_length=50, unique=True, help_text="Ej: Gasolina, Eléctrico, Híbrido")
     descripcion = models.TextField(help_text="Una breve descripción sobre este tipo de vehículos.")
     slug = models.SlugField(unique=True, blank=True, help_text="Se genera automáticamente a partir del nombre.")
-
+    imagen = models.ImageField(upload_to='categorias/', blank=True, null=True)
+    
     class Meta:
         verbose_name_plural = "Categorías"
 
@@ -87,3 +88,17 @@ class Ruta(models.Model):
 
     def __str__(self):
         return f"Ruta de {self.origen.nombre} a {self.destino.nombre} ({self.distancia} km)"
+    
+
+class Piloto(models.Model):
+    nombre = models.CharField(max_length=100)
+    disciplina = models.CharField(max_length=50)
+    edad = models.IntegerField()
+    altura_cm = models.IntegerField()
+    experiencia_años = models.IntegerField()
+    idiomas = models.CharField(max_length=100)
+    calificacion = models.DecimalField(max_digits=2, decimal_places=1)
+    imagen = models.ImageField(upload_to='pilotos/', null=True, blank=True)  # ✅ campo para la foto
+
+    def __str__(self):
+        return self.nombre

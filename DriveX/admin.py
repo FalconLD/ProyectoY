@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Categoria, Vehiculo, Reserva
+from .models import Categoria, Vehiculo, Reserva, Piloto
 
 @admin.register(Categoria)
 class CategoriaAdmin(admin.ModelAdmin):
@@ -25,3 +25,5 @@ class ReservaAdmin(admin.ModelAdmin):
     def get_vehiculo_nombre(self, obj):
         return obj.vehiculo.nombre if obj.vehiculo else "N/A"
     get_vehiculo_nombre.short_description = 'Vehículo'
+
+admin.site.register(Piloto) # Registro simple sin personalización
