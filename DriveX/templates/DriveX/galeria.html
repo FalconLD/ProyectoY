@@ -1,0 +1,25 @@
+{% extends 'DriveX/base.html' %}
+{% load static %}
+
+{% block title %}Rental Car DriveX - Galería Premium{% endblock %}
+
+{% block content %}
+
+<main style="padding-top: 100px; padding-bottom: 3rem;">
+    <div class="container">
+        <h2 class="section-title">Galería de Vehículos</h2>
+        <p>Descubre nuestra exclusiva flota de vehículos premium.</p>
+
+        <div class="gallery-grid">
+            {% for vehiculo in vehiculos %}
+            <div class="gallery-item fade-in">
+                <img src="{{ vehiculo.imagen.url }}" alt="{{ vehiculo.nombre }}" class="gallery-image">
+                <h3>{{ vehiculo.nombre }}</h3>
+                <p>{{ vehiculo.descripcion }}</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+
+{% endblock %}

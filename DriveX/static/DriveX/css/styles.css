@@ -305,57 +305,94 @@ nav {
 
 
 /* ======================= 3. SECCIÓN DE SERVICIOS ======================= */
-
 .services {
     padding: 5rem 0;
-    background: var(--secondary-dark);
+    background: linear-gradient(145deg, #0d0d0d, #1a1a1a);
+}
+
+.section-title h2 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 2.5rem;
+    color: var(--primary-gold);
+    margin-bottom: 0.5rem;
+}
+
+.section-title p {
+    color: var(--text-gray);
+    font-size: 1.1rem;
 }
 
 .services-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 2rem;
     margin-top: 3rem;
+    align-items: start; /* evita solapamiento */
 }
 
 .service-card {
-    background: var(--accent-dark);
-    padding: 2.5rem;
-    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    overflow: hidden;
     text-align: center;
-    transition: all 0.3s ease;
-    border: 1px solid rgba(201, 167, 77, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 215, 0, 0.2);
+    transition: all 0.4s ease;
 }
 
 .service-card:hover {
     transform: translateY(-10px);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
     border-color: var(--primary-gold);
 }
 
-.service-icon {
-    width: 80px;
-    height: 80px;
-    background: var(--primary-gold);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 1.5rem;
-    font-size: 2rem;
-    color: var(--dark-bg);
+.service-img {
+    width: 100%;
+    aspect-ratio: 16/9; /* reemplaza altura fija */
+    overflow: hidden;
+    border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+}
+
+.service-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
 }
 
 .service-card h3 {
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
+    font-size: 1.4rem;
     color: var(--text-white);
+    margin: 1rem 0 0.5rem 0;
 }
 
 .service-card p {
     color: var(--text-gray);
-    line-height: 1.8;
+    padding: 0 1rem 1rem;
+    line-height: 1.6;
+    font-size: 0.95rem;
 }
+.fade-in {
+    animation: fadeInUp 0.8s ease forwards;
+    opacity: 0;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+
 
 
 /* ======================= 4. SECCIÓN DE VEHÍCULOS DESTACADOS ======================= */

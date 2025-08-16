@@ -1,0 +1,56 @@
+{% extends 'DriveX/base.html' %}
+
+{% block title %}Gestionar Flota - Panel de Administración{% endblock %}
+
+{% block content %}
+<main style="padding-top: 100px; padding-bottom: 3rem;">
+    <div class="container">
+        <a href="{% url 'panel_administracion' %}" style="color: var(--primary-gold); text-decoration: none; margin-bottom: 2rem; display: inline-block;">&larr; Volver al Panel Principal</a>
+        
+        <h2 class="section-title">Gestionar Flota de Vehículos</h2>
+        <p>Desde aquí puedes añadir, editar y eliminar vehículos de la flota.</p>
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+        
+        <div style="margin-bottom: 2rem; text-align: right;">
+            <a href="{% url 'vehiculo_add' %}" class="cta-button">Añadir Nuevo Vehículo</a>
+        </div>
+
+        <div class="admin-table-container">
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>Imagen</th>
+                        <th>Nombre</th>
+                        <th>Categoría</th>
+                        <th>Destacado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for vehiculo in vehiculos %}
+                    <tr>
+                        <td><img src="{{ vehiculo.imagen.url }}" alt="{{ vehiculo.nombre }}" width="100" style="border-radius: 4px;"></td>
+                        <td>{{ vehiculo.nombre }}</td>
+                        <td>{{ vehiculo.categoria.nombre }}</td>
+                        <td>{% if vehiculo.es_destacado %}✔️{% else %}❌{% endif %}</td>
+                        <td>
+                            <a href="{% url 'vehiculo_edit' vehiculo.pk %}" class="action-link">Editar</a>
+                            <a href="{% url 'vehiculo_delete' vehiculo.pk %}" class="action-link delete">Eliminar</a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="5">No hay vehículos en la flota. ¡Añade el primero!</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>
+{% endblock %}

@@ -3,46 +3,32 @@
 {% block title %}Panel de Administración - DriveX{% endblock %}
 
 {% block content %}
-<main style="padding-top: 100px;">
+<main style="padding-top: 100px; padding-bottom: 3rem;">
     <div class="container">
         <h2 class="section-title">Panel de Administración</h2>
-        <p>Bienvenido, {{ user.username }}. Desde aquí puedes gestionar la flota de vehículos.</p>
-        
-        <!-- Botón para añadir nuevos vehículos -->
-        <div style="margin-bottom: 2rem; text-align: right;">
-            <a href="#" class="cta-button">Añadir Nuevo Vehículo</a>
-        </div>
+        <p>Bienvenido, {{ user.username }}. Selecciona una sección para gestionar.</p>
 
-        <!-- Tabla para mostrar los vehículos existentes -->
-        <table class="admin-table">
-            <thead>
-                <tr>
-                    <th>Imagen</th>
-                    <th>Nombre</th>
-                    <th>Categoría</th>
-                    <th>Destacado</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for vehiculo in vehiculos %}
-                <tr>
-                    <td><img src="{{ vehiculo.imagen.url }}" alt="{{ vehiculo.nombre }}" width="100"></td>
-                    <td>{{ vehiculo.nombre }}</td>
-                    <td>{{ vehiculo.categoria.nombre }}</td>
-                    <td>{% if vehiculo.es_destacado %}Sí{% else %}No{% endif %}</td>
-                    <td>
-                        <a href="#" class="action-link">Editar</a>
-                        <a href="#" class="action-link delete">Eliminar</a>
-                    </td>
-                </tr>
-                {% empty %}
-                <tr>
-                    <td colspan="5">No hay vehículos en la flota.</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+        <div class="admin-hub-container" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 3rem; text-align: center;">
+            
+            <a href="{% url 'panel_flota' %}" class="service-card fade-in" style="text-decoration: none;">
+                <div class="service-icon" style="font-size: 2.5rem;">🚗</div>
+                <h3>Gestionar Flota</h3>
+                <p>Añade, edita o elimina vehículos del catálogo.</p>
+            </a>
+
+            <a href="{% url 'panel_reservas' %}" class="service-card fade-in" style="text-decoration: none;">
+                <div class="service-icon" style="font-size: 2.5rem;">📅</div>
+                <h3>Gestionar Reservas</h3>
+                <p>Visualiza y actualiza el estado de las reservas de los clientes.</p>
+            </a>
+
+            <a href="{% url 'panel_mantenimiento' %}" class="service-card fade-in" style="text-decoration: none;">
+                <div class="service-icon" style="font-size: 2.5rem;">🛠️</div>
+                <h3>Consultar Mantenimiento</h3>
+                <p>Revisa la guía de costos de mantenimiento para la flota.</p>
+            </a>
+
+        </div>
     </div>
 </main>
 {% endblock %}

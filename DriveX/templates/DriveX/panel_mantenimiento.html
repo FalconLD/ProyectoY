@@ -1,0 +1,108 @@
+{% extends 'DriveX/base.html' %}
+
+{% block title %}Guía de Mantenimiento - Panel de Administración{% endblock %}
+
+{% block content %}
+<main style="padding-top: 100px; padding-bottom: 3rem;">
+    <div class="container">
+        <a href="{% url 'panel_administracion' %}" style="color: var(--primary-gold); text-decoration: none; margin-bottom: 2rem; display: inline-block;">&larr; Volver al Panel Principal</a>
+
+        <div class="section-title fade-in">
+            <h2>Guía de Costos de Mantenimiento Preventivo</h2>
+            <p>Esta información es ideal para construir un Árbol Generador Mínimo (Prim o Kruskal), considerando los costos como pesos de las aristas.</p>
+        </div>
+
+        <h3 style="color: var(--primary-gold); margin-top: 3rem; margin-bottom: 1rem;">🛠️ Mantenimiento Preventivo por Tipo de Servicio</h3>
+        <div class="admin-table-container">
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>Servicio</th>
+                        <th>Mercedes-Benz Clase S</th>
+                        <th>Bentley Continental GT Híbrido</th>
+                        <th>Audi RS e-tron GT Eléctrico</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Aceite de motor</td>
+                        <td>US$ 80–100</td>
+                        <td>US$ 80–100</td>
+                        <td>US$ 0 (sin aceite de motor)</td>
+                    </tr>
+                    <tr>
+                        <td>Filtros</td>
+                        <td>US$ 20–50 cada uno</td>
+                        <td>US$ 20–50 cada uno</td>
+                        <td>US$ 20–50 cada uno</td>
+                    </tr>
+                    <tr>
+                        <td>Bujías</td>
+                        <td>US$ 15–25 cada una</td>
+                        <td>US$ 15–25 cada una</td>
+                        <td>US$ 0 (sin bujías)</td>
+                    </tr>
+                    <tr>
+                        <td>Pastillas de freno</td>
+                        <td>US$ 100–150 por eje</td>
+                        <td>US$ 100–150 por eje</td>
+                        <td>US$ 100–150 por eje</td>
+                    </tr>
+                    <tr>
+                        <td>Líquido de frenos</td>
+                        <td>US$ 12–15 por litro</td>
+                        <td>US$ 12–15 por litro</td>
+                        <td>US$ 12–15 por litro</td>
+                    </tr>
+                    <tr>
+                        <td>Correa de distribución</td>
+                        <td>US$ 100–150</td>
+                        <td>US$ 100–150</td>
+                        <td>US$ 0 (sin correa de distribución)</td>
+                    </tr>
+                    <tr>
+                        <td>Neumáticos</td>
+                        <td>US$ 150–250 cada uno</td>
+                        <td>US$ 300–500 cada uno</td>
+                        <td>US$ 300–500 cada uno</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h3 style="color: var(--primary-gold); margin-top: 3rem; margin-bottom: 1rem;">💰 Costos Anuales Estimados de Mantenimiento</h3>
+        <div class="admin-table-container">
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>Vehículo</th>
+                        <th>Costo Anual Estimado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Mercedes-Benz Clase S</td>
+                        <td>US$ 1,500–2,000</td>
+                    </tr>
+                    <tr>
+                        <td>Bentley Continental GT Híbrido</td>
+                        <td>US$ 2,000–2,500</td>
+                    </tr>
+                    <tr>
+                        <td>Audi RS e-tron GT Eléctrico</td>
+                        <td>US$ 1,000–1,500</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div style="margin-top: 3rem; background: var(--secondary-dark); padding: 1.5rem; border-radius: 8px;">
+            <h3 style="color: var(--primary-gold); margin-bottom: 1rem;">📌 Notas Importantes</h3>
+            <p style="margin-bottom: 0.5rem;"><strong>Mercedes-Benz Clase S:</strong> El mantenimiento incluye cambios de aceite, reemplazo de filtros, bujías y pastillas de freno.</p>
+            <p style="margin-bottom: 0.5rem;"><strong>Bentley Continental GT Híbrido:</strong> Además de los servicios mencionados, se considera el mantenimiento del sistema híbrido, lo que puede aumentar los costos.</p>
+            <p><strong>Audi RS e-tron GT Eléctrico:</strong> Los vehículos eléctricos requieren menos mantenimiento en términos de motor, pero los costos de neumáticos y frenos pueden ser similares a los de los vehículos de combustión interna.</p>
+        </div>
+
+    </div>
+</main>
+{% endblock %}

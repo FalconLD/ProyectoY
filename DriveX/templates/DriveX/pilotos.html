@@ -1,0 +1,38 @@
+{% extends 'DriveX/base.html' %}
+{% load static %}
+
+{% block title %}Pilotos Premium - DriveX{% endblock %}
+
+{% block content %}
+
+<main>
+    <section class="services">
+        <div class="container">
+            <div class="section-title fade-in"> 
+                <br>
+                <h2>Pilotos Destacados</h2>
+                <p>Conduce la excelencia con los mejores pilotos de F1 y Rally</p>
+            </div>
+            <div class="services-grid">
+
+                {% for piloto in pilotos %}
+                <div class="service-card fade-in">
+                    <div class="service-img">
+                        <img src="{% static 'DriveX/images/piloto_placeholder.png' %}" alt="{{ piloto.nombre }}">
+                    </div>
+                    <h3>{{ piloto.nombre }}</h3>
+                    <p><strong>Disciplina:</strong> {{ piloto.disciplina }}</p>
+                    <p><strong>Edad:</strong> {{ piloto.edad }} años</p>
+                    <p><strong>Altura:</strong> {{ piloto.altura_cm }} cm</p>
+                    <p><strong>Experiencia:</strong> {{ piloto.experiencia_años }} años</p>
+                    <p><strong>Idiomas:</strong> {{ piloto.idiomas }}</p>
+                    <p><strong>Calificación:</strong> {{ piloto.calificacion }} / 5 ⭐</p>
+                </div>
+                {% endfor %}
+
+            </div>
+        </div>
+    </section>
+</main>
+
+{% endblock %}

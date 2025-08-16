@@ -1,10 +1,15 @@
+import csv
+from datetime import datetime
+from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth import login as auth_login, authenticate, logout as auth_logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required, user_passes_test
-from .models import Vehiculo, Categoria, Reserva
+from django.db.models import Count
+from .models import Vehiculo, Categoria, Reserva, Sucursal, Ruta
 from .forms import ReservaForm, ContactoForm, VehiculoForm, CustomUserCreationForm
+from .utils import dijkstra
 
 # ========= Vistas Principales =========
 
@@ -14,31 +19,16 @@ def index(request):
     return render(request, 'DriveX/index.html', context)
 
 def lista_categorias(request):
-    """
-    Esta vista tiene doble funcionalidad:
-    - Si no hay parámetro de búsqueda, muestra la lista de categorías.
-    - Si hay un parámetro 'q' en la URL, busca vehículos y muestra los resultados.
-    """
     search_query = request.GET.get('q', None)
-    
-    # --- Línea de depuración ---
-    print(f"La consulta de búsqueda recibida es: '{search_query}'")
-    
     context = {}
-    
     if search_query:
-        # Si hay una consulta de búsqueda, filtramos los vehículos.
         vehiculos_encontrados = Vehiculo.objects.filter(nombre__icontains=search_query)
         context['vehiculos'] = vehiculos_encontrados
         context['search_query'] = search_query
     else:
-        # Si no hay búsqueda, mostramos las categorías.
         categorias = Categoria.objects.all()
         context['categorias'] = categorias
-
     return render(request, 'DriveX/vehiculos.html', context)
-
-# SE HA ELIMINADO LA SEGUNDA DEFINICIÓN REDUNDANTE DE 'lista_categorias' QUE ESTABA AQUÍ.
 
 def vehiculos_por_categoria(request, categoria_slug):
     categoria = get_object_or_404(Categoria, slug=categoria_slug)
@@ -80,7 +70,6 @@ def contacto(request):
             messages.error(request, 'Por favor, completa todos los campos obligatorios correctamente.')
     else:
         form = ContactoForm()
-    
     return render(request, 'DriveX/contacto.html', {'form': form})
 
 # ========= Vistas de Contenido Estático =========
@@ -96,6 +85,34 @@ def sobre_nosotros(request):
 
 def promociones(request):
     return render(request, 'DriveX/promociones.html')
+
+def calcular_ruta(request):
+    sucursales = Sucursal.objects.all()
+    origen_pk = request.GET.get('origen')
+    destino_pk = request.GET.get('destino')
+    
+    context = {
+        'sucursales': sucursales,
+        'origen_pk': int(origen_pk) if origen_pk else None,
+        'destino_pk': int(destino_pk) if destino_pk else None,
+    }
+
+    if origen_pk and destino_pk and origen_pk != destino_pk:
+        rutas = Ruta.objects.all()
+        grafo = {s.nombre: {} for s in sucursales}
+        for ruta in rutas:
+            grafo[ruta.origen.nombre][ruta.destino.nombre] = ruta.distancia
+            grafo[ruta.destino.nombre][ruta.origen.nombre] = ruta.distancia
+
+        origen = get_object_or_404(Sucursal, pk=origen_pk)
+        destino = get_object_or_404(Sucursal, pk=destino_pk)
+
+        distancia, ruta_optima = dijkstra(grafo, origen.nombre, destino.nombre)
+
+        context['distancia'] = distancia if distancia != float('infinity') else -1
+        context['ruta_optima'] = ruta_optima
+        
+    return render(request, 'DriveX/calcular_ruta.html', context)
 
 # ========= Vistas de Autenticación =========
 
@@ -140,10 +157,29 @@ def es_administrador(user):
 
 @user_passes_test(es_administrador, login_url='login')
 def panel_administracion(request):
+    """
+    Esta vista actúa como una página principal o "hub" para las diferentes
+    secciones del panel de administración.
+    """
+    return render(request, 'DriveX/panel_administracion.html')
+
+@user_passes_test(es_administrador, login_url='login')
+def panel_flota(request):
+    """
+    Esta vista muestra la tabla con la flota de vehículos para su gestión (CRUD).
+    """
     vehiculos = Vehiculo.objects.all().order_by('categoria', 'nombre')
     context = {'vehiculos': vehiculos}
-    return render(request, 'DriveX/panel_administracion.html', context)
+    return render(request, 'DriveX/panel_flota.html', context)
 
+@user_passes_test(es_administrador, login_url='login')
+def panel_mantenimiento(request):
+    """
+    Esta vista muestra la página informativa sobre los costos de mantenimiento.
+    """
+    return render(request, 'DriveX/panel_mantenimiento.html')
+
+# --- CRUD de Vehículos ---
 @user_passes_test(es_administrador, login_url='login')
 def vehiculo_add(request):
     if request.method == 'POST':
@@ -151,10 +187,9 @@ def vehiculo_add(request):
         if form.is_valid():
             form.save()
             messages.success(request, 'Vehículo añadido con éxito.')
-            return redirect('panel_administracion')
+            return redirect('panel_flota') # CORREGIDO: Redirige al panel de flota
     else:
         form = VehiculoForm()
-    
     context = {'form': form, 'form_title': 'Añadir Nuevo Vehículo'}
     return render(request, 'DriveX/vehiculo_form.html', context)
 
@@ -166,10 +201,9 @@ def vehiculo_edit(request, pk):
         if form.is_valid():
             form.save()
             messages.success(request, f'El vehículo "{vehiculo.nombre}" ha sido actualizado con éxito.')
-            return redirect('panel_administracion')
+            return redirect('panel_flota') # CORREGIDO: Redirige al panel de flota
     else:
         form = VehiculoForm(instance=vehiculo)
-
     context = {'form': form, 'form_title': f'Editar Vehículo: {vehiculo.nombre}'}
     return render(request, 'DriveX/vehiculo_form.html', context)
 
@@ -180,5 +214,80 @@ def vehiculo_delete(request, pk):
         vehiculo_nombre = vehiculo.nombre
         vehiculo.delete()
         messages.success(request, f'El vehículo "{vehiculo_nombre}" ha sido eliminado con éxito.')
-        return redirect('panel_administracion')
+        return redirect('panel_flota') # CORREGIDO: Redirige al panel de flota
     return render(request, 'DriveX/vehiculo_confirm_delete.html', {'vehiculo': vehiculo})
+
+# --- GESTIÓN DE RESERVAS ---
+@user_passes_test(es_administrador, login_url='login')
+def panel_reservas(request):
+    active_filter = request.GET.get('estado', None)
+    reservas = Reserva.objects.all().select_related('usuario', 'vehiculo').order_by('-fecha_servicio')
+
+    if active_filter and active_filter in dict(Reserva.ESTADO_CHOICES):
+        reservas = reservas.filter(estado=active_filter)
+    
+    context = {
+        'reservas': reservas,
+        'estados': dict(Reserva.ESTADO_CHOICES),
+        'active_filter': active_filter,
+    }
+    return render(request, 'DriveX/panel_reservas.html', context)
+
+@user_passes_test(es_administrador, login_url='login')
+def update_reserva_status(request, pk):
+    if request.method == 'POST':
+        reserva = get_object_or_404(Reserva, pk=pk)
+        nuevo_estado = request.POST.get('estado')
+        if nuevo_estado in dict(Reserva.ESTADO_CHOICES):
+            reserva.estado = nuevo_estado
+            reserva.save()
+            messages.success(request, f"El estado de la reserva ha sido actualizado a '{reserva.get_estado_display()}'.")
+    return redirect('panel_reservas')
+
+@user_passes_test(es_administrador, login_url='login')
+def exportar_reservas_csv(request):
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = f'attachment; filename="reporte_reservas_{datetime.now().strftime("%Y-%m-%d")}.csv"'
+    response.write(u'\ufeff'.encode('utf8'))
+
+    writer = csv.writer(response)
+    writer.writerow(['ID Reserva', 'Cliente', 'Email', 'Vehículo', 'Fecha Servicio', 'Estado'])
+    
+    reservas = Reserva.objects.select_related('usuario', 'vehiculo').all()
+
+    for reserva in reservas:
+        writer.writerow([
+            reserva.pk,
+            reserva.usuario.username,
+            reserva.email,
+            reserva.vehiculo.nombre if reserva.vehiculo else 'N/A',
+            reserva.fecha_servicio,
+            reserva.get_estado_display()
+        ])
+    
+    return response
+
+def pilotos_view(request):
+    pilotos = [
+        {"nombre": "Michael Schumacher", "disciplina": "F1", "edad": 56, "altura_cm": 174, "experiencia_años": 30, "idiomas": "Alemán, Inglés", "calificacion": 5.0},
+        {"nombre": "Lewis Hamilton", "disciplina": "F1", "edad": 40, "altura_cm": 174, "experiencia_años": 20, "idiomas": "Inglés", "calificacion": 4.9},
+        {"nombre": "Juan Manuel Fangio", "disciplina": "F1", "edad": 84, "altura_cm": 175, "experiencia_años": 15, "idiomas": "Español, Italiano", "calificacion": 5.0},
+        {"nombre": "Ayrton Senna", "disciplina": "F1", "edad": 34, "altura_cm": 175, "experiencia_años": 10, "idiomas": "Portugués, Inglés", "calificacion": 5.0},
+        {"nombre": "Alain Prost", "disciplina": "F1", "edad": 68, "altura_cm": 170, "experiencia_años": 20, "idiomas": "Francés, Inglés", "calificacion": 4.8},
+        {"nombre": "Sébastien Loeb", "disciplina": "RALLY", "edad": 50, "altura_cm": 176, "experiencia_años": 25, "idiomas": "Francés, Inglés", "calificacion": 5.0},
+        {"nombre": "Sébastien Ogier", "disciplina": "RALLY", "edad": 38, "altura_cm": 175, "experiencia_años": 15, "idiomas": "Francés, Inglés", "calificacion": 4.9},
+        {"nombre": "Carlos Sainz", "disciplina": "RALLY", "edad": 58, "altura_cm": 175, "experiencia_años": 35, "idiomas": "Español, Inglés", "calificacion": 4.8},
+        {"nombre": "Tommi Mäkinen", "disciplina": "RALLY", "edad": 57, "altura_cm": 172, "experiencia_años": 20, "idiomas": "Finlandés, Inglés", "calificacion": 4.7},
+        {"nombre": "Juha Kankkunen", "disciplina": "RALLY", "edad": 65, "altura_cm": 178, "experiencia_años": 25, "idiomas": "Finlandés, Inglés", "calificacion": 4.8},
+        {"nombre": "Nelson Piquet", "disciplina": "F1", "edad": 69, "altura_cm": 177, "experiencia_años": 18, "idiomas": "Portugués, Inglés", "calificacion": 4.7},
+        {"nombre": "Niki Lauda", "disciplina": "F1", "edad": 70, "altura_cm": 170, "experiencia_años": 15, "idiomas": "Alemán, Inglés", "calificacion": 4.9},
+        {"nombre": "Marcus Grönholm", "disciplina": "RALLY", "edad": 57, "altura_cm": 182, "experiencia_años": 22, "idiomas": "Finlandés, Inglés", "calificacion": 4.8},
+        {"nombre": "Colin McRae", "disciplina": "RALLY", "edad": 37, "altura_cm": 178, "experiencia_años": 15, "idiomas": "Inglés", "calificacion": 4.9},
+        {"nombre": "Walter Röhrl", "disciplina": "RALLY", "edad": 75, "altura_cm": 175, "experiencia_años": 30, "idiomas": "Alemán, Inglés", "calificacion": 5.0},
+        {"nombre": "Fernando Alonso", "disciplina": "F1", "edad": 42, "altura_cm": 171, "experiencia_años": 20, "idiomas": "Español, Inglés", "calificacion": 4.8},
+        {"nombre": "Sebastian Vettel", "disciplina": "F1", "edad": 36, "altura_cm": 176, "experiencia_años": 15, "idiomas": "Alemán, Inglés", "calificacion": 4.7},
+        {"nombre": "Mika Häkkinen", "disciplina": "F1", "edad": 54, "altura_cm": 176, "experiencia_años": 12, "idiomas": "Finlandés, Inglés", "calificacion": 4.8},
+        {"nombre": "Didier Auriol", "disciplina": "RALLY", "edad": 64, "altura_cm": 174, "experiencia_años": 25, "idiomas": "Francés, Inglés", "calificacion": 4.7},
+        {"nombre": "Ari Vatanen", "disciplina": "RALLY", "edad": 70, "altura_cm": 177, "experiencia_años": 22, "idiomas": "Finlandés, Inglés", "calificacion": 4.8}
+    ]
+    return render(request, 'DriveX/pilotos.html', {'pilotos': pilotos})

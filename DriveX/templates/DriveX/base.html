@@ -6,11 +6,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Rental Car DriveX{% endblock %}</title>
-
+    <link rel="icon" href="{% static 'DriveX/images/Logo_DX.png' %}" type="image/png">
     <!-- Enlaces a Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Corinthia:wght@400;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Corinthia:wght@400;700&family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
 
     <!-- Enlace a tu hoja de estilos local. La línea {% load static %} de arriba es VITAL para que esto funcione. -->
     <link rel="stylesheet" href="{% static 'DriveX/css/styles.css' %}">
@@ -23,9 +25,10 @@
             <ul class="nav-links">
                 <li><a href="{% url 'index' %}">Inicio</a></li>
                 <li><a href="{% url 'vehiculos' %}">Vehículos</a></li>
+                <li><a href="{% url 'pilotos' %}">Choféres</a></li>
                 <li><a href="{% url 'reserva' %}">Reserva</a></li>
                 <li><a href="{% url 'contacto' %}">Contacto</a></li>
-                
+
                 {% if is_in_admin_group %}
                 <li><a href="{% url 'panel_administracion' %}" style="color: var(--primary-gold);">Panel Admin</a></li>
                 {% endif %}
@@ -55,7 +58,8 @@
         <div class="footer-container fade-in">
             <div class="footer-about">
                 <h4>Rental Car DriveX</h4>
-                <p>Ofrecemos una experiencia de transporte de lujo inigualable, con una flota de vehículos premium y un servicio impecable.</p>
+                <p>Ofrecemos una experiencia de transporte de lujo inigualable, con una flota de vehículos premium y un
+                    servicio impecable.</p>
             </div>
             <div class="footer-links">
                 <h4>Navegación</h4>
