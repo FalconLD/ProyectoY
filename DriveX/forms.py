@@ -24,6 +24,14 @@ class ReservaForm(forms.ModelForm):
             'tipo_servicio', 'direccion_recogida', 'destino', 
             'solicitudes_especiales'
         ]
+        
+        # =================================================================
+        # LÍNEA CLAVE AÑADIDA:
+        # Excluimos los campos que se asignan automáticamente en la vista.
+        # Esto soluciona el error que impedía que el formulario se guardara.
+        exclude = ['usuario', 'estado']
+        # =================================================================
+
         widgets = {
             'fecha_servicio': forms.DateInput(attrs={'type': 'date'}),
             'hora_servicio': forms.TimeInput(attrs={'type': 'time'}),

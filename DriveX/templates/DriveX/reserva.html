@@ -13,26 +13,30 @@
             </div>
 
             <div class="form-container fade-in">
-                {% if messages %}
-                    {% for message in messages %}
-                        <div class="alert alert-{{ message.tags }}">{{ message }}</div>
-                    {% endfor %}
-                {% endif %}
-
+                
                 <form id="reservation-form" method="post" action="{% url 'reserva' %}">
                     {% csrf_token %}
+
+                    <!-- Muestra errores generales que no pertenecen a un campo específico -->
+                    {% if form.non_field_errors %}
+                        <div class="alert alert-error">
+                            {% for error in form.non_field_errors %}
+                                <p>{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
 
                     <!-- Fila 1: Nombre y Email (dos columnas) -->
                     <div class="form-row">
                         <div class="form-group">
                             {{ form.nombre_completo.label_tag }}
                             {{ form.nombre_completo }}
-                            {% if form.nombre_completo.errors %}<div class="error-message">{{ form.nombre_completo.errors }}</div>{% endif %}
+                            {% if form.nombre_completo.errors %}<div class="error-message">{{ form.nombre_completo.errors|first }}</div>{% endif %}
                         </div>
                         <div class="form-group">
                             {{ form.email.label_tag }}
                             {{ form.email }}
-                            {% if form.email.errors %}<div class="error-message">{{ form.email.errors }}</div>{% endif %}
+                            {% if form.email.errors %}<div class="error-message">{{ form.email.errors|first }}</div>{% endif %}
                         </div>
                     </div>
 
@@ -41,12 +45,12 @@
                         <div class="form-group">
                             {{ form.telefono.label_tag }}
                             {{ form.telefono }}
-                            {% if form.telefono.errors %}<div class="error-message">{{ form.telefono.errors }}</div>{% endif %}
+                            {% if form.telefono.errors %}<div class="error-message">{{ form.telefono.errors|first }}</div>{% endif %}
                         </div>
                         <div class="form-group">
                             {{ form.vehiculo.label_tag }}
                             {{ form.vehiculo }}
-                            {% if form.vehiculo.errors %}<div class="error-message">{{ form.vehiculo.errors }}</div>{% endif %}
+                            {% if form.vehiculo.errors %}<div class="error-message">{{ form.vehiculo.errors|first }}</div>{% endif %}
                         </div>
                     </div>
 
@@ -55,12 +59,12 @@
                         <div class="form-group">
                             {{ form.fecha_servicio.label_tag }}
                             {{ form.fecha_servicio }}
-                            {% if form.fecha_servicio.errors %}<div class="error-message">{{ form.fecha_servicio.errors }}</div>{% endif %}
+                            {% if form.fecha_servicio.errors %}<div class="error-message">{{ form.fecha_servicio.errors|first }}</div>{% endif %}
                         </div>
                         <div class="form-group">
                             {{ form.hora_servicio.label_tag }}
                             {{ form.hora_servicio }}
-                            {% if form.hora_servicio.errors %}<div class="error-message">{{ form.hora_servicio.errors }}</div>{% endif %}
+                            {% if form.hora_servicio.errors %}<div class="error-message">{{ form.hora_servicio.errors|first }}</div>{% endif %}
                         </div>
                     </div>
                     
@@ -69,12 +73,12 @@
                         <div class="form-group">
                             {{ form.duracion.label_tag }}
                             {{ form.duracion }}
-                            {% if form.duracion.errors %}<div class="error-message">{{ form.duracion.errors }}</div>{% endif %}
+                            {% if form.duracion.errors %}<div class="error-message">{{ form.duracion.errors|first }}</div>{% endif %}
                         </div>
                         <div class="form-group">
                             {{ form.tipo_servicio.label_tag }}
                             {{ form.tipo_servicio }}
-                            {% if form.tipo_servicio.errors %}<div class="error-message">{{ form.tipo_servicio.errors }}</div>{% endif %}
+                            {% if form.tipo_servicio.errors %}<div class="error-message">{{ form.tipo_servicio.errors|first }}</div>{% endif %}
                         </div>
                     </div>
 
@@ -82,19 +86,19 @@
                     <div class="form-group">
                         {{ form.direccion_recogida.label_tag }}
                         {{ form.direccion_recogida }}
-                        {% if form.direccion_recogida.errors %}<div class="error-message">{{ form.direccion_recogida.errors }}</div>{% endif %}
+                        {% if form.direccion_recogida.errors %}<div class="error-message">{{ form.direccion_recogida.errors|first }}</div>{% endif %}
                     </div>
                     <div class="form-group">
                         {{ form.destino.label_tag }}
                         {{ form.destino }}
-                        {% if form.destino.errors %}<div class="error-message">{{ form.destino.errors }}</div>{% endif %}
+                        {% if form.destino.errors %}<div class="error-message">{{ form.destino.errors|first }}</div>{% endif %}
                     </div>
                     
                     <!-- Fila 6: Solicitudes Especiales (campo ancho) -->
                     <div class="form-group">
                         {{ form.solicitudes_especiales.label_tag }}
                         {{ form.solicitudes_especiales }}
-                        {% if form.solicitudes_especiales.errors %}<div class="error-message">{{ form.solicitudes_especiales.errors }}</div>{% endif %}
+                        {% if form.solicitudes_especiales.errors %}<div class="error-message">{{ form.solicitudes_especiales.errors|first }}</div>{% endif %}
                     </div>
 
                     <div style="text-align: center; margin-top: 2rem;">

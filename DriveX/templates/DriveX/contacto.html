@@ -12,12 +12,6 @@
                 <p>¿Tienes alguna pregunta? Rellena el formulario y te responderemos lo antes posible.</p>
             </div>
 
-            {% if messages %}
-                {% for message in messages %}
-                    <div class="alert alert-{{ message.tags }}">{{ message }}</div>
-                {% endfor %}
-            {% endif %}
-
             <!-- CORREGIDO: El formulario ahora renderiza el ContactoForm de Django -->
             <form action="{% url 'contacto' %}" method="post" class="form-container fade-in">
                 {% csrf_token %}

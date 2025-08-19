@@ -10,12 +10,6 @@
         <h2 class="section-title">Gestionar Flota de Vehículos</h2>
         <p>Desde aquí puedes añadir, editar y eliminar vehículos de la flota.</p>
 
-        {% if messages %}
-            {% for message in messages %}
-                <div class="alert alert-{{ message.tags }}">{{ message }}</div>
-            {% endfor %}
-        {% endif %}
-        
         <div style="margin-bottom: 2rem; text-align: right;">
             <a href="{% url 'vehiculo_add' %}" class="cta-button">Añadir Nuevo Vehículo</a>
         </div>

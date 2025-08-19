@@ -14,7 +14,7 @@
         href="https://fonts.googleapis.com/css2?family=Corinthia:wght@400;700&family=Poppins:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
 
-    <!-- Enlace a tu hoja de estilos local. La línea {% load static %} de arriba es VITAL para que esto funcione. -->
+    <!-- Enlace a tu hoja de estilos local -->
     <link rel="stylesheet" href="{% static 'DriveX/css/styles.css' %}">
 </head>
 
@@ -38,7 +38,7 @@
             <div class="nav-auth">
                 {% if user.is_authenticated %}
                 <span>Bienvenido, {{ user.username }}</span>
-                <a href="{% url 'mis_reservas' %}" class="auth-button">Mis Reservas</a> <!-- BOTÓN AÑADIDO -->
+                <a href="{% url 'mis_reservas' %}" class="auth-button">Mis Reservas</a>
                 <a href="{% url 'logout' %}" class="auth-button">Cerrar Sesión</a>
                 {% else %}
                 <a href="{% url 'login' %}" class="auth-button">Iniciar Sesión</a>
@@ -54,7 +54,6 @@
 
         </nav>
     </header>
-
 
     <main>
         {% block content %}
@@ -80,8 +79,9 @@
             </div>
             <div class="footer-contact">
                 <h4>Contacto</h4>
-                <p><span>Email:</span> info@drivex.com</p>
-                <p><span>Teléfono:</span> +123 456 7890</p>
+                <p><span>Email:</span> drivex_rentalcar@gmail.com</p>
+                <p><span>Teléfono:</span> +593 983 223 670</p>
+                <p><span>Teléfono:</span> +593 967 231 641</p>
                 <p><a href="{% url 'contacto' %}" style="color: var(--primary-gold);">Formulario de Contacto</a></p>
             </div>
         </div>
@@ -90,9 +90,27 @@
         </div>
     </footer>
 
-    <!-- Enlace a tu archivo JavaScript -->
+    <!-- ======================= INICIO SECCIÓN DE SCRIPTS ======================= -->
+    
+    <!-- Contenedor para las notificaciones Toast que creará JS -->
+    <div id="toast-container"></div>
+
+    <!-- Contenedor OCULTO con los mensajes de Django para que JS los lea -->
+    {% if messages %}
+    <div id="django-messages" style="display: none;">
+        {% for message in messages %}
+            <div class="django-message-item {{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <!-- Enlace a tu archivo JavaScript principal -->
     <script src="{% static 'DriveX/js/script.js' %}"></script>
+    
+    <!-- Bloque para que las plantillas hijas puedan añadir su propio JavaScript -->
     {% block extra_js %}{% endblock %}
+    
+    <!-- ======================== FIN SECCIÓN DE SCRIPTS ======================= -->
 </body>
 
 </html>

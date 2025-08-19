@@ -9,13 +9,6 @@
         <div class="container">
             <h2 class="section-title">Iniciar Sesión</h2>
 
-            <!-- Mostramos mensajes de Django, como "Has cerrado sesión" -->
-            {% if messages %}
-                {% for message in messages %}
-                    <div class="alert alert-{{ message.tags }}">{{ message }}</div>
-                {% endfor %}
-            {% endif %}
-            
             <form method="post" class="form-container">
                 {% csrf_token %}
 

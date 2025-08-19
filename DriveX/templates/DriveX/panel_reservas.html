@@ -7,13 +7,7 @@
     <div class="container">
         <h2 class="section-title">Gestionar Reservas</h2>
         <p>Aquí puedes ver y administrar todas las reservas de los clientes.</p>
-
-        {% if messages %}
-            {% for message in messages %}
-                <div class="alert alert-{{ message.tags }}">{{ message }}</div>
-            {% endfor %}
-        {% endif %}
-        
+     
         <!-- Filtros y Acciones -->
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
             <div class="filters">
