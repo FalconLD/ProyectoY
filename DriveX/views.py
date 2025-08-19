@@ -150,6 +150,18 @@ def logout_view(request):
     messages.info(request, "Has cerrado sesión exitosamente.")
     return redirect('index')
 
+# ========= VISTA PARA "MIS RESERVAS" (NUEVO) =========
+@login_required
+def mis_reservas(request):
+    """
+    Muestra al usuario autenticado una lista con todas sus reservas.
+    """
+    reservas_usuario = Reserva.objects.filter(usuario=request.user).order_by('-fecha_servicio')
+    context = {
+        'reservas': reservas_usuario
+    }
+    return render(request, 'DriveX/mis_reservas.html', context)
+
 # ========= Vistas del Panel de Administración =========
 
 def es_administrador(user):

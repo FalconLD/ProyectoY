@@ -17,7 +17,8 @@
                 <p style="color: var(--text-gray); margin-bottom: 2rem;">Esta acción no se puede deshacer.</p>
                 
                 <div class="form-actions" style="display: flex; justify-content: center; gap: 1rem; margin-top: 2rem;">
-                    <a href="{% url 'panel_administracion' %}" class="auth-button">Cancelar</a>
+                    <!-- CAMBIO REALIZADO AQUÍ: El enlace ahora apunta a 'panel_flota' -->
+                    <a href="{% url 'panel_flota' %}" class="auth-button">Cancelar</a>
                     <!-- Este botón rojo enviará la petición POST para confirmar -->
                     <button type="submit" class="cta-button" style="background: #a43a3a;">Sí, Eliminar</button>
                 </div>

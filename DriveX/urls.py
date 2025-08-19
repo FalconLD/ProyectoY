@@ -21,6 +21,7 @@ urlpatterns = [
     path('registro/', views.registro, name='registro'),
     path('login/', views.login_view, name='login'),
     path('logout/', views.logout_view, name='logout'),
+    path('mis-reservas/', views.mis_reservas, name='mis_reservas'), # <-- NUEVA URL
     path('password_reset/', auth_views.PasswordResetView.as_view(template_name='DriveX/password_reset.html'), name='password_reset'),
     path('password_reset/done/', auth_views.PasswordResetDoneView.as_view(template_name='DriveX/password_reset_done.html'), name='password_reset_done'),
     path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(template_name='DriveX/password_reset_confirm.html'), name='password_reset_confirm'),

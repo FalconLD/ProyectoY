@@ -19,3 +19,5 @@ __pycache__/
 
 # Backups de la base de datos
 data_backup.json
+
+db.sqlite3

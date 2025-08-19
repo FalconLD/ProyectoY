@@ -46,7 +46,8 @@
                 {% endfor %}
 
                 <div class="form-actions" style="display: flex; justify-content: space-between; margin-top: 2rem;">
-                    <a href="{% url 'panel_administracion' %}" class="auth-button">Cancelar</a>
+                    <!-- CAMBIO REALIZADO AQUÍ: El enlace ahora apunta a 'panel_flota' -->
+                    <a href="{% url 'panel_flota' %}" class="auth-button">Cancelar</a>
                     <button type="submit" class="cta-button">Guardar Cambios</button>
                 </div>
             </form>

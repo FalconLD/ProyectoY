@@ -4,42 +4,38 @@
 {% block title %}Pilotos Premium - DriveX{% endblock %}
 
 {% block content %}
-
 <main>
-    <section class="services">
+    <section class="pilotos-section">
         <div class="container">
             <div class="section-title fade-in">
-                <br>
                 <h2>Pilotos Premium</h2>
                 <p>Conduce la excelencia con los mejores pilotos de F1 y Rally</p>
             </div>
+            
             <div class="pilotos-gallery">
-
                 {% for piloto in pilotos %}
-                <div class="service-card fade-in">
-                    <div class="service-img">
+                <div class="piloto-card fade-in">
+                    <div class="piloto-img-container">
                         {% if piloto.imagen %}
-                        <img src="{{ piloto.imagen.url }}" alt="{{ piloto.nombre }}">
+                        <img src="{{ piloto.imagen.url }}" alt="{{ piloto.nombre }}" loading="lazy">
                         {% else %}
-                        <img src="{% static 'DriveX/images/piloto_placeholder.png' %}" alt="{{ piloto.nombre }}">
+                        <img src="{% static 'DriveX/images/piloto_placeholder.png' %}" alt="{{ piloto.nombre }}" loading="lazy">
                         {% endif %}
-                        <div class="service-info">
-                            <p><strong>Disciplina:</strong> {{ piloto.disciplina }}</p>
-                            <p><strong>Edad:</strong> {{ piloto.edad }} años</p>
-                            <p><strong>Altura:</strong> {{ piloto.altura_cm }} cm</p>
-                            <p><strong>Experiencia:</strong> {{ piloto.experiencia_años }} años</p>
-                            <p><strong>Idiomas:</strong> {{ piloto.idiomas }}</p>
-                            <p><strong>Calificación:</strong> {{ piloto.calificacion }} / 5 ⭐</p>
-                        </div>
                     </div>
-                    <h3>{{ piloto.nombre }}</h3>
+                    
+                    <div class="piloto-info">
+                        <h3>{{ piloto.nombre }}</h3>
+                        <p><strong>Disciplina:</strong> {{ piloto.disciplina }}</p>
+                        <p><strong>Edad:</strong> {{ piloto.edad }} años</p>
+                        <p><strong>Altura:</strong> {{ piloto.altura_cm }} cm</p>
+                        <p><strong>Experiencia:</strong> {{ piloto.experiencia_años }} años</p>
+                        <p><strong>Idiomas:</strong> {{ piloto.idiomas }}</p>
+                        <p><strong>Calificación:</strong> {{ piloto.calificacion }} / 5 ⭐</p>
+                    </div>
                 </div>
-
                 {% endfor %}
-
             </div>
         </div>
     </section>
 </main>
-
 {% endblock %}

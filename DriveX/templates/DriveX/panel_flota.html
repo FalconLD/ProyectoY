@@ -39,6 +39,7 @@
                         <td>{{ vehiculo.categoria.nombre }}</td>
                         <td>{% if vehiculo.es_destacado %}✔️{% else %}❌{% endif %}</td>
                         <td>
+                            <!-- CLASES CSS APLICADAS AQUÍ -->
                             <a href="{% url 'vehiculo_edit' vehiculo.pk %}" class="action-link">Editar</a>
                             <a href="{% url 'vehiculo_delete' vehiculo.pk %}" class="action-link delete">Eliminar</a>
                         </td>

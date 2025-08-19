@@ -1,22 +1,24 @@
 /* ===================================================================
-   TABLA DE CONTENIDOS
+   TABLA DE CONTENIDOS OPTIMIZADA
    ===================================================================
-   0. FUENTES PERSONALIZADAS Y GLOBALES
-   1. HEADER Y NAVEGACIÓN
-   2. SECCIÓN HERO
-   3. SECCIÓN DE SERVICIOS
-   4. SECCIÓN DE VEHÍCULOS DESTACADOS
-   5. ESTILOS GENERALES DE FORMULARIO
-   6. FOOTER (PIE DE PÁGINA)
-   7. ANIMACIONES
-   8. DISEÑO RESPONSIVE (MEDIA QUERIES)
-   9. ESTILOS DE UTILIDAD (Alertas, Validación)
+   0. VARIABLES Y ESTILOS GLOBALES
+   1. COMPONENTES DE INTERFAZ
+      - Header y Navegación
+      - Footer
+      - Tarjetas
+      - Formularios
+      - Tablas
+      - Alertas
+   2. SECCIONES PRINCIPALES
+      - Hero
+      - Galería
+      - Servicios
+      - Vehículos
+   3. ANIMACIONES Y EFECTOS
+   4. DISEÑO RESPONSIVE
    =================================================================== */
 
-
-/* ======================= 0. FUENTES PERSONALIZADAS Y GLOBALES ======================= */
-
-/* Declaración de la fuente personalizada para el logo */
+/* ======================= 0. VARIABLES Y ESTILOS GLOBALES ======================= */
 :root {
     --primary-gold: #C9A74D;
     --dark-bg: #0A0A0A;
@@ -64,70 +66,9 @@ body {
     font-size: 1.1rem;
 }
 
-/* ======================= INTRO SPLASH SCREEN ======================= */
+/* ======================= 1. COMPONENTES DE INTERFAZ ======================= */
 
-#intro-splash {
-    position: fixed; /* Lo fija sobre toda la página */
-    top: 0;
-    left: 0;
-    width: 100vw; /* 100% del ancho de la ventana */
-    height: 100vh; /* 100% del alto de la ventana */
-    z-index: 9999; /* Se asegura de que esté por encima de todo */
-    background-color: #000; /* Fondo negro por si el video tarda en cargar */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: opacity 1s ease-out; /* Para una desaparición suave */
-}
-
-#intro-splash.hidden {
-    opacity: 0; /* Lo hacemos transparente para que desaparezca */
-}
-
-#intro-splash video {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* Hace que el video cubra todo el espacio sin deformarse */
-}
-
-.splash-title {
-    position: relative; /* Lo ponemos relativo para que el z-index funcione */
-    z-index: 10; /* Se asegura de que el título esté por encima del video */
-    font-size: 6rem; /* Tamaño grande y llamativo */
-    color: var(--primary-gold); /* Usamos tu variable de color dorado */
-    font-family: 'Corinthia', cursive;
-    font-weight: 600;
-    text-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
-
-    /* ¡La animación elegante! */
-    animation: fadeInOut 5s ease-in-out forwards; /* Ajusta la duración (5s) a tus necesidades */
-}
-
-/* Keyframes para la animación del título */
-@keyframes fadeInOut {
-    0% {
-        opacity: 0;
-        transform: scale(0.9);
-    }
-    20% {
-        opacity: 1;
-        transform: scale(1);
-    }
-    80% {
-        opacity: 1;
-        transform: scale(1);
-    }
-    100% {
-        opacity: 0;
-        transform: scale(0.9);
-    }
-}
-
-/* ======================= 1. HEADER Y NAVEGACIÓN ======================= */
-
+/* ---------------------- Header y Navegación ---------------------- */
 header {
     position: fixed;
     top: 0;
@@ -146,7 +87,7 @@ nav {
     justify-content: space-between;
     align-items: center;
     padding: 0 2rem;
-    flex-wrap: wrap; /* importante para móvil */
+    flex-wrap: wrap;
 }
 
 .logo {
@@ -165,7 +106,6 @@ nav {
     transition: max-height 0.4s ease;
 }
 
-/* enlaces */
 .nav-links a {
     color: var(--text-white);
     text-decoration: none;
@@ -193,7 +133,6 @@ nav {
     width: 100%;
 }
 
-/* auth buttons */
 .nav-auth {
     display: flex;
     align-items: center;
@@ -232,7 +171,6 @@ nav {
     color: var(--primary-gold);
 }
 
-/* botón móvil */
 .mobile-menu-btn {
     display: none;
     background: none;
@@ -242,624 +180,7 @@ nav {
     cursor: pointer;
 }
 
-/* ======================= Responsive móvil ======================= */
-@media (max-width: 992px) {
-    .mobile-menu-btn {
-        display: block;
-    }
-
-    .nav-links {
-        flex-direction: column;
-        width: 100%;
-        max-height: 0;
-        overflow: hidden;
-    }
-
-    .nav-links.show {
-        max-height: 1000px; /* ajusta según cantidad de enlaces */
-    }
-
-    .nav-links li {
-        width: 100%;
-        text-align: center;
-        margin: 0.5rem 0;
-    }
-
-    .nav-auth {
-        flex-direction: column;
-        width: 100%;
-        margin-top: 1rem;
-        text-align: center;
-    }
-}
-
-
-/* ======================= 2. SECCIÓN HERO ======================= */
-
-.hero {
-    height: 100vh;
-    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.7)),
-                url('../images/fondo.png');
-    background-size: cover; /* Hace que la imagen cubra toda la sección sin deformarse */
-    background-position: center; /* Centra la imagen */
-    background-repeat: no-repeat; /* Evita que la imagen se repita si es pequeña */
-    background-attachment: fixed; /* Crea un elegante efecto de parallax al hacer scroll */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    position: relative;
-}
-
-.hero-content {
-    max-width: 800px;
-    padding: 0 2rem;
-    animation: fadeInUp 1s ease-out;
-}
-
-.hero h1 {
-    font-size: 3.5rem;
-    font-weight: 700;
-    margin-bottom: 1.5rem;
-    background: linear-gradient(135deg, var(--text-white), var(--primary-gold));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-}
-
-.hero p {
-    font-size: 1.3rem;
-    margin-bottom: 2.5rem;
-    color: var(--text-gray);
-    font-weight: 300;
-}
-
-.cta-button {
-    display: inline-block;
-    padding: 1rem 2.5rem;
-    background: linear-gradient(135deg, var(--primary-gold), #E6D08A);
-    color: var(--dark-bg);
-    text-decoration: none;
-    font-weight: 600;
-    border-radius: 50px;
-    transition: all 0.3s ease;
-    box-shadow: 0 10px 30px var(--shadow-gold);
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    border: none;
-    cursor: pointer;
-}
-
-.cta-button:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 15px 40px var(--shadow-gold);
-}
-
-/* ======================= 3. GALERÍA DE AUTOS ======================= */
-
-.autos-section {
-    padding: 5rem 2rem;
-    background: linear-gradient(145deg, #0d0d0d, #1a1a1a); /* Fondo elegante oscuro */
-    text-align: center;
-}
-
-.autos-section h2 {
-    font-size: 2.8rem;
-    margin-bottom: 3rem;
-    color: var(--primary-gold);
-    font-family: 'Poppins', sans-serif;
-}
-
-/* Galería con GRID */
-.autos-gallery {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 2rem;
-    justify-content: center;
-    align-items: stretch;
-}
-
-/* Cada tarjeta de auto */
-.auto-card {
-    background: #111;
-    border-radius: 15px;
-    overflow: hidden;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.auto-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 15px 35px rgba(0,0,0,0.7);
-}
-
-/* Imagen de auto */
-.auto-card img {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-    display: block;
-}
-
-/* Texto de auto */
-.auto-info {
-    padding: 1.5rem;
-    text-align: left;
-}
-
-.auto-info h3 {
-    font-size: 1.5rem;
-    color: var(--primary-gold);
-    margin-bottom: 0.5rem;
-}
-
-.auto-info p {
-    font-size: 1rem;
-    color: var(--text-gray);
-}
-
-/* GRID DE CATEGORÍAS */
-.categories-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 2rem;
-    margin-top: 2rem;
-}
-
-
-/* CONTENEDOR */
-.categories-gallery {
-    display: flex;
-    width: 100%;
-    height: 400px;
-    border-radius: 20px;
-    overflow: hidden;
-    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6);
-    transition: height 0.5s ease;
-}
-
-/* TARJETAS */
-.category-item {
-    flex-grow: 1;
-    width: 0; /* importante para el efecto */
-    position: relative;
-    transition: all 0.5s ease;
-    overflow: hidden;
-    cursor: pointer;
-}
-
-/* IMAGEN */
-.category-item img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    filter: grayscale(40%) brightness(70%);
-    transition: all 0.5s ease;
-}
-
-/* INFO (oculto al inicio) */
-.category-info {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    padding: 0.4rem;
-    text-align: center;
-    /* Degradado y blur */
-    background: linear-gradient(to top, rgba(0,0,0,0.6), rgba(0,0,0,0));
-    backdrop-filter: blur(6px) brightness(0.6);
-    text-shadow: 2px 2px 6px rgba(0,0,0,0.8);
-    /* Ajuste de visibilidad */
-    opacity: 1; /* título siempre visible */
-}
-
-
-/* Muestra la info al hacer hover */
-/* HOVER → SE EXPANDE */
-.category-item:hover {
-    flex-grow: 3;
-    box-shadow: 0 12px 30px #E6D08A; /* Sombra dorada al hacer hover */
-    width: 35%; /* Expande al 50% del contenedor */
-    z-index: 1; /* Asegura que esté por encima de otros elementos */
-    overflow: hidden; /* Evita que el contenido se desborde */
-    transition: flex-grow 0.5s ease, width 0.5s ease, box-shadow 0.5s ease;
-    cursor: pointer;
-    background: rgba(0, 0, 0, 0.5); /* Fondo oscuro al hacer hover */
-    border-radius: 20px; /* Mantiene el borde redondeado */
-}
-
-.category-item:hover img {
-    filter: grayscale(0%) brightness(100%);
-    transform: scale(1.05);
-}
-
-.category-item:hover .category-info {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-/* Título siempre visible */
-.category-info h3 {
-    font-size: 1.5rem;
-    margin-bottom: 0.5rem;
-    color: #E6D08A;
-    transition: all 0.5s ease;
-}
-
-/* Descripción y botón ocultos inicialmente */
-.category-info p,
-.category-info .cta-button { /* si tienes un botón dentro */
-    opacity: 0;
-    max-height: 0;
-    overflow: hidden;
-    transition: all 0.5s ease;
-}
-
-/* Hover: mostrar todo */
-.category-item:hover .category-info p,
-.category-item:hover .category-info .cta-button {
-    opacity: 1;
-    max-height: 200px; /* ajusta según tu contenido */
-    overflow: visible;
-}
-
-/* TARJETA */
-.category-card {
-    background: #111;
-    border-radius: 15px;
-    overflow: hidden;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.5);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    display: flex;
-    flex-direction: column;
-}
-
-.category-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 12px 30px #E6D08A;
-}
-
-/* IMAGEN */
-.category-image img {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-    filter: grayscale(20%);
-    transition: 0.5s ease;
-}
-
-.category-card:hover .category-image img {
-    filter: grayscale(0%) contrast(110%);
-}
-
-/* CONTENIDO */
-.category-content {
-    padding: 1.5rem;
-    text-align: center;
-}
-
-.category-content h3 {
-    font-size: 1.8rem;
-    color: #E6D08A;
-    margin-bottom: 1rem;
-}
-
-.category-content p {
-    font-size: 1rem;
-    color: #ddd;
-    margin-bottom: 1.2rem;
-}
-
-
-
-/* ======================= 3. SECCIÓN DE SERVICIOS ======================= */
-.services {
-    padding: 5rem 0;
-    background: linear-gradient(145deg, #0d0d0d, #1a1a1a);
-}
-
-.section-title h2 {
-    font-family: 'Poppins', sans-serif;
-    font-size: 2.5rem;
-    color: var(--primary-gold);
-    margin-bottom: 0.5rem;
-}
-
-.section-title p {
-    color: var(--text-gray);
-    font-size: 1.1rem;
-}
-
-.services-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 2rem;
-    margin-top: 3rem;
-    align-items: start; /* evita solapamiento */
-}
-
-.service-card {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 20px;
-    overflow: hidden;
-    text-align: center;
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 215, 0, 0.2);
-    transition: all 0.4s ease;
-}
-
-.service-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
-    border-color: var(--primary-gold);
-}
-
-.service-img {
-    width: 100%;
-    aspect-ratio: 16/9; /* reemplaza altura fija */
-    overflow: hidden;
-    border-bottom: 1px solid rgba(255, 215, 0, 0.2);
-}
-
-.service-img img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.4s ease;
-}
-
-.service-card h3 {
-    font-size: 1.4rem;
-    color: var(--text-white);
-    margin: 1rem 0 0.5rem 0;
-}
-
-.service-card p {
-    color: var(--text-gray);
-    padding: 0 1rem 1rem;
-    line-height: 1.6;
-    font-size: 0.95rem;
-}
-.fade-in {
-    animation: fadeInUp 0.8s ease forwards;
-    opacity: 0;
-}
-
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-
-
-
-
-/* ======================= 4. SECCIÓN DE VEHÍCULOS DESTACADOS ======================= */
-
-.featured-vehicles {
-    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.7)),
-                url('../images/fondo.png');
-    background-size: cover; /* Hace que la imagen cubra toda la sección sin deformarse */
-    background-position: center; /* Centra la imagen */
-    background-repeat: no-repeat; /* Evita que la imagen se repita si es pequeña */
-    background-attachment: fixed; /* Crea un elegante efecto de parallax al hacer scroll */
-    padding: 5rem 0;
-   
-}
-
-.vehicles-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    gap: 2rem;
-    margin-top: 3rem;
-}
-
-.vehicle-card {
-    background: var(--secondary-dark);
-    border-radius: 15px;
-    overflow: hidden;
-    transition: all 0.3s ease;
-    border: 1px solid rgba(201, 167, 77, 0.1);
-}
-
-.vehicle-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-    border-color: var(--primary-gold);
-}
-
-.vehicle-image {
-    height: 250px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-}
-
-.vehicle-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.vehicle-content {
-    padding: 1.5rem;
-}
-
-.vehicle-content h3 {
-    font-size: 1.3rem;
-    margin-bottom: 0.5rem;
-    color: var(--text-white);
-}
-
-.vehicle-content p {
-    color: var(--text-gray);
-    margin-bottom: 1rem;
-    font-size: 0.9rem;
-}
-
-.vehicle-button {
-    display: inline-block;
-    padding: 0.7rem 1.5rem;
-    background: transparent;
-    color: var(--primary-gold);
-    text-decoration: none;
-    border: 2px solid var(--primary-gold);
-    border-radius: 25px;
-    transition: all 0.3s ease;
-    font-weight: 500;
-}
-
-.vehicle-button:hover {
-    background: var(--primary-gold);
-    color: var(--dark-bg);
-}
-
-
-/* ======================= 5. ESTILOS GENERALES DE CHOFÉRES ======================= */
-
-/* Contenedor de todas las tarjetas */
-.pilotos-gallery {
-    display: flex;           /* Flexbox para filas de tarjetas */
-    flex-wrap: wrap;         /* Permite que bajen a la siguiente fila */
-    gap: 1.5rem;             /* Espacio entre tarjetas */
-    justify-content: center; /* Centra las tarjetas */
-    padding: 2rem;
-}
-
-/* Contenedor de cada tarjeta de piloto */
-.service-card {
-    position: relative;         /* Para poder posicionar el overlay */
-    flex: 1 1 250px;          /* Permite que las tarjetas crezcan y se ajusten */
-    min-width: 250px;       /* Ancho mínimo para tarjetas */
-    width: 300px;               /* Ancho fijo de la tarjeta */
-    height: auto;              /* Altura mayor para dar espacio a la imagen */
-    margin: 1rem;               /* Separación entre tarjetas */
-    overflow: hidden;           /* Evita que el contenido sobresalga */
-    border-radius: 15px;        /* Bordes redondeados */
-    cursor: pointer;
-    transition: transform 0.4s ease, box-shadow 0.4s ease; /* Animación al pasar el mouse */
-    display: flex;
-    flex-direction: column;
-}
-
-/* Imagen del piloto */
-.service-card img {
-    width: 100%;
-    height: 100%;               /* Ocupa toda la tarjeta */
-    object-fit: cover;          /* Mantiene proporción sin deformar */
-    transition: transform 0.4s ease; /* Suaviza el zoom al hover */
-}
-
-/* Contenedor de la info (nombre y descripción) */
-.service-info {
-    position: absolute;         /* Se coloca encima de la imagen */
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: auto;              /* Ocupa todo el alto de la tarjeta */
-    background: rgba(0,0,0,0.7); /* Fondo semitransparente para texto */
-    color: #fff;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 1rem;
-    opacity: 0;                 /* Oculto inicialmente */
-    text-align: center;
-    transition: opacity 0.4s ease; /* Aparece suavemente al hover */
-}
-
-/* Nombre del piloto */
-.service-info h3 {
-    font-size: 1.8rem;
-    margin-bottom: 0.5rem;
-    color: #E6D08A;             /* Dorado */
-}
-
-/* Descripción del piloto */
-.service-info p {
-    font-size: 1rem;
-    line-height: 1.3rem;
-}
-
-/* Hover: aparece el overlay y se agranda la tarjeta */
-.service-card:hover {
-    box-shadow: 0 5px 15px #E6D08A; /* Sombra suave */
-    transform: scale(1.08);     /* Agranda suavemente */
-}
-
-.service-card:hover img {
-    transform: scale(1.1);      /* Zoom ligero a la imagen */
-}
-
-.service-card:hover .service-info {
-    opacity: 1;                 /* Muestra la info */
-}
-
-
-
-/* ======================= 5. ESTILOS GENERALES DE FORMULARIO ======================= */
-
-.form-container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 2rem;
-    background: var(--secondary-dark);
-    border-radius: 15px;
-    border: 1px solid rgba(201, 167, 77, 0.1);
-}
-
-.form-group {
-    margin-bottom: 1.5rem;
-}
-
-.form-group label {
-    display: block;
-    margin-bottom: 0.5rem;
-    color: var(--text-white);
-    font-weight: 500;
-}
-
-.form-group input,
-.form-group select,
-.form-group textarea {
-    width: 100%;
-    padding: 1rem;
-    background: var(--accent-dark);
-    border: 1px solid rgba(201, 167, 77, 0.2);
-    border-radius: 8px;
-    color: var(--text-white);
-    font-family: 'Poppins', sans-serif;
-    transition: all 0.3s ease;
-}
-
-.form-group input:focus,
-.form-group select:focus,
-.form-group textarea:focus {
-    outline: none;
-    border-color: var(--primary-gold);
-    box-shadow: 0 0 10px var(--shadow-gold);
-}
-
-.form-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.5rem;
-}
-
-
-/* ======================= 6. FOOTER (PIE DE PÁGINA) ======================= */
-
+/* ---------------------- Footer ---------------------- */
 footer {
     background: var(--secondary-dark);
     padding: 4rem 0 2rem;
@@ -938,8 +259,604 @@ footer {
     font-size: 0.9rem;
 }
 
+/* ---------------------- Tarjetas (Estilo Unificado) ---------------------- */
+.card {
+    background: var(--secondary-dark);
+    padding: 2rem;
+    border-radius: 16px;
+    margin-top: 2rem;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.35);
+}
 
-/* ======================= 7. ANIMACIONES ======================= */
+.card-title {
+    color: var(--primary-gold);
+    margin-bottom: 1.5rem;
+    font-size: 1.6rem;
+    font-weight: 600;
+}
+
+.service-card {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    overflow: hidden;
+    text-align: center;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 215, 0, 0.2);
+    transition: all 0.4s ease;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.service-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+    border-color: var(--primary-gold);
+}
+
+.service-img {
+    width: 100%;
+    aspect-ratio: 16/9;
+    overflow: hidden;
+    border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+}
+
+.service-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+}
+
+.service-card h3 {
+    font-size: 1.4rem;
+    color: var(--text-white);
+    margin: 1rem 0 0.5rem 0;
+}
+
+.service-card p {
+    color: var(--text-gray);
+    padding: 0 1rem 1rem;
+    line-height: 1.6;
+    font-size: 0.95rem;
+}
+
+.vehicle-card {
+    background: var(--secondary-dark);
+    border-radius: 15px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(201, 167, 77, 0.1);
+}
+
+.vehicle-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    border-color: var(--primary-gold);
+}
+
+.vehicle-image {
+    height: 250px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.vehicle-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.vehicle-content {
+    padding: 1.5rem;
+}
+
+.vehicle-content h3 {
+    font-size: 1.3rem;
+    margin-bottom: 0.5rem;
+    color: var(--text-white);
+}
+
+.vehicle-content p {
+    color: var(--text-gray);
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+}
+
+/* ---------------------- Formularios ---------------------- */
+.form-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+    background: var(--secondary-dark);
+    border-radius: 15px;
+    border: 1px solid rgba(201, 167, 77, 0.1);
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--text-white);
+    font-weight: 500;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 1rem;
+    background: var(--accent-dark);
+    border: 1px solid rgba(201, 167, 77, 0.2);
+    border-radius: 8px;
+    color: var(--text-white);
+    font-family: 'Poppins', sans-serif;
+    transition: all 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--primary-gold);
+    box-shadow: 0 0 10px var(--shadow-gold);
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+}
+
+/* ---------------------- Tablas ---------------------- */
+.admin-table-container {
+    overflow-x: auto;
+}
+
+.admin-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: #1e1e1e;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.admin-table thead th {
+    background: #2b2b2b;
+    color: var(--primary-gold);
+    font-weight: 600;
+    text-align: center;
+    padding: 1rem;
+}
+
+.admin-table tbody td {
+    padding: 1rem;
+    text-align: center;
+    border-bottom: 1px solid #333;
+    color: #ddd;
+}
+
+.admin-table tbody tr:nth-child(even) {
+    background: rgba(255,255,255,0.03);
+}
+
+.admin-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.admin-table tbody tr:hover {
+    background: rgba(255,215,0,0.1);
+}
+
+/* ---------------------- Alertas ---------------------- */
+.error-message {
+    color: #ff6b6b;
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+}
+
+.alert {
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: 500;
+}
+
+.alert-success {
+    background-color: rgba(40, 167, 69, 0.2);
+    color: #52c76e;
+    border: 1px solid rgba(40, 167, 69, 0.4);
+}
+
+.alert-error {
+    background-color: rgba(255, 107, 107, 0.2);
+    color: #ff8a8a;
+    border: 1px solid rgba(255, 107, 107, 0.4);
+}
+
+.alert-info {
+    background-color: rgba(77, 166, 201, 0.2);
+    color: #85d2f3;
+    border: 1px solid rgba(77, 166, 201, 0.4);
+}
+
+/* ======================= 2. SECCIONES PRINCIPALES ======================= */
+
+/* ---------------------- Splash Screen ---------------------- */
+#intro-splash {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 9999;
+    background-color: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 1s ease-out;
+}
+
+#intro-splash.hidden {
+    opacity: 0;
+}
+
+#intro-splash video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.splash-title {
+    position: relative;
+    z-index: 10;
+    font-size: 6rem;
+    color: var(--primary-gold);
+    font-family: 'Corinthia', cursive;
+    font-weight: 600;
+    text-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+    animation: fadeInOut 5s ease-in-out forwards;
+}
+
+/* ---------------------- Hero Section ---------------------- */
+.hero {
+    height: 100vh;
+    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.7)),
+                url('../images/fondo.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+}
+
+.hero-content {
+    max-width: 800px;
+    padding: 0 2rem;
+    animation: fadeInUp 1s ease-out;
+}
+
+.hero h1 {
+    font-size: 3.5rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    background: linear-gradient(135deg, var(--text-white), var(--primary-gold));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.hero p {
+    font-size: 1.3rem;
+    margin-bottom: 2.5rem;
+    color: var(--text-gray);
+    font-weight: 300;
+}
+
+.cta-button {
+    display: inline-block;
+    padding: 1rem 2.5rem;
+    background: linear-gradient(135deg, var(--primary-gold), #E6D08A);
+    color: var(--dark-bg);
+    text-decoration: none;
+    font-weight: 600;
+    border-radius: 50px;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 30px var(--shadow-gold);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border: none;
+    cursor: pointer;
+}
+
+.cta-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 40px var(--shadow-gold);
+}
+
+.vehicle-button {
+    display: inline-block;
+    padding: 0.7rem 1.5rem;
+    background: transparent;
+    color: var(--primary-gold);
+    text-decoration: none;
+    border: 2px solid var(--primary-gold);
+    border-radius: 25px;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.vehicle-button:hover {
+    background: var(--primary-gold);
+    color: var(--dark-bg);
+}
+
+/* ---------------------- Galería de Autos ---------------------- */
+.autos-section {
+    padding: 5rem 2rem;
+    background: linear-gradient(145deg, #0d0d0d, #1a1a1a);
+    text-align: center;
+}
+
+.autos-section h2 {
+    font-size: 2.8rem;
+    margin-bottom: 3rem;
+    color: var(--primary-gold);
+    font-family: 'Poppins', sans-serif;
+}
+
+.autos-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    justify-content: center;
+    align-items: stretch;
+}
+
+/* ---------------------- Categorías ---------------------- */
+.categories-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.categories-gallery {
+    display: flex;
+    width: 100%;
+    height: 400px;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6);
+    transition: height 0.5s ease;
+}
+
+.category-item {
+    flex-grow: 1;
+    width: 0;
+    position: relative;
+    transition: all 0.5s ease;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.category-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: grayscale(40%) brightness(70%);
+    transition: all 0.5s ease;
+}
+
+.category-info {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 0.4rem;
+    text-align: center;
+    background: linear-gradient(to top, rgba(0,0,0,0.6), rgba(0,0,0,0));
+    backdrop-filter: blur(6px) brightness(0.6);
+    text-shadow: 2px 2px 6px rgba(0,0,0,0.8);
+    opacity: 1;
+}
+
+.category-item:hover {
+    flex-grow: 3;
+    box-shadow: 0 12px 30px #E6D08A;
+    width: 35%;
+    z-index: 1;
+    overflow: hidden;
+    transition: flex-grow 0.5s ease, width 0.5s ease, box-shadow 0.5s ease;
+    cursor: pointer;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 20px;
+}
+
+.category-item:hover img {
+    filter: grayscale(0%) brightness(100%);
+    transform: scale(1.05);
+}
+
+.category-item:hover .category-info {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.category-info h3 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    color: #E6D08A;
+    transition: all 0.5s ease;
+}
+
+.category-info p,
+.category-info .cta-button {
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: all 0.5s ease;
+}
+
+.category-item:hover .category-info p,
+.category-item:hover .category-info .cta-button {
+    opacity: 1;
+    max-height: 200px;
+    overflow: visible;
+}
+
+/* ---------------------- Servicios ---------------------- */
+.services {
+    padding: 5rem 0;
+    background: linear-gradient(145deg, #0d0d0d, #1a1a1a);
+}
+
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+    align-items: start;
+}
+
+/* ---------------------- Vehículos Destacados ---------------------- */
+.featured-vehicles {
+    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.7)),
+                url('../images/fondo.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    padding: 5rem 0;
+}
+
+.vehicles-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+}
+
+/* ---------------------- Choferes ---------------------- */
+/* ======================= SECCIÓN DE CHOFERES ======================= */
+
+.pilotos-section {
+    padding: 5rem 0;
+    background: linear-gradient(145deg, #0d0d0d, #1a1a1a);
+}
+
+.pilotos-gallery {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2rem;
+    padding: 0 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.piloto-card {
+    position: relative;
+    width: 300px;
+    height: 400px;
+    border-radius: 15px;
+    overflow: hidden;
+    transition: all 0.4s ease;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+}
+
+.piloto-img-container {
+    width: 100%;
+    height: 100%;
+}
+
+.piloto-img-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+}
+
+.piloto-info {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.7);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1.5rem;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    text-align: center;
+}
+
+.piloto-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 15px 35px var(--shadow-gold);
+}
+
+.piloto-card:hover .piloto-img-container img {
+    transform: scale(1.1);
+}
+
+.piloto-card:hover .piloto-info {
+    opacity: 1;
+}
+
+.piloto-info h3 {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    color: var(--primary-gold);
+}
+
+.piloto-info p {
+    font-size: 1rem;
+    line-height: 1.5;
+    margin-bottom: 0.5rem;
+}
+
+.piloto-info p strong {
+    color: var(--primary-gold);
+}
+/* ======================= 3. ANIMACIONES Y EFECTOS ======================= */
+
+@keyframes fadeInOut {
+    0% {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    20% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    80% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+}
 
 @keyframes fadeInUp {
     from {
@@ -963,8 +880,37 @@ footer {
     transform: translateY(0);
 }
 
+/* ======================= 4. DISEÑO RESPONSIVE ======================= */
 
-/* ======================= 8. DISEÑO RESPONSIVE (MEDIA QUERIES) ======================= */
+@media (max-width: 992px) {
+    .mobile-menu-btn {
+        display: block;
+    }
+
+    .nav-links {
+        flex-direction: column;
+        width: 100%;
+        max-height: 0;
+        overflow: hidden;
+    }
+
+    .nav-links.show {
+        max-height: 1000px;
+    }
+
+    .nav-links li {
+        width: 100%;
+        text-align: center;
+        margin: 0.5rem 0;
+    }
+
+    .nav-auth {
+        flex-direction: column;
+        width: 100%;
+        margin-top: 1rem;
+        text-align: center;
+    }
+}
 
 @media (max-width: 768px) {
     .mobile-menu-btn {
@@ -1011,102 +957,47 @@ footer {
     }
 }
 
+/* ======================= ESTILOS ADICIONALES PARA EL PANEL ======================= */
 
-/* ======================= 9. ESTILOS DE UTILIDAD (Alertas, Validación) ======================= */
-
-.error-message {
-    color: #ff6b6b;
-    font-size: 0.9rem;
-    margin-top: 0.5rem;
-}
-
-.alert {
-    padding: 1rem;
-    margin-bottom: 1.5rem;
-    border-radius: 8px;
-    text-align: center;
-    font-weight: 500;
-}
-
-.alert-success {
-    background-color: rgba(40, 167, 69, 0.2);
-    color: #52c76e;
-    border: 1px solid rgba(40, 167, 69, 0.4);
-}
-
-.alert-error {
-    background-color: rgba(255, 107, 107, 0.2);
-    color: #ff8a8a;
-    border: 1px solid rgba(255, 107, 107, 0.4);
-}
-
-.alert-info {
-    background-color: rgba(77, 166, 201, 0.2);
-    color: #85d2f3;
-    border: 1px solid rgba(77, 166, 201, 0.4);
-}
-
-
-/* Estilo de tarjetas */
-.card {
-    background: var(--secondary-dark);
-    padding: 2rem;
-    border-radius: 16px;
-    margin-top: 2rem;
-    box-shadow: 0 6px 16px rgba(0,0,0,0.35);
-}
-
-/* Títulos dentro de tarjetas */
-.card-title {
-    color: var(--primary-gold);
-    margin-bottom: 1.5rem;
-    font-size: 1.6rem;
+/* Estilo para las etiquetas de estado de reserva */
+.status-badge {
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
     font-weight: 600;
+    font-size: 0.85rem;
+    color: #0A0A0A;
+    text-transform: uppercase;
+}
+.status-pendiente { background-color: #f7b731; }
+.status-confirmada { background-color: #26de81; }
+.status-finalizada { background-color: #a5b1c2; }
+.status-cancelada { background-color: #fc5c65; }
+
+/* Estilo para los botones de acción en las tablas (Editar, Eliminar) */
+.action-link {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    margin: 0.2rem;
+    text-decoration: none;
+    color: var(--text-white);
+    background-color: var(--accent-dark);
+    border: 1px solid var(--primary-gold);
+    border-radius: 6px;
+    transition: all 0.2s ease-in-out;
 }
 
-/* Contenedor de tablas */
-.admin-table-container {
-    overflow-x: auto;
+.action-link:hover {
+    background-color: var(--primary-gold);
+    color: var(--dark-bg);
+    transform: translateY(-2px);
 }
 
-/* Estilo general de tabla */
-.admin-table {
-    width: 100%;
-    border-collapse: separate;
-    border-spacing: 0;
-    background: #1e1e1e;
-    border-radius: 12px;
-    overflow: hidden;
+/* Estilo específico para el botón de eliminar */
+.action-link.delete {
+    border-color: #fc5c65;
 }
 
-/* Encabezados */
-.admin-table thead th {
-    background: #2b2b2b;
-    color: var(--primary-gold);
-    font-weight: 600;
-    text-align: center;
-    padding: 1rem;
-}
-
-/* Filas */
-.admin-table tbody td {
-    padding: 1rem;
-    text-align: center;
-    border-bottom: 1px solid #333;
-    color: #ddd;
-}
-
-/* Filas alternadas */
-.admin-table tbody tr:nth-child(even) {
-    background: rgba(255,255,255,0.03);
-}
-
-/* Última fila sin borde */
-.admin-table tbody tr:last-child td {
-    border-bottom: none;
-}
-
-/* Hover */
-.admin-table tbody tr:hover {
-    background: rgba(255,215,0,0.1);
+.action-link.delete:hover {
+    background-color: #fc5c65;
+    color: var(--text-white);
 }

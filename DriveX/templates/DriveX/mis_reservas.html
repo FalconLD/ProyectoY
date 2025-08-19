@@ -1,0 +1,42 @@
+{% extends 'DriveX/base.html' %}
+
+{% block title %}Mis Reservas - DriveX{% endblock %}
+
+{% block content %}
+<main style="padding-top: 100px; padding-bottom: 3rem;">
+    <div class="container">
+        <h2 class="section-title">Mis Reservas</h2>
+        <p>Aquí puedes ver el historial de todas las reservas que has realizado.</p>
+
+        <div class="admin-table-container" style="margin-top: 2rem;">
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>Vehículo</th>
+                        <th>Fecha del Servicio</th>
+                        <th>Hora</th>
+                        <th>Estado de la Reserva</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for reserva in reservas %}
+                    <tr>
+                        <td>{{ reserva.vehiculo.nombre|default:"Vehículo no disponible" }}</td>
+                        <td>{{ reserva.fecha_servicio }}</td>
+                        <td>{{ reserva.hora_servicio }}</td>
+                        <td>
+                            <!-- Usamos una clase para dar color al estado -->
+                            <span class="status-badge status-{{ reserva.estado|lower }}">{{ reserva.get_estado_display }}</span>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="4">Aún no has realizado ninguna reserva. <a href="{% url 'vehiculos' %}" style="color: var(--primary-gold);">¡Explora nuestra flota!</a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>
+{% endblock %}

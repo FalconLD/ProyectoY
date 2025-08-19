@@ -38,6 +38,7 @@
             <div class="nav-auth">
                 {% if user.is_authenticated %}
                 <span>Bienvenido, {{ user.username }}</span>
+                <a href="{% url 'mis_reservas' %}" class="auth-button">Mis Reservas</a> <!-- BOTÓN AÑADIDO -->
                 <a href="{% url 'logout' %}" class="auth-button">Cerrar Sesión</a>
                 {% else %}
                 <a href="{% url 'login' %}" class="auth-button">Iniciar Sesión</a>
